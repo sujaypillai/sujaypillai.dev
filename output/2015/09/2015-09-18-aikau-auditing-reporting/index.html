@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Aikau Audit Report | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Sujay Pillai&#39;s blog">
+<link rel="prev" href="https://sujaypillai.dev/2015/06/2015-06-01-alfresco-multi-folder-template/" />
+<link rel="next" href="https://sujaypillai.dev/2016/08/2016-08-04-update-amp-version/" />
+<link rel="canonical" href="https://sujaypillai.dev/2015/09/2015-09-18-aikau-auditing-reporting/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Aikau Audit Report"/>
+<meta name="twitter:description" content="EisenVault takes away the hassle of managing documents by storing them in both electronic and physical forms, enabling smart-search and deploying quick retrieval measures. Our innovative cloud-based document management system can be used in multiple industry sectors, and caters to specific requirements of various job roles. Our vision - to be your preferred partner for electronic and physical document management.
+This is EisenVault&rsquo;s first Aikau plugin and we would like to share our experience building it."/>
+<script type="application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Aikau Audit Report",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https:\/\/sujaypillai.dev\/2015\/09\/2015-09-18-aikau-auditing-reporting\/"
+    },
+    
+        "image": {
+            "@type": "ImageObject",
+            "url": "https:\/\/sujaypillai.dev\/cover.png",
+            "width":  800 ,
+            "height":  600 
+        },
+    
+    "genre": "posts",
+    
+        "keywords": "alfresco, aikau",
+    
+    "wordcount":  506 ,
+    "url": "https:\/\/sujaypillai.dev\/2015\/09\/2015-09-18-aikau-auditing-reporting\/",
+    
+        "datePublished": "2015-09-18T16:22:42\x2b08:00",
+    
+    
+        "dateModified": "2015-09-18T16:22:42\x2b08:00",
+    
+    
+        "license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+    
+    
+        "publisher": {
+            "@type": "Organization",
+            "name": "XXXX",
+            "logo": {
+            "@type": "ImageObject",
+            "url": "https:\/\/sujaypillai.dev\/logo.png",
+            "width":  127 ,
+            "height":  40 
+            }
+        },
+    
+    
+    "description": ""
+    }
+    </script>
+<link rel="stylesheet" href="/css/style.min.css">
+<link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.min.css">
+
+<link rel="stylesheet" href="/css/lib/animate/animate.min.min.css">
+
+    </head>
+    <body>
+        <script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script>
+        <div class="wrapper">
+            <nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://sujaypillai.dev/">Sujay Pillai</a>
+        </div>
+        <div class="navbar-menu">
+            
+            
+                <a class="menu-item" href="https://sujaypillai.dev/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile">
+     <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://sujaypillai.dev/">Sujay Pillai</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu">
+            
+            
+                <a class="menu-item" href="https://sujaypillai.dev/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav><main class="main">
+                <div class="container">
+                    
+    
+    
+    
+
+    <article class="post-warp">
+        <h1 class="post-title animated flipInX">Aikau Audit Report</h1>
+
+        <div class="post-meta">
+            <div class="post-meta-main">
+                <a class="author" href="https://sujaypillai.dev/" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+                <span class="post-category">
+                        included in
+                        <i class="far fa-folder fa-fw"></i><a href="https://sujaypillai.dev/categories/alfresco/">Alfresco</a>
+                            
+                    </span>
+            </div>
+            <div class="post-meta-other">
+                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2015-09-18>2015-09-18</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 506 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <p><a href="https://eisenvault.com">EisenVault</a> takes away the hassle of managing documents by storing them in both electronic and physical forms, enabling smart-search and deploying quick retrieval measures. Our innovative cloud-based document management system can be used in multiple industry sectors, and caters to specific requirements of various job roles. Our vision - to be your preferred partner for electronic and physical document management.</p>
+<p>This is <a href="https://eisenvault.com">EisenVault&rsquo;s</a> first Aikau plugin and we would like to share our experience building it. While during the days when people used Alfresco Explorer there was an option to view the audit trail for a document using the show_audit.ftl by selecting <em><strong>&ldquo;Preview in Template&rdquo;</strong></em>.
+Below is a screenshot of how it looked -</p>
+<p><img src="/images/audit-example-explorer.jpg" alt="Alfresco Explorer Audit Trail"></p>
+<p>But there is no such option in Alfresco Share to view those audit data, so I thought of building it. Auditing is by default enabled in Alfresco but the data generation for the same is disabled and to enable this you would have to put in the below property in alfresco-global.properties.
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">audit.alfresco-access.enabled=true</code></pre></td></tr></table>
+</div>
+</div>
+You can check the status for auditing by issuing the command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">curl -u admin:password &#34;http://localhost:8080/alfresco/service/api/audit/control&#34;</code></pre></td></tr></table>
+</div>
+</div>
+<p>On issuing the above command you would get a JSON response something similar -
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json">    <span class="p">{</span>
+       <span class="nt">&#34;enabled&#34;</span> <span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+       <span class="nt">&#34;applications&#34;</span><span class="p">:</span> 
+       <span class="p">[</span>
+          <span class="p">{</span>
+             <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;Alfresco Tagging Service&#34;</span><span class="p">,</span>
+             <span class="nt">&#34;path&#34;</span> <span class="p">:</span> <span class="s2">&#34;/tagging&#34;</span><span class="p">,</span>
+             <span class="nt">&#34;enabled&#34;</span> <span class="p">:</span> <span class="kc">true</span>
+          <span class="p">}</span>
+             <span class="p">,</span>
+          <span class="p">{</span>
+             <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;alfresco-access&#34;</span><span class="p">,</span>
+             <span class="nt">&#34;path&#34;</span> <span class="p">:</span> <span class="s2">&#34;/alfresco-access&#34;</span><span class="p">,</span>
+             <span class="nt">&#34;enabled&#34;</span> <span class="p">:</span> <span class="kc">true</span>
+          <span class="p">}</span>
+             
+       <span class="p">]</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></p>
+<p>You can also query to retrieve the audit events:
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">curl -u admin:password &#34;http://localhost:8080/alfresco/service/api/audit/query/alfresco-access?limit=2&#34;</code></pre></td></tr></table>
+</div>
+</div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+   <span class="nt">&#34;count&#34;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>
+   <span class="nt">&#34;entries&#34;</span><span class="p">:</span> 
+   <span class="p">[</span>
+      <span class="p">{</span>
+         <span class="nt">&#34;id&#34;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+         <span class="nt">&#34;application&#34;</span><span class="p">:</span><span class="s2">&#34;alfresco-access&#34;</span><span class="p">,</span>
+         <span class="nt">&#34;user&#34;</span><span class="p">:</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span>
+         <span class="nt">&#34;time&#34;</span><span class="p">:</span><span class="s2">&#34;2015-09-16T13:48:08.796+08:00&#34;</span><span class="p">,</span>
+         <span class="nt">&#34;values&#34;</span><span class="p">:</span> <span class="kc">null</span>
+      <span class="p">}</span><span class="p">,</span>
+      <span class="p">{</span>
+         <span class="nt">&#34;id&#34;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>
+         <span class="nt">&#34;application&#34;</span><span class="p">:</span><span class="s2">&#34;alfresco-access&#34;</span><span class="p">,</span>
+         <span class="nt">&#34;user&#34;</span><span class="p">:</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span>
+         <span class="nt">&#34;time&#34;</span><span class="p">:</span><span class="s2">&#34;2015-09-16T13:48:09.560+08:00&#34;</span><span class="p">,</span>
+         <span class="nt">&#34;values&#34;</span><span class="p">:</span> <span class="kc">null</span>
+      <span class="p">}</span>
+   <span class="p">]</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></p>
+<blockquote>
+<p><em><strong>If you looking for more information about Alfresco Audting you should definitely look <a href="http://docs.alfresco.com/5.0/concepts/audit-intro.html">here</a></strong></em></p>
+</blockquote>
+<a class="post-dummy-target" id="aikau-audit-report-page"></a><h3>Aikau Audit Report page</h3>
+<ul>
+<li>
+<p>The new Aikau Audit report page lets you view the audit trail for each document in the repository as shown below:</p>
+<p><img src="/images/aikau-audit-report.png" alt="Aikau Audit Report"></p>
+</li>
+<li>
+<p>You can access this page either from the document library action OR from the Document Actions section from the document details page:</p>
+<p><img src="/images/aar-dl.png" alt="DL"> |   <img src="/images/aar-da.png" alt="DA"></p>
+</li>
+</ul>
+<a class="post-dummy-target" id="how-does-it-work"></a><h3>How does it work?</h3>
+<ul>
+<li>The <a href="http://dev.alfresco.com/resource/docs/aikau-jsdoc/AlfList.html">AlfList</a> widget makes a call to webscript <a href="https://github.com/vipulswarup/ev-aikau-auditreport/blob/master/ev-repo/src/main/java/com/eisenvault/webscript/NodeAuditTrailWebScript.java">NodeAuditTrailWebScript</a> with help of the attribute <em><strong>loadDataPublishTopic</strong></em> via the CrudService (using the &ldquo;<strong>ALF_CRUD_GET_ALL</strong>&rdquo; topic) which take the nodeRef as a parameter and this in turn returns the data in JSON format.</li>
+<li>Now to render the list what AlfList loads we need to create a view which is done with the help of <a href="http://dev.alfresco.com/resource/docs/aikau-jsdoc/AlfListView.html">AlfListView</a>.</li>
+<li>As the list contains five columns we would be adding same number of <a href="http://dev.alfresco.com/resource/docs/aikau-jsdoc/HeaderCell.html">HeaderCell</a> for the attribute <em><strong>widgetsForHeader</strong></em>.</li>
+<li>Each row in the data will be represented by <a href="http://dev.alfresco.com/resource/docs/aikau-jsdoc/Row.html">Row</a> and each <a href="http://dev.alfresco.com/resource/docs/aikau-jsdoc/Cell.html">Cell</a> will hold <a href="http://dev.alfresco.com/resource/docs/aikau-jsdoc/Property.html">Property</a> to render the value for respective <em><strong>Cell</strong></em>.</li>
+<li>As the last column &ldquo;<strong>Audit Entry Values</strong>&rdquo; holds multiple values the <em><strong>Property</strong></em> widget need to be overridden and you may find this in <a href="https://github.com/vipulswarup/ev-aikau-auditreport/blob/master/ev-share/src/main/amp/web/js/eisenvault/widgets/Property.js">Property.js</a></li>
+</ul>
+
+    <div class="admonition note"><p>You may find the complete source code for this addon on <a href="https://github.com/vipulswarup/ev-aikau-auditreport">Github</a></p>
+</div>
+
+        </div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>This article is updated with 2015-09-18</span>
+            </div>
+            <div class="post-info-license">
+                
+            </div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md">
+                
+                    
+                        <span><a class="link-to-markdown" href="https://sujaypillai.dev/2015/09/2015-09-18-aikau-auditing-reporting/index.md" target="_blank"></a></span>
+                    
+                
+            </div>
+            <div class="post-info-share">
+                
+                    <span>
+    
+        <a href="//twitter.com/share?url=https%3a%2f%2fsujaypillai.dev%2f2015%2f09%2f2015-09-18-aikau-auditing-reporting%2f&amp;text=Aikau%20Audit%20Report&amp;via=sujaypillai" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a>
+    
+    
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fsujaypillai.dev%2f2015%2f09%2f2015-09-18-aikau-auditing-reporting%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a>
+    
+    
+    
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fsujaypillai.dev%2f2015%2f09%2f2015-09-18-aikau-auditing-reporting%2f&amp;title=Aikau%20Audit%20Report" target="_blank" title="Share on LinkedIn">
+            <i class="fab fa-linkedin fa-fw"></i>
+        </a>
+    
+    
+    
+    
+    
+    
+    
+</span>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section>
+            
+                
+                    <span class="tag">
+                        <a href="https://sujaypillai.dev/tags/alfresco/"><i class="fas fa-tag fa-fw"></i>alfresco</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="https://sujaypillai.dev/tags/aikau/"><i class="fas fa-tag fa-fw"></i>aikau</a>
+                    </span>
+                
+            
+        </section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://sujaypillai.dev/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+            <a href="https://sujaypillai.dev/2015/06/2015-06-01-alfresco-multi-folder-template/" class="prev" rel="prev" title="Alfresco Multi Folder Template Selection"><i class="fas fa-angle-left fa-fw"></i>Alfresco Multi Folder Template Selection</a>
+        
+        
+            <a href="https://sujaypillai.dev/2016/08/2016-08-04-update-amp-version/" class="next" rel="next" title="Downgrading AMP version in Alfresco">Downgrading AMP version in Alfresco<i class="fas fa-angle-right fa-fw"></i></a>
+        
+    </div>
+</div>
+
+        <div class="post-comment">
+            
+            
+
+            
+        </div>
+    </article></div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        <div class="copyright-line">
+            Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+        <div class="copyright-line">
+            <i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2018 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://sujaypillai.dev/">Sujay Pillai</a></span><span class="license">&nbsp;|&nbsp;<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+<script src="/js/lib/jquery/jquery.slim.min.min.js"></script>
+<script src="/js/lib/lazysizes/lazysizes.min.min.js"></script>
+<script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script>
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+
+
+
+<script src="/js/blog.min.js"></script>
+
+
+    
+</div>
+        <a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll><span>&nbsp;</span></a>
+    </body>
+</html>
