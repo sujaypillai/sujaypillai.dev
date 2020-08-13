@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Globally scoped platform ARG&#39;s in Docker BuildKit | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Sujay Pillai&#39;s blog">
+<link rel="prev" href="http://localhost/2018/11/2018-11-09-docker-ee-engine-activate/" />
+<link rel="next" href="http://localhost/2019/01/2019-01-22-docker-tip/" />
+<link rel="canonical" href="http://localhost/2019/01/2019-01-02-docker-platform-args/" />
+<link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../favicon-16x16.png">
+<link rel="manifest" href="../../../site.webmanifest">
+<link rel="mask-icon" href="../../../safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Globally scoped platform ARG&#39;s in Docker BuildKit"/>
+<meta name="twitter:description" content="ARG a.k.a &ldquo;build-time variable&rdquo; can be used to pass a variable to builder with the docker build command using --build-arg &lt;varname&gt;=&lt;value&gt; flag
+ With the new engine 18.09 Docker supports a new backend BuildKit for executing your builds. You may switch to this backend by setting the below environment variable on your CLI -
+1  DOCKER_BUILDKIT=1   With this new backend Docker predefines a set of ARG variables with the information pertaining to the platform of the node performing the build (build platform) and the resulting image (target platform)"/>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+<script type="application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Globally scoped platform ARG\u0027s in Docker BuildKit",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http:\/\/localhost\/2019\/01\/2019-01-02-docker-platform-args\/"
+    },
+    
+        "image": {
+            "@type": "ImageObject",
+            "url": "http:\/\/localhost\/cover.png",
+            "width":  800 ,
+            "height":  600 
+        },
+    
+    "genre": "posts",
+    
+        "keywords": "docker, buildkit",
+    
+    "wordcount":  250 ,
+    "url": "http:\/\/localhost\/2019\/01\/2019-01-02-docker-platform-args\/",
+    
+        "datePublished": "2019-01-02T16:22:42\u002b08:00",
+    
+    
+        "dateModified": "2019-01-02T16:22:42\u002b08:00",
+    
+    
+        "license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+    
+    
+        "publisher": {
+            "@type": "Organization",
+            "name": "XXXX",
+            "logo": {
+            "@type": "ImageObject",
+            "url": "http:\/\/localhost\/logo.png",
+            "width":  127 ,
+            "height":  40 
+            }
+        },
+    
+    
+    "description": ""
+    }
+    </script>
+<link rel="stylesheet" href="../../../css/style.min.css">
+<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" crossorigin="anonymous">
+
+<link rel="stylesheet" href="../../../css/lib/animate/animate.min.min.css">
+
+    </head>
+    <body>
+        <script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script>
+        <div class="wrapper">
+            <nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="http://localhost">Sujay Pillai</a>
+        </div>
+        <div class="navbar-menu">
+            
+            
+                <a class="menu-item" href="http://localhost/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="http://localhost/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="http://localhost/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="http://localhost/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile">
+     <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="http://localhost">Sujay Pillai</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu">
+            
+            
+                <a class="menu-item" href="http://localhost/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="http://localhost/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="http://localhost/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="http://localhost/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav><main class="main">
+                <div class="container">
+                    
+    
+    
+    
+
+    <article class="post-warp">
+        <h1 class="post-title animated flipInX">Globally scoped platform ARG&#39;s in Docker BuildKit</h1>
+
+        <div class="post-meta">
+            <div class="post-meta-main">
+                <a class="author" href="http://localhost" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+                <span class="post-category">
+                        included in
+                        <i class="far fa-folder fa-fw"></i><a href="http://localhost/categories/docker/">Docker</a>
+                            
+                    </span>
+            </div>
+            <div class="post-meta-other">
+                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2019-01-02>2019-01-02</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 250 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+    <div class="admonition note"><p><em><strong>ARG a.k.a &ldquo;build-time variable&rdquo; can be used to pass a variable to builder with the <code>docker build</code> command using <code>--build-arg &lt;varname&gt;=&lt;value&gt; flag</code></strong></em></p>
+</div>
+<p>With the new engine 18.09 Docker supports a new backend <a href="https://docs.docker.com/engine/reference/builder/#buildkit">BuildKit</a> for executing your builds. You may switch to this backend by setting the below environment variable on your CLI -</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">DOCKER_BUILDKIT=1</code></pre></td></tr></table>
+</div>
+</div>
+<p>With this new backend Docker predefines a set of ARG variables with the information pertaining to the platform of the node performing the build (build platform) and the resulting image (target platform)</p>
+<p>The following ARG variables are set automatically:</p>
+<table>
+<thead>
+<tr>
+<th>ARG</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TARGETPLATFORM</td>
+<td>Platform for which the image is being build e.g. linux/amd64, linux/arm/v7, windows/amd64.</td>
+</tr>
+<tr>
+<td>TARGETOS</td>
+<td>The OS value for the target platform e.g. (linux, windows)</td>
+</tr>
+<tr>
+<td>TARGETARCH</td>
+<td>CPU Architecture of the target platform.</td>
+</tr>
+<tr>
+<td>TARGETVARIANT</td>
+<td>Variant of the CPU e.g. <code>v7</code> to specify ARMv7 when architecture is <code>arm</code>.</td>
+</tr>
+<tr>
+<td>BUILDPLATFORM</td>
+<td>Platform of the node performing the build.</td>
+</tr>
+<tr>
+<td>BUILDOS</td>
+<td>The OS value for node performing the build.</td>
+</tr>
+<tr>
+<td>BUILDARCH</td>
+<td>CPU Architecture of the build platform.</td>
+</tr>
+<tr>
+<td>BUILDVARIANT</td>
+<td>Variant of the CPU for build platform</td>
+</tr>
+</tbody>
+</table>
+<p>These arguments are defined in the global scope so are not automatically available inside build stages or for your RUN commands. To expose one of these arguments inside the build stage redefine it without value as shown in below example:</p>
+<p>Consider the below <code>Dockerfile</code> where we have all the above predefined ARG&rsquo;s redefined</p>
+<script type="application/javascript" src="https://gist.github.com/sujaypillai/74d15e0d690a265a1b705cf3b26c6082.js"></script>
+
+<p>I carried out this build on a RaspberryPi to show all the values of above ARG&rsquo;s:</p>
+<p><img src="../../../images/predefinedargs.png" alt="PreDefinedARG"></p>
+<p>Read more about this <a href="https://docs.docker.com/engine/reference/builder/#automatic-platform-args-in-the-global-scope">here</a> from Docker Documentation.</p>
+
+        </div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>This article is updated with 2019-01-02</span>
+            </div>
+            <div class="post-info-license">
+                
+            </div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md">
+                
+                    
+                        <span><a class="link-to-markdown" href="http://localhost/2019/01/2019-01-02-docker-platform-args/index.md" target="_blank"></a></span>
+                    
+                
+            </div>
+            <div class="post-info-share">
+                
+                    <span>
+    
+        <a href="//twitter.com/share?url=http%3a%2f%2flocalhost%2f2019%2f01%2f2019-01-02-docker-platform-args%2f&amp;text=Globally%20scoped%20platform%20ARG%27s%20in%20Docker%20BuildKit&amp;via=sujaypillai" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a>
+    
+    
+        <a href="//www.facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%2f2019%2f01%2f2019-01-02-docker-platform-args%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a>
+    
+    
+    
+        <a href="//www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%2f2019%2f01%2f2019-01-02-docker-platform-args%2f&amp;title=Globally%20scoped%20platform%20ARG%27s%20in%20Docker%20BuildKit" target="_blank" title="Share on LinkedIn">
+            <i class="fab fa-linkedin fa-fw"></i>
+        </a>
+    
+    
+    
+    
+    
+    
+    
+</span>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section>
+            
+                
+                    <span class="tag">
+                        <a href="http://localhost/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="http://localhost/tags/buildkit/"><i class="fas fa-tag fa-fw"></i>buildkit</a>
+                    </span>
+                
+            
+        </section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+            <a href="http://localhost/2018/11/2018-11-09-docker-ee-engine-activate/" class="prev" rel="prev" title="CE-EE node activate"><i class="fas fa-angle-left fa-fw"></i>CE-EE node activate</a>
+        
+        
+            <a href="http://localhost/2019/01/2019-01-22-docker-tip/" class="next" rel="next" title="Connect to Docker daemon over ssh using docker-compose">Connect to Docker daemon over ssh using docker-compose<i class="fas fa-angle-right fa-fw"></i></a>
+        
+    </div>
+</div>
+
+        <div class="post-comment">
+            
+            <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            (function() {
+                
+                
+                if (window.location.hostname == "localhost")
+                    return;
+
+                var dsq = document.createElement("script"); dsq.type = "text/javascript"; dsq.async = true;
+                var disqus_shortname = "sujaypillai";
+                dsq.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+                (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="https://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+            
+        </div>
+    </article></div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        <div class="copyright-line">
+            Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+        <div class="copyright-line">
+            <i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2018 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="http://localhost">Sujay Pillai</a></span><span class="license">&nbsp;|&nbsp;<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+<script src="../../../js/lib/jquery/jquery.slim.min.min.js"></script>
+<script src="../../../js/lib/lazysizes/lazysizes.min.min.js"></script>
+<script src="../../../js/lib/smooth-scroll/smooth-scroll.polyfills.min.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script>
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+
+
+
+<script src="../../../js/blog.min.js"></script>
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</div>
+        <a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll><span>&nbsp;</span></a>
+    </body>
+</html>

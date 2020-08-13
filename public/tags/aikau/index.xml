@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>aikau on Sujay Pillai</title>
+    <link>http://localhost/tags/aikau/</link>
+    <description>Recent content in aikau on Sujay Pillai</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Fri, 18 Sep 2015 16:22:42 +0800</lastBuildDate>
+    
+	<atom:link href="http://localhost/tags/aikau/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Aikau Audit Report</title>
+      <link>http://localhost/2015/09/2015-09-18-aikau-auditing-reporting/</link>
+      <pubDate>Fri, 18 Sep 2015 16:22:42 +0800</pubDate>
+      
+      <guid>http://localhost/2015/09/2015-09-18-aikau-auditing-reporting/</guid>
+      <description>EisenVault takes away the hassle of managing documents by storing them in both electronic and physical forms, enabling smart-search and deploying quick retrieval measures. Our innovative cloud-based document management system can be used in multiple industry sectors, and caters to specific requirements of various job roles. Our vision - to be your preferred partner for electronic and physical document management.
+This is EisenVault&amp;rsquo;s first Aikau plugin and we would like to share our experience building it.</description>
+    </item>
+    
+  </channel>
+</rss>

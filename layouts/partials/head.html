@@ -37,7 +37,7 @@
 {{ end -}}
 
 {{ template "_internal/twitter_cards.html" . -}}
-
+{{ template "_internal/google_analytics.html" . }}
 {{ partial "seo.html" . -}}
 
 {{ $res := resources.Get "css/style.scss" | resources.ToCSS | resources.Minify -}}

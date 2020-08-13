@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>CE-EE node activate | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Sujay Pillai&#39;s blog">
+<link rel="prev" href="http://localhost/2018/05/2018-05-06-docker-tip/" />
+<link rel="next" href="http://localhost/2019/01/2019-01-02-docker-platform-args/" />
+<link rel="canonical" href="http://localhost/2018/11/2018-11-09-docker-ee-engine-activate/" />
+<link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../favicon-16x16.png">
+<link rel="manifest" href="../../../site.webmanifest">
+<link rel="mask-icon" href="../../../safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CE-EE node activate"/>
+<meta name="twitter:description" content="November 8, 2018 was a great day for Docker community as we saw new stable release for community edition Docker 18.09 CE afer moving to the new release and support cadence. This will be supported for 7 months with Docker 19.03 CE being the next release in line.
+Along with this being an Enterprise customer we are excited to have Docker Enterprise 2.1 which adds support for Windows Server 1709, 1803 and Windows Server 2019."/>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+<script type="application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "CE-EE node activate",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http:\/\/localhost\/2018\/11\/2018-11-09-docker-ee-engine-activate\/"
+    },
+    
+        "image": {
+            "@type": "ImageObject",
+            "url": "http:\/\/localhost\/cover.png",
+            "width":  800 ,
+            "height":  600 
+        },
+    
+    "genre": "posts",
+    
+        "keywords": "docker",
+    
+    "wordcount":  1344 ,
+    "url": "http:\/\/localhost\/2018\/11\/2018-11-09-docker-ee-engine-activate\/",
+    
+        "datePublished": "2018-11-09T16:22:42\u002b08:00",
+    
+    
+        "dateModified": "2018-11-09T16:22:42\u002b08:00",
+    
+    
+        "license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+    
+    
+        "publisher": {
+            "@type": "Organization",
+            "name": "XXXX",
+            "logo": {
+            "@type": "ImageObject",
+            "url": "http:\/\/localhost\/logo.png",
+            "width":  127 ,
+            "height":  40 
+            }
+        },
+    
+    
+    "description": ""
+    }
+    </script>
+<link rel="stylesheet" href="../../../css/style.min.css">
+<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" crossorigin="anonymous">
+
+<link rel="stylesheet" href="../../../css/lib/animate/animate.min.min.css">
+
+    </head>
+    <body>
+        <script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script>
+        <div class="wrapper">
+            <nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="http://localhost">Sujay Pillai</a>
+        </div>
+        <div class="navbar-menu">
+            
+            
+                <a class="menu-item" href="http://localhost/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="http://localhost/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="http://localhost/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="http://localhost/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile">
+     <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="http://localhost">Sujay Pillai</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu">
+            
+            
+                <a class="menu-item" href="http://localhost/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="http://localhost/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="http://localhost/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="http://localhost/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav><main class="main">
+                <div class="container">
+                    
+    
+    
+    
+
+    <article class="post-warp">
+        <h1 class="post-title animated flipInX">CE-EE node activate</h1>
+
+        <div class="post-meta">
+            <div class="post-meta-main">
+                <a class="author" href="http://localhost" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+                <span class="post-category">
+                        included in
+                        <i class="far fa-folder fa-fw"></i><a href="http://localhost/categories/docker/">Docker</a>
+                            
+                    </span>
+            </div>
+            <div class="post-meta-other">
+                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2018-11-09>2018-11-09</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1344 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>7 min&nbsp;</div>
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <p>November 8, 2018 was a great day for Docker community as we saw new stable release for community edition Docker 18.09 CE afer moving to the new release and support cadence. This will be supported for 7 months with Docker 19.03 CE being the next release in line.</p>
+<p>Along with this being an Enterprise customer we are excited to have <a href="https://blog.docker.com/2018/11/introducing-docker-enterprise-2-1-advancing-our-container-platform-leadership/">Docker Enterprise 2.1</a> which adds support for Windows Server 1709, 1803 and Windows Server 2019. Read more about this in the <a href="https://blog.docker.com/2018/11/introducing-docker-enterprise-2-1-advancing-our-container-platform-leadership/">blog</a> from Docker team.</p>
+<p>The one feature I was keen to test on was upgrading CE engine to EE engine using the Docker cli. Here are the steps I followed to upgrade a CentOS machine running 17.12.0-ce engine to 18.09 (EE engine).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ docker version
+Client:
+ Version:	17.12.0-ce
+ API version:	1.35
+ Go version:	go1.9.2
+ Git commit:	c97c6d6
+ Built:	Wed Dec 27 20:10:14 2017
+ OS/Arch:	linux/amd64
+
+Server:
+ Engine:
+  Version:	17.12.0-ce
+  API version:	1.35 (minimum version 1.12)
+  Go version:	go1.9.2
+  Git commit:	c97c6d6
+  Built:	Wed Dec 27 20:12:46 2017
+  OS/Arch:	linux/amd64
+  Experimental:	false</code></pre></td></tr></table>
+</div>
+</div>
+<p>Lets add the stable repository so that we have the latest pacakges to install the new release of Docker CE.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo yum-config-manager \
+     --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+Failed to set locale, defaulting to C
+Loaded plugins: fastestmirror
+adding repo from: https://download.docker.com/linux/centos/docker-ce.repo
+grabbing file https://download.docker.com/linux/centos/docker-ce.repo to /etc/yum.repos.d/docker-ce.repo
+repo saved to /etc/yum.repos.d/docker-ce.repo</code></pre></td></tr></table>
+</div>
+</div>
+<p>To install specific version of Docker instead of always using the latest, firt list the available versions.
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo yum list docker-ce --showduplicates 
+Failed to set locale, defaulting to C
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+docker-ce-stable                                      | 3.5 kB  00:00:00     
+(1/2): docker-ce-stable/x86_64/updateinfo             |   55 B  00:00:00     
+(2/2): docker-ce-stable/x86_64/primary_db                19 kB  00:00:00     
+Installed Packages
+docker-ce.x86_64        17.12.0.ce-1.el7.centos       @docker-ce-stable
+Available Packages
+docker-ce.x86_64        17.03.0.ce-1.el7.centos       docker-ce-stable 
+docker-ce.x86_64        17.03.1.ce-1.el7.centos       docker-ce-stable 
+docker-ce.x86_64        17.03.2.ce-1.el7.centos       docker-ce-stable 
+docker-ce.x86_64        17.03.3.ce-1.el7              docker-ce-stable 
+docker-ce.x86_64        17.06.0.ce-1.el7.centos       docker-ce-stable 
+docker-ce.x86_64        17.06.1.ce-1.el7.centos       docker-ce-stable 
+docker-ce.x86_64        17.06.2.ce-1.el7.centos       docker-ce-stable 
+docker-ce.x86_64        17.09.0.ce-1.el7.centos       docker-ce-stable 
+docker-ce.x86_64        17.09.1.ce-1.el7.centos       docker-ce-stable 
+docker-ce.x86_64        17.12.0.ce-1.el7.centos       docker-ce-stable 
+docker-ce.x86_64        17.12.1.ce-1.el7.centos       docker-ce-stable 
+docker-ce.x86_64        18.03.0.ce-1.el7.centos       docker-ce-stable 
+docker-ce.x86_64        18.03.1.ce-1.el7.centos       docker-ce-stable 
+docker-ce.x86_64        18.06.0.ce-3.el7              docker-ce-stable 
+docker-ce.x86_64        18.06.1.ce-3.el7              docker-ce-stable 
+docker-ce.x86_64        3:18.09.0-3.el7               docker-ce-stable </code></pre></td></tr></table>
+</div>
+</div></p>
+
+    <div class="admonition note"><p>The standard way of installing a specific version is <code>$ sudo yum install &lt;FULLY-QUALIFIED-PACKAGE-NAME&gt;</code></p>
+<p>The version string is the package name plus the version up to the first hyphen. In the example above, the fully qualified package name is docker-ce-18.09.0</p>
+</div>
+<p>Let&rsquo;s upgrade Docker to 18.09</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo yum install docker-ce-18.09.0
+Failed to set locale, defaulting to C
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+Resolving Dependencies
+--&gt; Running transaction check
+---&gt; Package docker-ce.x86_64 0:17.12.0.ce-1.el7.centos will be updated
+---&gt; Package docker-ce.x86_64 3:18.09.0-3.el7 will be an update
+--&gt; Processing Dependency: containerd.io for package: 3:docker-ce-18.09.0-3.el7.x86_64
+--&gt; Processing Dependency: docker-ce-cli for package: 3:docker-ce-18.09.0-3.el7.x86_64
+--&gt; Running transaction check
+---&gt; Package containerd.io.x86_64 0:1.2.0-3.el7 will be installed
+---&gt; Package docker-ce-cli.x86_64 1:18.09.0-3.el7 will be installed
+--&gt; Finished Dependency Resolution
+
+Dependencies Resolved
+
+====================================================================================================================================================================================
+ Package                                    Arch                                Version                                         Repository                                     Size
+====================================================================================================================================================================================
+Updating:
+ docker-ce                                  x86_64                              3:18.09.0-3.el7                                 docker-ce-stable                               19 M
+Installing for dependencies:
+ containerd.io                              x86_64                              1.2.0-3.el7                                     docker-ce-stable                               22 M
+ docker-ce-cli                              x86_64                              1:18.09.0-3.el7                                 docker-ce-stable                               14 M
+
+Transaction Summary
+====================================================================================================================================================================================
+Install             ( 2 Dependent packages)
+Upgrade  1 Package
+
+Total download size: 55 M
+Is this ok [y/d/N]: y
+Downloading packages:
+Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
+(1/3): containerd.io-1.2.0-3.el7.x86_64.rpm                                                                                                                  |  22 MB  00:00:07     
+(2/3): docker-ce-18.09.0-3.el7.x86_64.rpm                                                                                                                    |  19 MB  00:00:09     
+(3/3): docker-ce-cli-18.09.0-3.el7.x86_64.rpm                                                                                                                |  14 MB  00:00:03     
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                               5.1 MB/s |  55 MB  00:00:10     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+Warning: RPMDB altered outside of yum.
+  Installing : containerd.io-1.2.0-3.el7.x86_64                                                                                                                                 1/4 
+  Installing : 1:docker-ce-cli-18.09.0-3.el7.x86_64                                                                                                                             2/4 
+  Updating   : 3:docker-ce-18.09.0-3.el7.x86_64                                                                                                                                 3/4 
+  Cleanup    : docker-ce-17.12.0.ce-1.el7.centos.x86_64                                                                                                                         4/4 
+  Verifying  : 1:docker-ce-cli-18.09.0-3.el7.x86_64                                                                                                                             1/4 
+  Verifying  : 3:docker-ce-18.09.0-3.el7.x86_64                                                                                                                                 2/4 
+  Verifying  : containerd.io-1.2.0-3.el7.x86_64                                                                                                                                 3/4 
+  Verifying  : docker-ce-17.12.0.ce-1.el7.centos.x86_64                                                                                                                         4/4 
+
+Dependency Installed:
+  containerd.io.x86_64 0:1.2.0-3.el7                                                      docker-ce-cli.x86_64 1:18.09.0-3.el7                                                     
+
+Updated:
+  docker-ce.x86_64 3:18.09.0-3.el7                                                                                                                                                  
+
+Complete!</code></pre></td></tr></table>
+</div>
+</div>
+<p>There are certain requirements to activate the EE engine from a CE:</p>
+<ol>
+<li>The Docker Community Edition (CE) version must be 18.09 or higher.</li>
+<li>All of the Docker packages must be installed: docker-cli, docker-server, and containerd.</li>
+<li>A valid Docker EE license (obtain it from the Docker Hub under your organization profile)</li>
+</ol>
+<p>At this point this feature has some limitations:</p>
+<ol>
+<li>Only supported on x86 Linux nodes.</li>
+<li>Windows nodes are not currently supported.</li>
+<li>Node-level Engine activation between CE and EE is only supported in the same version of Docker Enterprise Engine for Docker.</li>
+<li>Prior version of Docker CE do not support this feature</li>
+</ol>
+<p>Considering the above requirements and limitation lets check the version of Docker to ensure that we can do a CE-EE node activation</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ docker version
+Client:
+ Version:           18.09.0
+ API version:       1.39
+ Go version:        go1.10.4
+ Git commit:        4d60db4
+ Built:             Wed Nov  7 00:48:22 2018
+ OS/Arch:           linux/amd64
+ Experimental:      false
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          18.09.0
+  API version:      1.39 (minimum version 1.12)
+  Go version:       go1.10.4
+  Git commit:       4d60db4
+  Built:            Wed Nov  7 00:19:08 2018
+  OS/Arch:          linux/amd64
+  Experimental:     false</code></pre></td></tr></table>
+</div>
+</div>
+
+    <div class="admonition note"><p><em><strong>NOTE:</strong></em> When running the command docker login, the shell stores the credentials in the current user’s home directory. RHEL and Ubuntu-based Linux distributions have different behavior for sudo. RHEL sets $HOME to point to /root while Ubuntu leaves $HOME pointing to the user’s home directory who ran sudo and this can cause permission and access problems when switching between sudo and non-sudo commands.</p>
+</div>
+
+    <div class="admonition warning"><p>This is something I missed during my steps and thanks to Docker team for helping me out in resolving this issue.</p>
+</div>
+<p>Here is the new Management command available in this release:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo docker engine --help
+Usage:	docker engine COMMAND
+
+Manage the docker engine
+
+Commands:
+  activate    Activate Enterprise Edition
+  check       Check for available engine updates
+  update      Update a local engine</code></pre></td></tr></table>
+</div>
+</div>
+<p>Make sure you have downloaded your license file from Docker Store to activate the license using the command below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo docker engine activate --license docker_subscription.lic 
+[sudo] password for sujaypillai: 
+License: Quantity: 20 Nodes	Expiration date: 2019-07-30	License is currently active
+18.09.0: resolving 
+unable to pull image docker.io/store/docker/engine-enterprise-dm:18.09.0: failed to resolve reference &#34;docker.io/store/docker/engine-enterprise-dm:18.09.0&#34;: pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed</code></pre></td></tr></table>
+</div>
+</div>
+
+    <div class="admonition tip"><p>The reason this failed is because you need to login to your dockerhub using the same userid which you used to download the license file.</p>
+</div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo docker login docker.io -u sujaypillai
+Password: 
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded</code></pre></td></tr></table>
+</div>
+</div>
+<p>Lets activate the EE license</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo docker engine activate --license docker_subscription.lic 
+License: Quantity: 10 Nodes	Expiration date: 2019-05-25	License is currently active
+18.09.0: resolved 
+8426d869cd15: done [==================================================&gt;]     433B/433B
+04943fdcc3c7: done 
+130b7807ec4a: done 
+3470a7591bbb: done [==================================================&gt;]  4.594kB/4.594kB
+15bd6c72f8d4: done 
+22797e024efe: done [==================================================&gt;]    850kB/850kB
+Successfully activated engine.
+Restart docker with &#39;systemctl restart docker&#39; to complete the activation.</code></pre></td></tr></table>
+</div>
+</div>
+<p>Once you restart the system and execute the below command you  may see the Server as &ldquo;Docker Engine - Enterprise&rdquo; while the Client is still on the Community</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ docker version
+Client:
+ Version:           18.09.0
+ API version:       1.39
+ Go version:        go1.10.4
+ Git commit:        4d60db4
+ Built:             Wed Nov  7 00:48:22 2018
+ OS/Arch:           linux/amd64
+ Experimental:      false
+
+Server: Docker Engine - Enterprise
+ Engine:
+  Version:          18.09.0
+  API version:      1.39 (minimum version 1.12)
+  Go version:       go1.10.4
+  Git commit:       33a45cd
+  Built:            Wed Nov  7 00:19:46 2018
+  OS/Arch:          linux/amd64
+  Experimental:     false</code></pre></td></tr></table>
+</div>
+</div>
+
+        </div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>This article is updated with 2018-11-09</span>
+            </div>
+            <div class="post-info-license">
+                
+            </div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md">
+                
+                    
+                        <span><a class="link-to-markdown" href="http://localhost/2018/11/2018-11-09-docker-ee-engine-activate/index.md" target="_blank"></a></span>
+                    
+                
+            </div>
+            <div class="post-info-share">
+                
+                    <span>
+    
+        <a href="//twitter.com/share?url=http%3a%2f%2flocalhost%2f2018%2f11%2f2018-11-09-docker-ee-engine-activate%2f&amp;text=CE-EE%20node%20activate&amp;via=sujaypillai" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a>
+    
+    
+        <a href="//www.facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%2f2018%2f11%2f2018-11-09-docker-ee-engine-activate%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a>
+    
+    
+    
+        <a href="//www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%2f2018%2f11%2f2018-11-09-docker-ee-engine-activate%2f&amp;title=CE-EE%20node%20activate" target="_blank" title="Share on LinkedIn">
+            <i class="fab fa-linkedin fa-fw"></i>
+        </a>
+    
+    
+    
+    
+    
+    
+    
+</span>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section>
+            
+                
+                    <span class="tag">
+                        <a href="http://localhost/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a>
+                    </span>
+                
+            
+        </section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+            <a href="http://localhost/2018/05/2018-05-06-docker-tip/" class="prev" rel="prev" title="Switch between Linux and Windows Container on D4W"><i class="fas fa-angle-left fa-fw"></i>Switch between Linux and Windows Container on D4W</a>
+        
+        
+            <a href="http://localhost/2019/01/2019-01-02-docker-platform-args/" class="next" rel="next" title="Globally scoped platform ARG&#39;s in Docker BuildKit">Globally scoped platform ARG&#39;s in Docker BuildKit<i class="fas fa-angle-right fa-fw"></i></a>
+        
+    </div>
+</div>
+
+        <div class="post-comment">
+            
+            <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            (function() {
+                
+                
+                if (window.location.hostname == "localhost")
+                    return;
+
+                var dsq = document.createElement("script"); dsq.type = "text/javascript"; dsq.async = true;
+                var disqus_shortname = "sujaypillai";
+                dsq.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+                (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="https://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+            
+        </div>
+    </article></div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        <div class="copyright-line">
+            Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+        <div class="copyright-line">
+            <i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2018 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="http://localhost">Sujay Pillai</a></span><span class="license">&nbsp;|&nbsp;<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+<script src="../../../js/lib/jquery/jquery.slim.min.min.js"></script>
+<script src="../../../js/lib/lazysizes/lazysizes.min.min.js"></script>
+<script src="../../../js/lib/smooth-scroll/smooth-scroll.polyfills.min.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script>
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+
+
+
+<script src="../../../js/blog.min.js"></script>
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</div>
+        <a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll><span>&nbsp;</span></a>
+    </body>
+</html>

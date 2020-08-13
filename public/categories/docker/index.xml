@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on Sujay Pillai</title>
+    <link>http://localhost/categories/docker/</link>
+    <description>Recent content in Docker on Sujay Pillai</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 23 Mar 2020 12:10:56 +0800</lastBuildDate>
+    
+	<atom:link href="http://localhost/categories/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Docker GitHub Action</title>
+      <link>http://localhost/2020/03/2020-03-23-first-docker-github-action/</link>
+      <pubDate>Mon, 23 Mar 2020 12:10:56 +0800</pubDate>
+      
+      <guid>http://localhost/2020/03/2020-03-23-first-docker-github-action/</guid>
+      <description>Last week Docker released its first Github Action called docker/build-push-action . This has been developed by Docker after keeping into consideration to simplify basic workflow of: building an image, tagging it, logging into Docker Hub, and pushing the image to a registry.
+My previous blog Docker images on Github Package Registry showcased how we could achieve the above workflow with Github package registry. If you look at the workflow definition dockerimage.</description>
+    </item>
+    
+    <item>
+      <title>Docker images on Github Package Registry</title>
+      <link>http://localhost/2019/09/2019-09-26-docker-github-package-registry/</link>
+      <pubDate>Thu, 26 Sep 2019 12:28:54 +0800</pubDate>
+      
+      <guid>http://localhost/2019/09/2019-09-26-docker-github-package-registry/</guid>
+      <description>Ever wondered to have your source code and packages in one place?
+GitHub Package Registry is a package management service that makes it easy to publish public or private packages next to your source code. It is fully integrated with GitHub, so you can use the same search, browsing, and management tools to find and publish packages as you do for your repositories. You can also use the same user and team permissions to manage code and packages together.</description>
+    </item>
+    
+    <item>
+      <title>Connect to Docker daemon over ssh using docker-compose</title>
+      <link>http://localhost/2019/01/2019-01-22-docker-tip/</link>
+      <pubDate>Tue, 22 Jan 2019 16:22:42 +0800</pubDate>
+      
+      <guid>http://localhost/2019/01/2019-01-22-docker-tip/</guid>
+      <description>One of the cool feature released with Docker 18.09 is the ability to connect to a docker daemon over ssh. This post would walk you through the steps to connect to a docker daemon running on DigitalOcean.
+To create a remote docker host we will use a tool called docker-machine :
+1  docker-machine create --driver DigitalOcean --digitalocean-access-token xxxx do-node2   Here is a detailed documentation about setting up a droplet on DigitalOcean.</description>
+    </item>
+    
+    <item>
+      <title>Globally scoped platform ARG&#39;s in Docker BuildKit</title>
+      <link>http://localhost/2019/01/2019-01-02-docker-platform-args/</link>
+      <pubDate>Wed, 02 Jan 2019 16:22:42 +0800</pubDate>
+      
+      <guid>http://localhost/2019/01/2019-01-02-docker-platform-args/</guid>
+      <description>ARG a.k.a &amp;ldquo;build-time variable&amp;rdquo; can be used to pass a variable to builder with the docker build command using --build-arg &amp;lt;varname&amp;gt;=&amp;lt;value&amp;gt; flag
+ With the new engine 18.09 Docker supports a new backend BuildKit for executing your builds. You may switch to this backend by setting the below environment variable on your CLI -
+1  DOCKER_BUILDKIT=1   With this new backend Docker predefines a set of ARG variables with the information pertaining to the platform of the node performing the build (build platform) and the resulting image (target platform)</description>
+    </item>
+    
+    <item>
+      <title>CE-EE node activate</title>
+      <link>http://localhost/2018/11/2018-11-09-docker-ee-engine-activate/</link>
+      <pubDate>Fri, 09 Nov 2018 16:22:42 +0800</pubDate>
+      
+      <guid>http://localhost/2018/11/2018-11-09-docker-ee-engine-activate/</guid>
+      <description>November 8, 2018 was a great day for Docker community as we saw new stable release for community edition Docker 18.09 CE afer moving to the new release and support cadence. This will be supported for 7 months with Docker 19.03 CE being the next release in line.
+Along with this being an Enterprise customer we are excited to have Docker Enterprise 2.1 which adds support for Windows Server 1709, 1803 and Windows Server 2019.</description>
+    </item>
+    
+    <item>
+      <title>Switch between Linux and Windows Container on D4W</title>
+      <link>http://localhost/2018/05/2018-05-06-docker-tip/</link>
+      <pubDate>Sun, 06 May 2018 16:22:42 +0800</pubDate>
+      
+      <guid>http://localhost/2018/05/2018-05-06-docker-tip/</guid>
+      <description>If you are using Docker for Windows there might be a need to switch between Linux OR Windows container at times.
+The first way to achieve this is to right click on the whale icon from the system tray and choose either the option &amp;ldquo;Switch to Linux Containers&amp;hellip;&amp;rdquo; OR &amp;ldquo;Switch to Windows Containers&amp;hellip;&amp;rdquo;
+The other way to achieve this from the CMD/Powershell is to execute the below command:  &amp;amp; &#39;C:\Program Files\Docker\Docker\DockerCli.</description>
+    </item>
+    
+    <item>
+      <title>Switch ORCHESTRATOR on D4W</title>
+      <link>http://localhost/2018/04/2018-04-13-docker-tip/</link>
+      <pubDate>Fri, 13 Apr 2018 16:22:42 +0800</pubDate>
+      
+      <guid>http://localhost/2018/04/2018-04-13-docker-tip/</guid>
+      <description>If you are using latest Docker for Windows 18.02 CE Edge or higher it comes by default Docker Orchestrator as &amp;ldquo;Kubernetes&amp;rdquo;. For me at the time of writing this post I don&amp;rsquo;t see an option to switch it to Docker Swarm from the Settings menu.
+If you ever need to change the Orchestrator to Swarm/Kubernetes you may set the environment variable DOCKER_ORCHESTRATOR to appropriate value as shown below
+1  set DOCKER_ORCHESTRATOR=swarm   </description>
+    </item>
+    
+  </channel>
+</rss>

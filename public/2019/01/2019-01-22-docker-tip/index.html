@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Connect to Docker daemon over ssh using docker-compose | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Sujay Pillai&#39;s blog">
+<link rel="prev" href="http://localhost/2019/01/2019-01-02-docker-platform-args/" />
+<link rel="next" href="http://localhost/2019/09/2019-09-26-docker-github-package-registry/" />
+<link rel="canonical" href="http://localhost/2019/01/2019-01-22-docker-tip/" />
+<link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../favicon-16x16.png">
+<link rel="manifest" href="../../../site.webmanifest">
+<link rel="mask-icon" href="../../../safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Connect to Docker daemon over ssh using docker-compose"/>
+<meta name="twitter:description" content="One of the cool feature released with Docker 18.09 is the ability to connect to a docker daemon over ssh. This post would walk you through the steps to connect to a docker daemon running on DigitalOcean.
+To create a remote docker host we will use a tool called docker-machine :
+1  docker-machine create --driver DigitalOcean --digitalocean-access-token xxxx do-node2   Here is a detailed documentation about setting up a droplet on DigitalOcean."/>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+<script type="application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Connect to Docker daemon over ssh using docker-compose",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http:\/\/localhost\/2019\/01\/2019-01-22-docker-tip\/"
+    },
+    
+        "image": {
+            "@type": "ImageObject",
+            "url": "http:\/\/localhost\/cover.png",
+            "width":  800 ,
+            "height":  600 
+        },
+    
+    "genre": "posts",
+    
+        "keywords": "docker, dockertip, docker-compose",
+    
+    "wordcount":  441 ,
+    "url": "http:\/\/localhost\/2019\/01\/2019-01-22-docker-tip\/",
+    
+        "datePublished": "2019-01-22T16:22:42\u002b08:00",
+    
+    
+        "dateModified": "2019-01-22T16:22:42\u002b08:00",
+    
+    
+        "license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+    
+    
+        "publisher": {
+            "@type": "Organization",
+            "name": "XXXX",
+            "logo": {
+            "@type": "ImageObject",
+            "url": "http:\/\/localhost\/logo.png",
+            "width":  127 ,
+            "height":  40 
+            }
+        },
+    
+    
+    "description": ""
+    }
+    </script>
+<link rel="stylesheet" href="../../../css/style.min.css">
+<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" crossorigin="anonymous">
+
+<link rel="stylesheet" href="../../../css/lib/animate/animate.min.min.css">
+
+    </head>
+    <body>
+        <script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script>
+        <div class="wrapper">
+            <nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="http://localhost">Sujay Pillai</a>
+        </div>
+        <div class="navbar-menu">
+            
+            
+                <a class="menu-item" href="http://localhost/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="http://localhost/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="http://localhost/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="http://localhost/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile">
+     <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="http://localhost">Sujay Pillai</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu">
+            
+            
+                <a class="menu-item" href="http://localhost/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="http://localhost/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="http://localhost/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="http://localhost/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav><main class="main">
+                <div class="container">
+                    
+    
+    
+    
+
+    <article class="post-warp">
+        <h1 class="post-title animated flipInX">Connect to Docker daemon over ssh using docker-compose</h1>
+
+        <div class="post-meta">
+            <div class="post-meta-main">
+                <a class="author" href="http://localhost" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+                <span class="post-category">
+                        included in
+                        <i class="far fa-folder fa-fw"></i><a href="http://localhost/categories/docker/">Docker</a>
+                            
+                    </span>
+            </div>
+            <div class="post-meta-other">
+                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2019-01-22>2019-01-22</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 441 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <p>One of the cool feature released with Docker 18.09 is the ability to connect to a docker daemon over ssh. This post would walk you through the steps to connect to a docker daemon running on <a href="https://www.digitalocean.com/">DigitalOcean</a>.</p>
+<p>To create a remote docker host we will use a tool called docker-machine :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker-machine create --driver DigitalOcean --digitalocean-access-token xxxx do-node2</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="../../../images/dm1.png" alt="digitalocean-nodes"></p>
+<p>Here is a detailed <a href="https://docs.docker.com/machine/examples/ocean/">documentation</a> about setting up a droplet on DigitalOcean. You may verify this by logging into your DigitalOcean account as shown below</p>
+<p><img src="../../../images/do1.png" alt="digitalocean-nodes"></p>
+<p>When the Droplet is created, Docker generates a unique SSH key and stores it on your local system in <code>~/.docker/machine/machines</code> and for this droplet named do-node2 its generated under <code>~/.docker/machine/machines/do-node2</code> in my case. This location would contain a file called <code>id_rsa</code> which is used under the hood to access the droplet directly with docker-machine ssh command as shown below</p>
+<p><img src="../../../images/do2.png" alt="digitalocean-nodes"></p>
+<p>To connect to the above remote docker daemon we would add the same private key to the authentication agent using the below command - </p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ssh-add -k ~/.docker/machine/machines/do-node2/id_rsa</code></pre></td></tr></table>
+</div>
+</div>
+<p>Now issue the command :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker -H ssh://root@165.227.106.59 run -d -P nginx</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="../../../images/do3.png" alt="digitalocean-nodes"></p>
+<p>On executing the above command your docker client will connect to the DigitalOcean droplet to find that in order to run the nginx container it needs to pull it from DockerHub and then starts the container on the port <code>32768</code> (with docker doing the port mapping for you because of flag -P). Below is what you get when you try to access the nginx container using the droplet ip in a browser:</p>
+<p><img src="../../../images/do4.png" alt="digitalocean-nodes"></p>
+<p>If you don&rsquo;t want to use the above flag every time with the docker command you may set the environment variable called DOCKER_HOST as shown below -</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ export DOCKER_HOST=ssh://root@165.227.106.59
+
+$ docker image ls
+REPOSITORY  TAG       IMAGE ID            CREATED             SIZE
+nginx       latest    7042885a156a        3 weeks ago         109MB
+
+$ docker ps --format &#34;{{.ID}} :: {{.Image}} {{.Ports}} {{.Names}}&#34;
+19d5a2d4f7f0 :: nginx 0.0.0.0:32768-&gt;80/tcp sleepy_cohen</code></pre></td></tr></table>
+</div>
+</div>
+<p>Let&rsquo;s try to use docker-compose now -</p>
+<p><img src="../../../images/do5.png" alt="digitalocean-nodes"></p>
+
+    <div class="admonition note"><p>The above command failed because docker-compose version &lt; 1.24.0 doesn&rsquo;t support ssh connection to a remote docker engine. The latest version of docker-compose (as of writing 1.24.0-rc1) supports connecting to remote docker engine using ssh protocol. So lets upgrade to the latest docker-compose</p>
+</div>
+<p><img src="../../../images/do6.png" alt="digitalocean-nodes"></p>
+<p>Now let&rsquo;s create a docker-compose file using the same nginx image and this time exposing the container on port 8000.</p>
+<p><img src="../../../images/do7.png" alt="digitalocean-nodes"></p>
+<p>As you see on executing the command <code>docker-compose -f docker-compose-ngix.yml up</code> it spinned up a container on my DigitalOcean droplet named do-node2 having ip 165.227.106.59 and if you try to access the same ip with the port 8000 you may see the default page for <code>nginx</code>.</p>
+
+        </div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>This article is updated with 2019-01-22</span>
+            </div>
+            <div class="post-info-license">
+                
+            </div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md">
+                
+                    
+                        <span><a class="link-to-markdown" href="http://localhost/2019/01/2019-01-22-docker-tip/index.md" target="_blank"></a></span>
+                    
+                
+            </div>
+            <div class="post-info-share">
+                
+                    <span>
+    
+        <a href="//twitter.com/share?url=http%3a%2f%2flocalhost%2f2019%2f01%2f2019-01-22-docker-tip%2f&amp;text=Connect%20to%20Docker%20daemon%20over%20ssh%20using%20docker-compose&amp;via=sujaypillai" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a>
+    
+    
+        <a href="//www.facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%2f2019%2f01%2f2019-01-22-docker-tip%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a>
+    
+    
+    
+        <a href="//www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%2f2019%2f01%2f2019-01-22-docker-tip%2f&amp;title=Connect%20to%20Docker%20daemon%20over%20ssh%20using%20docker-compose" target="_blank" title="Share on LinkedIn">
+            <i class="fab fa-linkedin fa-fw"></i>
+        </a>
+    
+    
+    
+    
+    
+    
+    
+</span>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section>
+            
+                
+                    <span class="tag">
+                        <a href="http://localhost/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="http://localhost/tags/dockertip/"><i class="fas fa-tag fa-fw"></i>dockertip</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="http://localhost/tags/docker-compose/"><i class="fas fa-tag fa-fw"></i>docker-compose</a>
+                    </span>
+                
+            
+        </section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+            <a href="http://localhost/2019/01/2019-01-02-docker-platform-args/" class="prev" rel="prev" title="Globally scoped platform ARG&#39;s in Docker BuildKit"><i class="fas fa-angle-left fa-fw"></i>Globally scoped platform ARG&#39;s in Docker BuildKit</a>
+        
+        
+            <a href="http://localhost/2019/09/2019-09-26-docker-github-package-registry/" class="next" rel="next" title="Docker images on Github Package Registry">Docker images on Github Package Registry<i class="fas fa-angle-right fa-fw"></i></a>
+        
+    </div>
+</div>
+
+        <div class="post-comment">
+            
+            <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            (function() {
+                
+                
+                if (window.location.hostname == "localhost")
+                    return;
+
+                var dsq = document.createElement("script"); dsq.type = "text/javascript"; dsq.async = true;
+                var disqus_shortname = "sujaypillai";
+                dsq.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+                (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="https://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+            
+        </div>
+    </article></div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        <div class="copyright-line">
+            Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+        <div class="copyright-line">
+            <i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2018 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="http://localhost">Sujay Pillai</a></span><span class="license">&nbsp;|&nbsp;<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+<script src="../../../js/lib/jquery/jquery.slim.min.min.js"></script>
+<script src="../../../js/lib/lazysizes/lazysizes.min.min.js"></script>
+<script src="../../../js/lib/smooth-scroll/smooth-scroll.polyfills.min.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script>
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+
+
+
+<script src="../../../js/blog.min.js"></script>
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</div>
+        <a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll><span>&nbsp;</span></a>
+    </body>
+</html>

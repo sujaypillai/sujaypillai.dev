@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Downgrading AMP version in Alfresco | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Sujay Pillai&#39;s blog">
+<link rel="prev" href="http://localhost/2015/09/2015-09-18-aikau-auditing-reporting/" />
+<link rel="next" href="http://localhost/2018/04/2018-04-13-docker-tip/" />
+<link rel="canonical" href="http://localhost/2016/08/2016-08-04-update-amp-version/" />
+<link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../favicon-16x16.png">
+<link rel="manifest" href="../../../site.webmanifest">
+<link rel="mask-icon" href="../../../safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Downgrading AMP version in Alfresco"/>
+<meta name="twitter:description" content="If you ever tried to downgrade an AMP version in Alfresco you should have seen an error something similar:
+1 2 3 4 5 6 7 8 9 10 11  Caused by: org.alfresco.error.AlfrescoRuntimeException: 02100002 Downgrading of modules is not supported. Module &#39;acme-cms-poc-repo-amp&#39; version 1.0.1 is currently installed and must be uninstalled before version 1.0.0 can be installed. at org.alfresco.error.AlfrescoRuntimeException.create(AlfrescoRuntimeException.java:51) at org.alfresco.repo.module.ModuleComponentHelper.startModule(ModuleComponentHelper.java:632) at org.alfresco.repo.module.ModuleComponentHelper.access$500(ModuleComponentHelper.java:61) at org.alfresco.repo.module.ModuleComponentHelper$1$1.execute(ModuleComponentHelper.java:259) at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:454) at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:342) at org."/>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+<script type="application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Downgrading AMP version in Alfresco",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http:\/\/localhost\/2016\/08\/2016-08-04-update-amp-version\/"
+    },
+    
+        "image": {
+            "@type": "ImageObject",
+            "url": "http:\/\/localhost\/cover.png",
+            "width":  800 ,
+            "height":  600 
+        },
+    
+    "genre": "posts",
+    
+        "keywords": "alfresco",
+    
+    "wordcount":  322 ,
+    "url": "http:\/\/localhost\/2016\/08\/2016-08-04-update-amp-version\/",
+    
+        "datePublished": "2016-08-04T16:22:42\u002b08:00",
+    
+    
+        "dateModified": "2016-08-04T16:22:42\u002b08:00",
+    
+    
+        "license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+    
+    
+        "publisher": {
+            "@type": "Organization",
+            "name": "XXXX",
+            "logo": {
+            "@type": "ImageObject",
+            "url": "http:\/\/localhost\/logo.png",
+            "width":  127 ,
+            "height":  40 
+            }
+        },
+    
+    
+    "description": ""
+    }
+    </script>
+<link rel="stylesheet" href="../../../css/style.min.css">
+<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" crossorigin="anonymous">
+
+<link rel="stylesheet" href="../../../css/lib/animate/animate.min.min.css">
+
+    </head>
+    <body>
+        <script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script>
+        <div class="wrapper">
+            <nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="http://localhost">Sujay Pillai</a>
+        </div>
+        <div class="navbar-menu">
+            
+            
+                <a class="menu-item" href="http://localhost/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="http://localhost/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="http://localhost/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="http://localhost/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile">
+     <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="http://localhost">Sujay Pillai</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu">
+            
+            
+                <a class="menu-item" href="http://localhost/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="http://localhost/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="http://localhost/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="http://localhost/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav><main class="main">
+                <div class="container">
+                    
+    
+    
+    
+
+    <article class="post-warp">
+        <h1 class="post-title animated flipInX">Downgrading AMP version in Alfresco</h1>
+
+        <div class="post-meta">
+            <div class="post-meta-main">
+                <a class="author" href="http://localhost" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+                <span class="post-category">
+                        included in
+                        <i class="far fa-folder fa-fw"></i><a href="http://localhost/categories/alfresco/">Alfresco</a>
+                            
+                    </span>
+            </div>
+            <div class="post-meta-other">
+                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2016-08-04>2016-08-04</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 322 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <p>If you ever tried to downgrade an AMP version in Alfresco you should have seen an error something similar:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">Caused</span> <span class="n">by</span><span class="o">:</span> <span class="n">org</span><span class="o">.</span><span class="na">alfresco</span><span class="o">.</span><span class="na">error</span><span class="o">.</span><span class="na">AlfrescoRuntimeException</span><span class="o">:</span> <span class="n">02100002</span>
+  <span class="n">Downgrading</span> <span class="n">of</span> <span class="n">modules</span> <span class="n">is</span> <span class="n">not</span> <span class="n">supported</span><span class="o">.</span>
+        <span class="n">Module</span> <span class="err">&#39;</span><span class="n">acme</span><span class="o">-</span><span class="n">cms</span><span class="o">-</span><span class="n">poc</span><span class="o">-</span><span class="n">repo</span><span class="o">-</span><span class="n">amp</span><span class="err">&#39;</span> <span class="n">version</span> <span class="n">1</span><span class="o">.</span><span class="na">0</span><span class="o">.</span><span class="na">1</span> <span class="n">is</span> <span class="n">currently</span> <span class="n">installed</span> <span class="n">and</span> <span class="n">must</span> <span class="n">be</span> <span class="n">uninstalled</span> <span class="n">before</span> <span class="n">version</span> <span class="n">1</span><span class="o">.</span><span class="na">0</span><span class="o">.</span><span class="na">0</span> <span class="n">can</span> <span class="n">be</span> <span class="n">installed</span><span class="o">.</span>
+        <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">alfresco</span><span class="o">.</span><span class="na">error</span><span class="o">.</span><span class="na">AlfrescoRuntimeException</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">AlfrescoRuntimeException</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="n">51</span><span class="o">)</span>
+        <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">alfresco</span><span class="o">.</span><span class="na">repo</span><span class="o">.</span><span class="na">module</span><span class="o">.</span><span class="na">ModuleComponentHelper</span><span class="o">.</span><span class="na">startModule</span><span class="o">(</span><span class="n">ModuleComponentHelper</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="n">632</span><span class="o">)</span>
+        <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">alfresco</span><span class="o">.</span><span class="na">repo</span><span class="o">.</span><span class="na">module</span><span class="o">.</span><span class="na">ModuleComponentHelper</span><span class="o">.</span><span class="na">access$500</span><span class="o">(</span><span class="n">ModuleComponentHelper</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="n">61</span><span class="o">)</span>
+        <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">alfresco</span><span class="o">.</span><span class="na">repo</span><span class="o">.</span><span class="na">module</span><span class="o">.</span><span class="na">ModuleComponentHelper$1$1</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">ModuleComponentHelper</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="n">259</span><span class="o">)</span>
+        <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">alfresco</span><span class="o">.</span><span class="na">repo</span><span class="o">.</span><span class="na">transaction</span><span class="o">.</span><span class="na">RetryingTransactionHelper</span><span class="o">.</span><span class="na">doInTransaction</span><span class="o">(</span><span class="n">RetryingTransactionHelper</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="n">454</span><span class="o">)</span>
+        <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">alfresco</span><span class="o">.</span><span class="na">repo</span><span class="o">.</span><span class="na">transaction</span><span class="o">.</span><span class="na">RetryingTransactionHelper</span><span class="o">.</span><span class="na">doInTransaction</span><span class="o">(</span><span class="n">RetryingTransactionHelper</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="n">342</span><span class="o">)</span>
+        <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">alfresco</span><span class="o">.</span><span class="na">repo</span><span class="o">.</span><span class="na">module</span><span class="o">.</span><span class="na">ModuleComponentHelper$1</span><span class="o">.</span><span class="na">doWork</span><span class="o">(</span><span class="n">ModuleComponentHelper</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="n">280</span><span class="o">)</span>
+        <span class="o">...</span> <span class="n">45</span> <span class="n">more</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>There are two ways to solve this issue:</p>
+<ol>
+<li>
+<p>Configuring a rule on a folder to execute script action.</p>
+</li>
+<li>
+<p>Executing a SQL update statement directly on the DB.</p>
+</li>
+</ol>
+<a class="post-dummy-target" id="configuring-a-rule-on-a-folder-to-execute-script-action"></a><h3>Configuring a rule on a folder to execute script action.</h3>
+<ul>
+<li>Navigate to Admin Tools &gt; Node Browser</li>
+<li>Change the &ldquo;Select Store&rdquo; drop down on the top right section to the option &lsquo;system://system&rsquo;</li>
+<li>Change the search option from &ldquo;fts-alfresco&rdquo; to &ldquo;storeroot&rdquo; and press Search
+<img src="../../../images/img7.png" alt="Node Browser"></li>
+<li>This would give the workspace reference
+[<code>system://system/c7cad4eb-98a2-4904-be3c-f6c98f83ad09</code>]</li>
+<li>Navigate to <strong>/sys:system-registry/module:modules</strong></li>
+<li>From the “Child Nodes” section find the module for which you need to update the versión and get the child reference in this case –
+<code>system://system/31278e85-7fe5-49b2-a1b7-179707163da5</code>
+<img src="../../../images/img8.png" alt="Node Browser"></li>
+<li>Copy the following script in to a text file and save it as changeAMPVersion.js and save it under <em><strong>Repository &gt; Data Dictionary &gt; Script</strong></em></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">node</span> <span class="o">=</span> <span class="nx">search</span><span class="p">.</span><span class="nx">findNode</span><span class="p">(</span><span class="s2">&#34;&lt;nodeRef &gt;&#34;</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">properties</span><span class="p">[</span><span class="s2">&#34;module:currentVersion&#34;</span><span class="p">]</span><span class="o">=</span><span class="s2">&#34;1.0.0&#34;</span><span class="p">;</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>Create a folder and apply a rule that executes the said script from the .js file uploaded in above step. Once executed the “module:currentVersion” of the module will reflect the required value.</li>
+</ul>
+
+    <div class="admonition note"><p>If you have the Javascript console installed then you may execute the above script directly on <a href="https://github.com/share-extras/js-console">JSConsole</a></p>
+</div>
+<a class="post-dummy-target" id="executing-a-sql-update-statement-directly-on-the-db"></a><h3>Executing a SQL update statement directly on the DB.</h3>
+<ul>
+<li>You may execute the below query directly on Alfresco DB to change the currentVersion value of AMP module
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">UPDATE</span> <span class="n">alf_node_properties</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="p">(</span><span class="n">alf_qname</span><span class="p">,</span> <span class="n">alf_namespace</span><span class="p">)</span> <span class="k">ON</span> <span class="p">(</span><span class="n">alf_node_properties</span><span class="p">.</span><span class="n">qname_id</span> <span class="o">=</span> <span class="n">alf_qname</span><span class="p">.</span><span class="n">id</span> <span class="k">AND</span> <span class="n">alf_qname</span><span class="p">.</span><span class="n">ns_id</span> <span class="o">=</span> <span class="n">alf_namespace</span><span class="p">.</span><span class="n">id</span><span class="p">)</span>
+<span class="k">SET</span> <span class="n">alf_node_properties</span><span class="p">.</span><span class="n">string_value</span> <span class="o">=</span> <span class="s2">&#34;1.0.0&#34;</span>
+<span class="k">WHERE</span> <span class="n">alf_namespace</span><span class="p">.</span><span class="n">uri</span><span class="o">=</span><span class="s2">&#34;http://www.alfresco.org/system/modules/1.0&#34;</span> <span class="k">AND</span> <span class="n">alf_qname</span><span class="p">.</span><span class="n">local_name</span> <span class="o">=</span> <span class="s2">&#34;currentVersion&#34;</span> <span class="k">AND</span> <span class="n">string_value</span> <span class="o">=</span> <span class="s2">&#34;1.0.1&#34;</span><span class="p">;</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+        </div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>This article is updated with 2016-08-04</span>
+            </div>
+            <div class="post-info-license">
+                
+            </div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md">
+                
+                    
+                        <span><a class="link-to-markdown" href="http://localhost/2016/08/2016-08-04-update-amp-version/index.md" target="_blank"></a></span>
+                    
+                
+            </div>
+            <div class="post-info-share">
+                
+                    <span>
+    
+        <a href="//twitter.com/share?url=http%3a%2f%2flocalhost%2f2016%2f08%2f2016-08-04-update-amp-version%2f&amp;text=Downgrading%20AMP%20version%20in%20Alfresco&amp;via=sujaypillai" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a>
+    
+    
+        <a href="//www.facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%2f2016%2f08%2f2016-08-04-update-amp-version%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a>
+    
+    
+    
+        <a href="//www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%2f2016%2f08%2f2016-08-04-update-amp-version%2f&amp;title=Downgrading%20AMP%20version%20in%20Alfresco" target="_blank" title="Share on LinkedIn">
+            <i class="fab fa-linkedin fa-fw"></i>
+        </a>
+    
+    
+    
+    
+    
+    
+    
+</span>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section>
+            
+                
+                    <span class="tag">
+                        <a href="http://localhost/tags/alfresco/"><i class="fas fa-tag fa-fw"></i>alfresco</a>
+                    </span>
+                
+            
+        </section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+            <a href="http://localhost/2015/09/2015-09-18-aikau-auditing-reporting/" class="prev" rel="prev" title="Aikau Audit Report"><i class="fas fa-angle-left fa-fw"></i>Aikau Audit Report</a>
+        
+        
+            <a href="http://localhost/2018/04/2018-04-13-docker-tip/" class="next" rel="next" title="Switch ORCHESTRATOR on D4W">Switch ORCHESTRATOR on D4W<i class="fas fa-angle-right fa-fw"></i></a>
+        
+    </div>
+</div>
+
+        <div class="post-comment">
+            
+            <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            (function() {
+                
+                
+                if (window.location.hostname == "localhost")
+                    return;
+
+                var dsq = document.createElement("script"); dsq.type = "text/javascript"; dsq.async = true;
+                var disqus_shortname = "sujaypillai";
+                dsq.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+                (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="https://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+            
+        </div>
+    </article></div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        <div class="copyright-line">
+            Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+        <div class="copyright-line">
+            <i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2018 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="http://localhost">Sujay Pillai</a></span><span class="license">&nbsp;|&nbsp;<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+<script src="../../../js/lib/jquery/jquery.slim.min.min.js"></script>
+<script src="../../../js/lib/lazysizes/lazysizes.min.min.js"></script>
+<script src="../../../js/lib/smooth-scroll/smooth-scroll.polyfills.min.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script>
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+
+
+
+<script src="../../../js/blog.min.js"></script>
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</div>
+        <a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll><span>&nbsp;</span></a>
+    </body>
+</html>

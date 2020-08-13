@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Docker images on Github Package Registry | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Sujay Pillai&#39;s blog">
+<link rel="prev" href="http://localhost/2019/01/2019-01-22-docker-tip/" />
+<link rel="next" href="http://localhost/2020/01/first-post/" />
+<link rel="canonical" href="http://localhost/2019/09/2019-09-26-docker-github-package-registry/" />
+<link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../favicon-16x16.png">
+<link rel="manifest" href="../../../site.webmanifest">
+<link rel="mask-icon" href="../../../safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker images on Github Package Registry"/>
+<meta name="twitter:description" content="Ever wondered to have your source code and packages in one place?
+GitHub Package Registry is a package management service that makes it easy to publish public or private packages next to your source code. It is fully integrated with GitHub, so you can use the same search, browsing, and management tools to find and publish packages as you do for your repositories. You can also use the same user and team permissions to manage code and packages together."/>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+<script type="application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Docker images on Github Package Registry",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http:\/\/localhost\/2019\/09\/2019-09-26-docker-github-package-registry\/"
+    },
+    
+        "image": {
+            "@type": "ImageObject",
+            "url": "http:\/\/localhost\/cover.png",
+            "width":  800 ,
+            "height":  600 
+        },
+    
+    "genre": "posts",
+    
+        "keywords": "docker, github",
+    
+    "wordcount":  428 ,
+    "url": "http:\/\/localhost\/2019\/09\/2019-09-26-docker-github-package-registry\/",
+    
+        "datePublished": "2019-09-26T12:28:54\u002b08:00",
+    
+    
+        "dateModified": "2019-09-26T12:28:54\u002b08:00",
+    
+    
+        "license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+    
+    
+        "publisher": {
+            "@type": "Organization",
+            "name": "XXXX",
+            "logo": {
+            "@type": "ImageObject",
+            "url": "http:\/\/localhost\/logo.png",
+            "width":  127 ,
+            "height":  40 
+            }
+        },
+    
+    
+    "description": ""
+    }
+    </script>
+<link rel="stylesheet" href="../../../css/style.min.css">
+<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" crossorigin="anonymous">
+
+<link rel="stylesheet" href="../../../css/lib/animate/animate.min.min.css">
+
+    </head>
+    <body>
+        <script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script>
+        <div class="wrapper">
+            <nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="http://localhost">Sujay Pillai</a>
+        </div>
+        <div class="navbar-menu">
+            
+            
+                <a class="menu-item" href="http://localhost/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="http://localhost/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="http://localhost/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="http://localhost/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile">
+     <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="http://localhost">Sujay Pillai</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu">
+            
+            
+                <a class="menu-item" href="http://localhost/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="http://localhost/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="http://localhost/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="http://localhost/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav><main class="main">
+                <div class="container">
+                    
+    
+    
+    
+
+    <article class="post-warp">
+        <h1 class="post-title animated flipInX">Docker images on Github Package Registry</h1>
+
+        <div class="post-meta">
+            <div class="post-meta-main">
+                <a class="author" href="http://localhost" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+                <span class="post-category">
+                        included in
+                        <i class="far fa-folder fa-fw"></i><a href="http://localhost/categories/docker/">Docker</a>
+                            
+                    </span>
+            </div>
+            <div class="post-meta-other">
+                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2019-09-26>2019-09-26</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 428 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <p><img src="../../../images/github-package-registry-01.png" alt="GithubAnnouncement"></p>
+
+    <div class="admonition question"><p><strong>Ever wondered to have your source code and packages in one place?</strong></p>
+<p><a href="https://github.com/features/packages">GitHub Package Registry</a> is a package management service that makes it easy to publish public or private packages next to your source code. It is fully integrated with GitHub, so you can use the same search, browsing, and management tools to find and publish packages as you do for your repositories. You can also use the same user and team permissions to manage code and packages together.</p>
+<p>It supports familiar package management tools:</p>
+<ul>
+<li>JavaScript (npm)</li>
+<li>Java (Maven)</li>
+<li>Ruby (RubyGems),</li>
+<li>.NET (NuGet)</li>
+<li>Docker images</li>
+</ul>
+</div>
+<a class="post-dummy-target" id="authenticating-to-github-package-registry"></a><h2>Authenticating to GitHub Package Registry</h2>
+<p>You can use the docker cli to use GitHub Package Registry to publish and retrieve docker images.
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ docker login docker.pkg.github.com -u sujaypillai -p</code></pre></td></tr></table>
+</div>
+</div></p>
+<a class="post-dummy-target" id="publishing-a-package-docker-image"></a><h2>Publishing a package (docker image)</h2>
+<p>Let&rsquo;s try to build the docker image for the repository - <a href="https://github.com/sujaypillai/buildxdemo">buildxdemo</a> which has a Dockerfile within the project. After checking out the project execute the docker build</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ docker build -t docker.pkg.github.com/sujaypillai/buildxdemo/demo . 
+Sending build context to Docker daemon   98.3kB
+Step 1/6 : FROM golang AS build
+---&gt; c4d6fdf2260a
+....
+Step 6/6 : CMD [&#34;/hello&#34;]
+---&gt; Using cache
+---&gt; 38c5db73c5a7
+Successfully built 38c5db73c5a7
+Successfully tagged docker.pkg.github.com/sujaypillai/buildxdemo/demo:latest</code></pre></td></tr></table>
+</div>
+</div>
+<p>The tagging of the image should follow the below pattern -</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker.pkg.github.com/owner/repository/image_name:version</code></pre></td></tr></table>
+</div>
+</div>
+
+    <div class="admonition info"><p>Because upper case letters aren&rsquo;t supported, you must use lowercase letters for the repository owner even if the GitHub user or organization name contains uppercase letters.
+GitHub Package Registry supports multiple top-level Docker images per repository.</p>
+</div>
+<p>Push the image to GitHub Package Registry:
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ docker push docker.pkg.github.com/sujaypillai/buildxdemo/demo
+The push refers to repository [docker.pkg.github.com/sujaypillai/buildxdemo/demo]
+bf1eeaedd583: Layer already exists
+latest: digest: sha256:c8ddfad1bfe68db341bc34d1cbe1f093de1eb8b73463396c67603934d8e49d46 size: 528
+03f6ad6134dc: Layer already exists
+v1: digest: sha256:b9ce4d4b077075e698c37a99f3e0a54d43d5583e164c6b493ad25a7f467edc40 size: 528</code></pre></td></tr></table>
+</div>
+</div></p>
+<p>You can access your packages from this URL by replacing <strong>OWNER</strong> with your GitHub user or organization name and <strong>REPOSITORY</strong> with your repository name:
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://github.com/OWNER/REPOSITORY/packages</code></pre></td></tr></table>
+</div>
+</div>
+i.e. <a href="https://github.com/sujaypillai/buildxdemo/packages">https://github.com/sujaypillai/buildxdemo/packages</a> and it should look similar to -
+<img src="../../../images/github-package-registry-02.png" alt="GithubPackageRegistry"></p>
+<a class="post-dummy-target" id="package-insights"></a><h2>Package Insights</h2>
+<p><img src="../../../images/github-package-registry-03.png" alt="GithubPackageRegistryInsights">
+Docker images hosted on GitHub include details and download statistics, along with their entire history, reference command to pull image from command line and the instruction to use it as base image in <code>Dockerfile</code>.</p>
+<p>As Github package registry doesn&rsquo;t support <a href="https://docs.docker.com/registry/spec/manifest-v2-2/">Image Manifest v2,Schema 2</a> it doesn&rsquo;t support multi-arc docker images. Below is the error what I got when trying to build a multi-arc docker image using buildx and push to Github package registry -
+<img src="../../../images/github-package-registry-04.png" alt="GithubPackageRegistryNoSupportForImageManifestv2"></p>
+
+    <div class="admonition bug"><p>Please upvote this issue on <a href="https://github.community/t5/GitHub-API-Development-and/Handle-multi-arch-Docker-images-on-GitHub-Package-Registry/m-p/31650">GitHub</a> if you would love to see multi-arc docker image support on Github package registry.</p>
+</div>
+
+        </div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>This article is updated with 2019-09-26</span>
+            </div>
+            <div class="post-info-license">
+                
+            </div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md">
+                
+                    
+                        <span><a class="link-to-markdown" href="http://localhost/2019/09/2019-09-26-docker-github-package-registry/index.md" target="_blank"></a></span>
+                    
+                
+            </div>
+            <div class="post-info-share">
+                
+                    <span>
+    
+        <a href="//twitter.com/share?url=http%3a%2f%2flocalhost%2f2019%2f09%2f2019-09-26-docker-github-package-registry%2f&amp;text=Docker%20images%20on%20Github%20Package%20Registry&amp;via=sujaypillai" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a>
+    
+    
+        <a href="//www.facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%2f2019%2f09%2f2019-09-26-docker-github-package-registry%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a>
+    
+    
+    
+        <a href="//www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%2f2019%2f09%2f2019-09-26-docker-github-package-registry%2f&amp;title=Docker%20images%20on%20Github%20Package%20Registry" target="_blank" title="Share on LinkedIn">
+            <i class="fab fa-linkedin fa-fw"></i>
+        </a>
+    
+    
+    
+    
+    
+    
+    
+</span>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section>
+            
+                
+                    <span class="tag">
+                        <a href="http://localhost/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="http://localhost/tags/github/"><i class="fas fa-tag fa-fw"></i>github</a>
+                    </span>
+                
+            
+        </section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+            <a href="http://localhost/2019/01/2019-01-22-docker-tip/" class="prev" rel="prev" title="Connect to Docker daemon over ssh using docker-compose"><i class="fas fa-angle-left fa-fw"></i>Connect to Docker daemon over ssh using docker-compose</a>
+        
+        
+            <a href="http://localhost/2020/01/first-post/" class="next" rel="next" title="LoveIt Theme Preview and Documentation">LoveIt Theme Preview and Documentation<i class="fas fa-angle-right fa-fw"></i></a>
+        
+    </div>
+</div>
+
+        <div class="post-comment">
+            
+            <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            (function() {
+                
+                
+                if (window.location.hostname == "localhost")
+                    return;
+
+                var dsq = document.createElement("script"); dsq.type = "text/javascript"; dsq.async = true;
+                var disqus_shortname = "sujaypillai";
+                dsq.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+                (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="https://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+            
+        </div>
+    </article></div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        <div class="copyright-line">
+            Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+        <div class="copyright-line">
+            <i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2018 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="http://localhost">Sujay Pillai</a></span><span class="license">&nbsp;|&nbsp;<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+<script src="../../../js/lib/jquery/jquery.slim.min.min.js"></script>
+<script src="../../../js/lib/lazysizes/lazysizes.min.min.js"></script>
+<script src="../../../js/lib/smooth-scroll/smooth-scroll.polyfills.min.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script>
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+
+
+
+<script src="../../../js/blog.min.js"></script>
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</div>
+        <a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll><span>&nbsp;</span></a>
+    </body>
+</html>

@@ -1,14 +1,15 @@
-baseURL = "https://sujaypillai.dev/"
+baseURL = "https://sujaypillai.dev"
+relativeURLs=true
 languageCode = "en-us"
 title = "Sujay Pillai"
 theme = "LoveIt"
 enableGitInfo = false                                    # whether to use git commit log to generate lastmod record
 hasCJKLanguage = false                                   # whether to include chinese/japanese/korean
 paginate = 12                                            # default amount of posts in each pages
-enableEmoji = true                                       # whether to use emoji code
+enableEmoji = true                                       # whether to use emojclear code
 enableRobotsTXT = true                                   # whether to use robots.txt
-googleAnalytics = ""                                     # [UA-XXXXXXXX-X] google analytics code
-disqusShortname = "dillonzq"                             # Disqus shortname to use Disqus in posts
+googleAnalytics = "UA-157173015-1"                       # [UA-XXXXXXXX-X] google analytics code
+disqusShortname = "sujaypillai"                          # Disqus shortname to use Disqus in posts
 copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License."
                                                          # copyright description used only for seo schema
 
