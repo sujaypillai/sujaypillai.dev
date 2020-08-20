@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Documentation on Sujay Pillai</title>
-    <link>http://localhost/categories/documentation/</link>
+    <link>https://sujaypillai.dev/categories/documentation/</link>
     <description>Recent content in Documentation on Sujay Pillai</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Sun, 26 Jan 2020 16:22:42 +0800</lastBuildDate>
     
-	<atom:link href="http://localhost/categories/documentation/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sujaypillai.dev/categories/documentation/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>LoveIt Theme Preview and Documentation</title>
-      <link>http://localhost/2020/01/first-post/</link>
+      <link>https://sujaypillai.dev/2020/01/first-post/</link>
       <pubDate>Sun, 26 Jan 2020 16:22:42 +0800</pubDate>
       
-      <guid>http://localhost/2020/01/first-post/</guid>
+      <guid>https://sujaypillai.dev/2020/01/first-post/</guid>
       <description>This is a LoveIt theme preview and documentation page.</description>
     </item>
     

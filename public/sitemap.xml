@@ -1,7 +1,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     
         <url>
-            <loc>http://localhost/categories/</loc>
+            <loc>https://sujaypillai.dev/tags/aws/</loc>
             
                 <lastmod>2020-03-23T12:10:56+08:00</lastmod>
             
@@ -15,7 +15,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/categories/docker/</loc>
+            <loc>https://sujaypillai.dev/tags/azure/</loc>
             
                 <lastmod>2020-03-23T12:10:56+08:00</lastmod>
             
@@ -29,7 +29,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/tags/docker/</loc>
+            <loc>https://sujaypillai.dev/categories/</loc>
             
                 <lastmod>2020-03-23T12:10:56+08:00</lastmod>
             
@@ -43,7 +43,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2020/03/2020-03-23-first-docker-github-action/</loc>
+            <loc>https://sujaypillai.dev/categories/docker/</loc>
             
                 <lastmod>2020-03-23T12:10:56+08:00</lastmod>
             
@@ -57,7 +57,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/tags/github/</loc>
+            <loc>https://sujaypillai.dev/tags/docker/</loc>
             
                 <lastmod>2020-03-23T12:10:56+08:00</lastmod>
             
@@ -71,7 +71,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/posts/</loc>
+            <loc>https://sujaypillai.dev/2020/03/2020-03-23-first-docker-github-action/</loc>
             
                 <lastmod>2020-03-23T12:10:56+08:00</lastmod>
             
@@ -85,7 +85,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/</loc>
+            <loc>https://sujaypillai.dev/tags/github/</loc>
             
                 <lastmod>2020-03-23T12:10:56+08:00</lastmod>
             
@@ -99,7 +99,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/tags/</loc>
+            <loc>https://sujaypillai.dev/2020/03/2020-08-17-migrating-from-aws-to-azure/</loc>
             
                 <lastmod>2020-03-23T12:10:56+08:00</lastmod>
             
@@ -113,7 +113,49 @@
         </url>
     
         <url>
-            <loc>http://localhost/about/</loc>
+            <loc>https://sujaypillai.dev/posts/</loc>
+            
+                <lastmod>2020-03-23T12:10:56+08:00</lastmod>
+            
+            
+                <changefreq>weekly</changefreq>
+            
+            
+                <priority>0.5</priority>
+            
+            
+        </url>
+    
+        <url>
+            <loc>https://sujaypillai.dev/</loc>
+            
+                <lastmod>2020-03-23T12:10:56+08:00</lastmod>
+            
+            
+                <changefreq>weekly</changefreq>
+            
+            
+                <priority>0.5</priority>
+            
+            
+        </url>
+    
+        <url>
+            <loc>https://sujaypillai.dev/tags/</loc>
+            
+                <lastmod>2020-03-23T12:10:56+08:00</lastmod>
+            
+            
+                <changefreq>weekly</changefreq>
+            
+            
+                <priority>0.5</priority>
+            
+            
+        </url>
+    
+        <url>
+            <loc>https://sujaypillai.dev/about/</loc>
             
                 <lastmod>2020-01-26T16:31:24+08:00</lastmod>
             
@@ -127,7 +169,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/categories/documentation/</loc>
+            <loc>https://sujaypillai.dev/categories/documentation/</loc>
             
                 <lastmod>2020-01-26T16:22:42+08:00</lastmod>
             
@@ -141,7 +183,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/tags/hugo/</loc>
+            <loc>https://sujaypillai.dev/tags/hugo/</loc>
             
                 <lastmod>2020-01-26T16:22:42+08:00</lastmod>
             
@@ -155,7 +197,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2020/01/first-post/</loc>
+            <loc>https://sujaypillai.dev/2020/01/first-post/</loc>
             
                 <lastmod>2020-01-26T16:22:42+08:00</lastmod>
             
@@ -169,7 +211,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/tags/theme/</loc>
+            <loc>https://sujaypillai.dev/tags/theme/</loc>
             
                 <lastmod>2020-01-26T16:22:42+08:00</lastmod>
             
@@ -183,7 +225,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2019/09/2019-09-26-docker-github-package-registry/</loc>
+            <loc>https://sujaypillai.dev/2019/09/2019-09-26-docker-github-package-registry/</loc>
             
                 <lastmod>2019-09-26T12:28:54+08:00</lastmod>
             
@@ -197,7 +239,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2019/01/2019-01-22-docker-tip/</loc>
+            <loc>https://sujaypillai.dev/2019/01/2019-01-22-docker-tip/</loc>
             
                 <lastmod>2019-01-22T16:22:42+08:00</lastmod>
             
@@ -211,7 +253,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/tags/docker-compose/</loc>
+            <loc>https://sujaypillai.dev/tags/docker-compose/</loc>
             
                 <lastmod>2019-01-22T16:22:42+08:00</lastmod>
             
@@ -225,7 +267,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/tags/dockertip/</loc>
+            <loc>https://sujaypillai.dev/tags/dockertip/</loc>
             
                 <lastmod>2019-01-22T16:22:42+08:00</lastmod>
             
@@ -239,7 +281,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/tags/buildkit/</loc>
+            <loc>https://sujaypillai.dev/tags/buildkit/</loc>
             
                 <lastmod>2019-01-02T16:22:42+08:00</lastmod>
             
@@ -253,7 +295,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2019/01/2019-01-02-docker-platform-args/</loc>
+            <loc>https://sujaypillai.dev/2019/01/2019-01-02-docker-platform-args/</loc>
             
                 <lastmod>2019-01-02T16:22:42+08:00</lastmod>
             
@@ -267,7 +309,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2018/11/2018-11-09-docker-ee-engine-activate/</loc>
+            <loc>https://sujaypillai.dev/2018/11/2018-11-09-docker-ee-engine-activate/</loc>
             
                 <lastmod>2018-11-09T16:22:42+08:00</lastmod>
             
@@ -281,7 +323,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2018/05/2018-05-06-docker-tip/</loc>
+            <loc>https://sujaypillai.dev/2018/05/2018-05-06-docker-tip/</loc>
             
                 <lastmod>2018-05-06T16:22:42+08:00</lastmod>
             
@@ -295,7 +337,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2018/04/2018-04-13-docker-tip/</loc>
+            <loc>https://sujaypillai.dev/2018/04/2018-04-13-docker-tip/</loc>
             
                 <lastmod>2018-04-13T16:22:42+08:00</lastmod>
             
@@ -309,7 +351,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/categories/alfresco/</loc>
+            <loc>https://sujaypillai.dev/categories/alfresco/</loc>
             
                 <lastmod>2016-08-04T16:22:42+08:00</lastmod>
             
@@ -323,7 +365,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/tags/alfresco/</loc>
+            <loc>https://sujaypillai.dev/tags/alfresco/</loc>
             
                 <lastmod>2016-08-04T16:22:42+08:00</lastmod>
             
@@ -337,7 +379,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2016/08/2016-08-04-update-amp-version/</loc>
+            <loc>https://sujaypillai.dev/2016/08/2016-08-04-update-amp-version/</loc>
             
                 <lastmod>2016-08-04T16:22:42+08:00</lastmod>
             
@@ -351,7 +393,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/tags/aikau/</loc>
+            <loc>https://sujaypillai.dev/tags/aikau/</loc>
             
                 <lastmod>2015-09-18T16:22:42+08:00</lastmod>
             
@@ -365,7 +407,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2015/09/2015-09-18-aikau-auditing-reporting/</loc>
+            <loc>https://sujaypillai.dev/2015/09/2015-09-18-aikau-auditing-reporting/</loc>
             
                 <lastmod>2015-09-18T16:22:42+08:00</lastmod>
             
@@ -379,7 +421,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2015/06/2015-06-01-alfresco-multi-folder-template/</loc>
+            <loc>https://sujaypillai.dev/2015/06/2015-06-01-alfresco-multi-folder-template/</loc>
             
                 <lastmod>2015-06-01T16:22:42+08:00</lastmod>
             
@@ -393,7 +435,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2015/05/2015-05-06-alfresco-tech-talk-live-85/</loc>
+            <loc>https://sujaypillai.dev/2015/05/2015-05-06-alfresco-tech-talk-live-85/</loc>
             
                 <lastmod>2015-05-06T16:22:42+08:00</lastmod>
             
@@ -407,7 +449,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/2015/03/2015-03-25-alfresco-checksum/</loc>
+            <loc>https://sujaypillai.dev/2015/03/2015-03-25-alfresco-checksum/</loc>
             
                 <lastmod>2015-03-25T16:22:42+08:00</lastmod>
             
@@ -421,7 +463,7 @@
         </url>
     
         <url>
-            <loc>http://localhost/tags/mvn/</loc>
+            <loc>https://sujaypillai.dev/tags/mvn/</loc>
             
                 <lastmod>2015-03-25T16:22:42+08:00</lastmod>
             

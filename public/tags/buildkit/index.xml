@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>buildkit on Sujay Pillai</title>
-    <link>http://localhost/tags/buildkit/</link>
+    <link>https://sujaypillai.dev/tags/buildkit/</link>
     <description>Recent content in buildkit on Sujay Pillai</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Wed, 02 Jan 2019 16:22:42 +0800</lastBuildDate>
     
-	<atom:link href="http://localhost/tags/buildkit/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sujaypillai.dev/tags/buildkit/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Globally scoped platform ARG&#39;s in Docker BuildKit</title>
-      <link>http://localhost/2019/01/2019-01-02-docker-platform-args/</link>
+      <link>https://sujaypillai.dev/2019/01/2019-01-02-docker-platform-args/</link>
       <pubDate>Wed, 02 Jan 2019 16:22:42 +0800</pubDate>
       
-      <guid>http://localhost/2019/01/2019-01-02-docker-platform-args/</guid>
+      <guid>https://sujaypillai.dev/2019/01/2019-01-02-docker-platform-args/</guid>
       <description>ARG a.k.a &amp;ldquo;build-time variable&amp;rdquo; can be used to pass a variable to builder with the docker build command using --build-arg &amp;lt;varname&amp;gt;=&amp;lt;value&amp;gt; flag
  With the new engine 18.09 Docker supports a new backend BuildKit for executing your builds. You may switch to this backend by setting the below environment variable on your CLI -
 1  DOCKER_BUILDKIT=1   With this new backend Docker predefines a set of ARG variables with the information pertaining to the platform of the node performing the build (build platform) and the resulting image (target platform)</description>

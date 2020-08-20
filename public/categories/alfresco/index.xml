@@ -2,42 +2,42 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Alfresco on Sujay Pillai</title>
-    <link>http://localhost/categories/alfresco/</link>
+    <link>https://sujaypillai.dev/categories/alfresco/</link>
     <description>Recent content in Alfresco on Sujay Pillai</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Thu, 04 Aug 2016 16:22:42 +0800</lastBuildDate>
     
-	<atom:link href="http://localhost/categories/alfresco/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sujaypillai.dev/categories/alfresco/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Downgrading AMP version in Alfresco</title>
-      <link>http://localhost/2016/08/2016-08-04-update-amp-version/</link>
+      <link>https://sujaypillai.dev/2016/08/2016-08-04-update-amp-version/</link>
       <pubDate>Thu, 04 Aug 2016 16:22:42 +0800</pubDate>
       
-      <guid>http://localhost/2016/08/2016-08-04-update-amp-version/</guid>
+      <guid>https://sujaypillai.dev/2016/08/2016-08-04-update-amp-version/</guid>
       <description>If you ever tried to downgrade an AMP version in Alfresco you should have seen an error something similar:
 1 2 3 4 5 6 7 8 9 10 11  Caused by: org.alfresco.error.AlfrescoRuntimeException: 02100002 Downgrading of modules is not supported. Module &amp;#39;acme-cms-poc-repo-amp&amp;#39; version 1.0.1 is currently installed and must be uninstalled before version 1.0.0 can be installed. at org.alfresco.error.AlfrescoRuntimeException.create(AlfrescoRuntimeException.java:51) at org.alfresco.repo.module.ModuleComponentHelper.startModule(ModuleComponentHelper.java:632) at org.alfresco.repo.module.ModuleComponentHelper.access$500(ModuleComponentHelper.java:61) at org.alfresco.repo.module.ModuleComponentHelper$1$1.execute(ModuleComponentHelper.java:259) at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:454) at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:342) at org.</description>
     </item>
     
     <item>
       <title>Aikau Audit Report</title>
-      <link>http://localhost/2015/09/2015-09-18-aikau-auditing-reporting/</link>
+      <link>https://sujaypillai.dev/2015/09/2015-09-18-aikau-auditing-reporting/</link>
       <pubDate>Fri, 18 Sep 2015 16:22:42 +0800</pubDate>
       
-      <guid>http://localhost/2015/09/2015-09-18-aikau-auditing-reporting/</guid>
+      <guid>https://sujaypillai.dev/2015/09/2015-09-18-aikau-auditing-reporting/</guid>
       <description>EisenVault takes away the hassle of managing documents by storing them in both electronic and physical forms, enabling smart-search and deploying quick retrieval measures. Our innovative cloud-based document management system can be used in multiple industry sectors, and caters to specific requirements of various job roles. Our vision - to be your preferred partner for electronic and physical document management.
 This is EisenVault&amp;rsquo;s first Aikau plugin and we would like to share our experience building it.</description>
     </item>
     
     <item>
       <title>Alfresco Multi Folder Template Selection</title>
-      <link>http://localhost/2015/06/2015-06-01-alfresco-multi-folder-template/</link>
+      <link>https://sujaypillai.dev/2015/06/2015-06-01-alfresco-multi-folder-template/</link>
       <pubDate>Mon, 01 Jun 2015 16:22:42 +0800</pubDate>
       
-      <guid>http://localhost/2015/06/2015-06-01-alfresco-multi-folder-template/</guid>
+      <guid>https://sujaypillai.dev/2015/06/2015-06-01-alfresco-multi-folder-template/</guid>
       <description>If you look into the Email Form while setting an &amp;ldquo;Send Email&amp;rdquo; Action on a folder you would be wondering how we can add new email templates into the list of drop down &amp;ldquo;Use Template&amp;rdquo; as shown below -
 The only option without any customization is to add your templates into the folder : Repository &amp;gt; Data Dictionary &amp;gt; Email Templates &amp;gt; Notify Email Templates
 How does this work? Look for the bean &amp;lsquo;ac-email-templates&amp;rsquo; in alfresco/WEB-INF/classes/alfresco/action-services-context.</description>
@@ -45,20 +45,20 @@ How does this work? Look for the bean &amp;lsquo;ac-email-templates&amp;rsquo; i
     
     <item>
       <title>Alfresco Tech Talk Live 85 - Global Virtual Hack-a-thon Project Demos</title>
-      <link>http://localhost/2015/05/2015-05-06-alfresco-tech-talk-live-85/</link>
+      <link>https://sujaypillai.dev/2015/05/2015-05-06-alfresco-tech-talk-live-85/</link>
       <pubDate>Wed, 06 May 2015 16:22:42 +0800</pubDate>
       
-      <guid>http://localhost/2015/05/2015-05-06-alfresco-tech-talk-live-85/</guid>
+      <guid>https://sujaypillai.dev/2015/05/2015-05-06-alfresco-tech-talk-live-85/</guid>
       <description>After the Global Virtual Hack-a-thon 2015 which was held on April 17, 2015 I was lucky enough to be on the panel list to demo the project what I worked on. Thanks Richard Esplin &amp;amp; Ole Hejlskov!!!
 The panel included:    Member Project     Richard Esplin Migrating Alfresco addons hosted on Google to Github   Ole Hejlskov Aikau Samples / SDK Samples   Borris Mejias The Outside Agent: Managing multiple Alfresco instances   Angel Borroy Folder Quotas   Sujay Pillai Update Jeff&amp;rsquo;s Five Star Ratings Add-On   Bindu Wavell Alfresco Yeoman Generator   Axel Faust Build a &amp;lsquo;CMIS Server&amp;rsquo; distribution of Alfresco   Martin Cosgrave Data visualization    The Tech Talk Live this month was dedicated to review different projects which were carried out during Hackathon.</description>
     </item>
     
     <item>
       <title>Generating Checksums for Alfresco Content</title>
-      <link>http://localhost/2015/03/2015-03-25-alfresco-checksum/</link>
+      <link>https://sujaypillai.dev/2015/03/2015-03-25-alfresco-checksum/</link>
       <pubDate>Wed, 25 Mar 2015 16:22:42 +0800</pubDate>
       
-      <guid>http://localhost/2015/03/2015-03-25-alfresco-checksum/</guid>
+      <guid>https://sujaypillai.dev/2015/03/2015-03-25-alfresco-checksum/</guid>
       <description>Inspired from Chris Paul&amp;rsquo;s blog and work I was reading about Alfresco Global Virtual Hack-a-thon scheduled to be on 17th April 2015 and going through the list of Projects came across - Document Checksuming and display in Share. My bookmark&amp;rsquo;s collection had Chris&amp;rsquo;s blog and thought of bootstrapping myself for hackathon by rewriting the whole work done by Chris using Alfresco SDK 2.0 on 5.0.c.
 Below are the brief details about my approach:</description>
     </item>

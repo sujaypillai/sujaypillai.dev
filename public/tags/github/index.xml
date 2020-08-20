@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>github on Sujay Pillai</title>
-    <link>http://localhost/tags/github/</link>
+    <link>https://sujaypillai.dev/tags/github/</link>
     <description>Recent content in github on Sujay Pillai</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Mon, 23 Mar 2020 12:10:56 +0800</lastBuildDate>
     
-	<atom:link href="http://localhost/tags/github/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sujaypillai.dev/tags/github/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Docker GitHub Action</title>
-      <link>http://localhost/2020/03/2020-03-23-first-docker-github-action/</link>
+      <link>https://sujaypillai.dev/2020/03/2020-03-23-first-docker-github-action/</link>
       <pubDate>Mon, 23 Mar 2020 12:10:56 +0800</pubDate>
       
-      <guid>http://localhost/2020/03/2020-03-23-first-docker-github-action/</guid>
+      <guid>https://sujaypillai.dev/2020/03/2020-03-23-first-docker-github-action/</guid>
       <description>Last week Docker released its first Github Action called docker/build-push-action . This has been developed by Docker after keeping into consideration to simplify basic workflow of: building an image, tagging it, logging into Docker Hub, and pushing the image to a registry.
 My previous blog Docker images on Github Package Registry showcased how we could achieve the above workflow with Github package registry. If you look at the workflow definition dockerimage.</description>
     </item>
     
     <item>
       <title>Docker images on Github Package Registry</title>
-      <link>http://localhost/2019/09/2019-09-26-docker-github-package-registry/</link>
+      <link>https://sujaypillai.dev/2019/09/2019-09-26-docker-github-package-registry/</link>
       <pubDate>Thu, 26 Sep 2019 12:28:54 +0800</pubDate>
       
-      <guid>http://localhost/2019/09/2019-09-26-docker-github-package-registry/</guid>
+      <guid>https://sujaypillai.dev/2019/09/2019-09-26-docker-github-package-registry/</guid>
       <description>Ever wondered to have your source code and packages in one place?
 GitHub Package Registry is a package management service that makes it easy to publish public or private packages next to your source code. It is fully integrated with GitHub, so you can use the same search, browsing, and management tools to find and publish packages as you do for your repositories. You can also use the same user and team permissions to manage code and packages together.</description>
     </item>
