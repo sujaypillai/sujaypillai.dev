@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Migrating from AWS to Azure | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Sujay Pillai&#39;s blog">
+<link rel="prev" href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" />
+<link rel="canonical" href="https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/" />
+<link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../favicon-16x16.png">
+<link rel="manifest" href="../../../site.webmanifest">
+<link rel="mask-icon" href="../../../safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Migrating from AWS to Azure"/>
+<meta name="twitter:description" content="Last week Docker released its first Github Action called docker/build-push-action . This has been developed by Docker after keeping into consideration to simplify basic workflow of: building an image, tagging it, logging into Docker Hub, and pushing the image to a registry.
+My previous blog Docker images on Github Package Registry showcased how we could achieve the above workflow with Github package registry. If you look at the workflow definition dockerimage."/>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+<script type="application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Migrating from AWS to Azure",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https:\/\/sujaypillai.dev\/2020\/08\/2020-08-21-migrating-from-aws-to-azure-copy\/"
+    },
+    
+        "image": {
+            "@type": "ImageObject",
+            "url": "https:\/\/sujaypillai.dev\/cover.png",
+            "width":  800 ,
+            "height":  600 
+        },
+    
+    "genre": "posts",
+    
+        "keywords": "azure, aws",
+    
+    "wordcount":  492 ,
+    "url": "https:\/\/sujaypillai.dev\/2020\/08\/2020-08-21-migrating-from-aws-to-azure-copy\/",
+    
+        "datePublished": "2020-08-21T12:10:56\u002b08:00",
+    
+    
+        "dateModified": "2020-08-21T12:10:56\u002b08:00",
+    
+    
+        "license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+    
+    
+        "publisher": {
+            "@type": "Organization",
+            "name": "XXXX",
+            "logo": {
+            "@type": "ImageObject",
+            "url": "https:\/\/sujaypillai.dev\/logo.png",
+            "width":  127 ,
+            "height":  40 
+            }
+        },
+    
+    
+    "description": ""
+    }
+    </script>
+<link rel="stylesheet" href="../../../css/style.min.css">
+<link rel="stylesheet" href="../../../css/lib/fontawesome-free/all.min.min.css">
+
+<link rel="stylesheet" href="../../../css/lib/animate/animate.min.min.css">
+
+    </head>
+    <body>
+        <script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script>
+        <div class="wrapper">
+            <nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://sujaypillai.dev">Sujay Pillai</a>
+        </div>
+        <div class="navbar-menu">
+            
+            
+                <a class="menu-item" href="https://sujaypillai.dev/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile">
+     <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://sujaypillai.dev">Sujay Pillai</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu">
+            
+            
+                <a class="menu-item" href="https://sujaypillai.dev/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav><main class="main">
+                <div class="container">
+                    
+    
+    
+    
+
+    <article class="post-warp">
+        <h1 class="post-title animated flipInX">Migrating from AWS to Azure</h1>
+
+        <div class="post-meta">
+            <div class="post-meta-main">
+                <a class="author" href="https://sujaypillai.dev" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+                <span class="post-category">
+                        included in
+                        <i class="far fa-folder fa-fw"></i><a href="https://sujaypillai.dev/categories/cloud/">Cloud</a>
+                            
+                    </span>
+            </div>
+            <div class="post-meta-other">
+                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-08-21>2020-08-21</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 492 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <p><img src="../../../images/docker-github-action-01.png" alt="Docker-GitHubAction">
+Last week Docker released its first <a href="https://help.github.com/en/actions/getting-started-with-github-actions/about-github-actions">Github Action</a> called <a href="https://github.com/docker/build-push-action">docker/build-push-action</a> . This has been developed by Docker after keeping into consideration to simplify basic workflow of: building an image, tagging it, logging into Docker Hub, and pushing the image to a registry.</p>
+<p>My previous blog <a href="https://sujaypillai.dev/2019/09/2019-09-26-docker-github-package-registry/">Docker images on Github Package Registry</a> showcased how we could achieve the above workflow with Github package registry. If you look at the workflow definition <a href="https://github.com/sujaypillai/buildxdemo/blob/master/.github/workflows/dockerimage.yml">dockerimage.yml</a> for this we had to write three small actions to achieve the above workflow. Lets replace [<em><strong>we will actually create a new workflow definiton</strong></em>] this with Docker&rsquo;s new GitHub action.</p>
+
+    <div class="admonition tip"><p>You can create more than one workflow in a repository. You must store workflows in the <code>.github/workflows</code> directory in the root of your repository.</p>
+</div>
+<a class="post-dummy-target" id="adding-a-workflow-template"></a><h2>Adding a workflow template:</h2>
+<p>On the main page of your repository navigate to Actions and click on <code>New workflow</code> button.</p>
+<p>If you don&rsquo;t see <em><strong>Build and push Docker Images</strong></em> template in the list then click on <code>Set up a workflow yourself</code>
+<img src="../../../images/docker-github-action-05.png" alt="Docker-GitHubAction">
+<br>
+<br>
+Search for the template <code>Build and push Docker images</code> from the Marketplace.
+<img src="../../../images/docker-github-action-06.png" alt="Docker-GitHubAction">
+<br>
+<br>
+Make the changes in the editor and commit the action to your repository using the <code>Start Commit</code> button.
+<img src="../../../images/docker-github-action-07.png" alt="Docker-GitHubAction"></p>
+<p>If you check the workflow definition it has an environment variable <code>DOCKER_BUILDKIT</code> set to 1 which helps to switch to the new builder mechanism available in Docker from <code>18.09</code>.</p>
+<a class="post-dummy-target" id="creating-encrypted-secrets"></a><h2>Creating encrypted secrets:</h2>
+
+    <div class="admonition info"><p><em><strong>Encrypted secrets allow you to store sensitive information, such as access tokens, in your repository.</strong></em></p>
+</div>
+<ol>
+<li>
+<p>Under your repository name, click <code>Settings</code> &gt; <code>Secrets</code>.
+<img src="../../../images/docker-github-action-08.png" alt="Docker-GitHubAction"></p>
+</li>
+<li>
+<p>Add the two secrets <code>DOCKER_USERNAME</code> (your dockerhub username) &amp; <code>DOCKER_PASSWORD</code> (your PAT token from Docker Hub).</p>
+<p>Docker Hub lets you create personal access tokens as alternatives to your password. Refer this <a href="https://docs.docker.com/docker-hub/access-tokens/">link</a> to create your PAT.</p>
+</li>
+<li>
+<p>You can access these secrets in your workflow using the <code>secrets</code> context.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">with:
+    username: ${{ secrets.DOCKER_USERNAME }}
+    password: ${{ secrets.DOCKER_PASSWORD }}
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<a class="post-dummy-target" id="tagging-options"></a><h2>Tagging options:</h2>
+<p>There are 3 options to tag your images with this action:</p>
+<ol>
+<li>
+<p><code>tags</code> - Comma-delimited list of tags. These will be added to the registry/repository to form the image&rsquo;s tags.</p>
+<p>Example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">tags</span><span class="p">:</span><span class="w"> </span>tag1<span class="p">,</span>tag2<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>tag_with_ref</code> - Boolean value. Defaults to <code>false</code>.
+Automatically tags the built image with the git reference. The format of the tag depends on the type of git reference with all forward slashes replaced with <code>-</code>.</p>
+<p>For pushes to a branch the reference will be <code>refs/heads/{branch-name}</code> and the tag will be <code>{branch-name}</code>. If <code>{branch-name}</code> is master then the tag will be <code>latest</code>.</p>
+<p>For pull requests the reference will be <code>refs/pull/{pull-request}</code> and the tag will be <code>pr-{pull-request}</code>.</p>
+<p>For git tags the reference will be <code>refs/tags/{git-tag}</code> and the tag will be <code>{git-tag}</code>.</p>
+<p>Examples:</p>
+<table>
+<thead>
+<tr>
+<th>Git Reference</th>
+<th>Image tag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>refs/heads/master</code></td>
+<td><code>latest</code></td>
+</tr>
+<tr>
+<td><code>refs/heads/my/branch</code></td>
+<td><code>my-branch</code></td>
+</tr>
+<tr>
+<td><code>refs/pull/2/merge</code></td>
+<td><code>pr-2-merge</code></td>
+</tr>
+<tr>
+<td><code>refs/tags/v1.0.0</code></td>
+<td><code>v1.0.0</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><code>tag_with_sha</code> - Boolean value. Defaults to <code>false</code>.</p>
+<p>Automatically tags the built image with the git short SHA prefixed with <code>sha-</code>.</p>
+<p>Example:</p>
+<table>
+<thead>
+<tr>
+<th>Git SHA</th>
+<th>Image tag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>2e0f87924a562826da882179798e2e083680c2d9</code></td>
+<td><code>sha-2e0f879</code></td>
+</tr>
+</tbody>
+</table>
+<p><img src="../../../images/docker-github-action-09.png" alt="Docker-GitHubAction"></p>
+</li>
+</ol>
+<a class="post-dummy-target" id="references"></a><h2>References:</h2>
+<ul>
+<li><a href="https://github.com/docker/build-push-action">Build+Push official Docker GitHub action</a></li>
+<li><a href="https://help.github.com/en/actions/getting-started-with-github-actions">Getting started with GitHub Actions</a></li>
+<li><a href="https://help.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions">Context and expression syntax for GitHub Actions</a></li>
+</ul>
+
+        </div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>This article is updated with 2020-08-21</span>
+            </div>
+            <div class="post-info-license">
+                
+            </div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md">
+                
+                    
+                        <span><a class="link-to-markdown" href="https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/index.md" target="_blank"></a></span>
+                    
+                
+            </div>
+            <div class="post-info-share">
+                
+                    <span>
+    
+        <a href="//twitter.com/share?url=https%3a%2f%2fsujaypillai.dev%2f2020%2f08%2f2020-08-21-migrating-from-aws-to-azure-copy%2f&amp;text=Migrating%20from%20AWS%20to%20Azure&amp;via=sujaypillai" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a>
+    
+    
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fsujaypillai.dev%2f2020%2f08%2f2020-08-21-migrating-from-aws-to-azure-copy%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a>
+    
+    
+    
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fsujaypillai.dev%2f2020%2f08%2f2020-08-21-migrating-from-aws-to-azure-copy%2f&amp;title=Migrating%20from%20AWS%20to%20Azure" target="_blank" title="Share on LinkedIn">
+            <i class="fab fa-linkedin fa-fw"></i>
+        </a>
+    
+    
+    
+    
+    
+    
+    
+</span>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section>
+            
+                
+                    <span class="tag">
+                        <a href="https://sujaypillai.dev/tags/azure/"><i class="fas fa-tag fa-fw"></i>azure</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="https://sujaypillai.dev/tags/aws/"><i class="fas fa-tag fa-fw"></i>aws</a>
+                    </span>
+                
+            
+        </section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://sujaypillai.dev">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+            <a href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" class="prev" rel="prev" title="Creating an EC2 instance using CLI"><i class="fas fa-angle-left fa-fw"></i>Creating an EC2 instance using CLI</a>
+        
+        
+    </div>
+</div>
+
+        <div class="post-comment">
+            
+            
+
+            
+        </div>
+    </article></div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        <div class="copyright-line">
+            Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+        <div class="copyright-line">
+            <i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2018 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://sujaypillai.dev">Sujay Pillai</a></span><span class="license">&nbsp;|&nbsp;<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+<script src="../../../js/lib/jquery/jquery.slim.min.min.js"></script>
+<script src="../../../js/lib/lazysizes/lazysizes.min.min.js"></script>
+<script src="../../../js/lib/smooth-scroll/smooth-scroll.polyfills.min.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script>
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+
+
+
+<script src="../../../js/blog.min.js"></script>
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</div>
+        <a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll><span>&nbsp;</span></a>
+    </body>
+</html>
