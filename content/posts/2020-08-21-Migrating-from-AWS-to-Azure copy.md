@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "Migrating from AWS to Azure"
-date: 2020-03-23T12:10:56+08:00
-lastmod: 2020-03-23T12:10:56+08:00
+date: 2020-08-21T12:10:56+08:00
+lastmod: 2020-08-21T12:10:56+08:00
 draft: false
 tags: ['azure', 'aws']
-categories: ['Docker']
+categories: ['Cloud']
 ---
 
 ![Docker-GitHubAction](/images/docker-github-action-01.png)

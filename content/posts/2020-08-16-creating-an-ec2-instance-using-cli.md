@@ -48,7 +48,7 @@ aws ec2 create-key-pair --key-name inlets --query 'KeyMaterial' --output text > 
 aws ec2 run-instances --image-id ami-01f7527546b557442 \
                       --security-group-ids sg-0f1144719b279f8cb \
                       --instance-type t2.micro         \
-                      --key-name example-key 
+                      --key-name inlets 
 {{< /highlight >}}
 ap-southeast-1
 --count 1 --instance-type t2.micro

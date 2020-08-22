@@ -216,6 +216,142 @@ if (!doNotTrack) {
     
     
     <h1 class="post-title post-list-title" itemprop="name headline">
+        <a href="https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/">Migrating from AWS to Azure</a>
+    </h1>
+
+    <div class="post-meta">
+        <a class="author" href="https://sujaypillai.dev" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+        published on&nbsp;<time datetime=2020-08-21>2020-08-21</time>&nbsp;
+        <span class="post-category">
+                included in
+                <i class="far fa-folder fa-fw"></i><a href="https://sujaypillai.dev/categories/cloud/">Cloud</a>
+                    
+            </span>
+    </div>
+    <div class="post-content">
+        
+            
+            
+            
+            
+            
+            
+            
+            Last week Docker released its first Github Action called docker/build-push-action . This has been developed by Docker after keeping into consideration to simplify basic workflow of: building an image, tagging it, logging into Docker Hub, and pushing the image to a registry.
+My previous blog Docker images on Github Package Registry showcased how we could achieve the above workflow with Github package registry. If you look at the workflow definition dockerimage.
+        
+    </div>
+    <div class="post-footer">
+        <a href="https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/">Read More</a>
+        
+            <div class="post-tags">
+                
+                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/azure/"><i class="fas fa-tag fa-fw"></i>azure</a></span>
+                
+                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/aws/"><i class="fas fa-tag fa-fw"></i>aws</a></span>
+                
+            </div>
+        
+    </div>
+</article><article class="post" itemscope itemtype="http://schema.org/Article">
+    
+    
+    
+
+    
+    
+    
+    <h1 class="post-title post-list-title" itemprop="name headline">
+        <a href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/">Creating an EC2 instance using CLI</a>
+    </h1>
+
+    <div class="post-meta">
+        <a class="author" href="https://sujaypillai.dev" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+        published on&nbsp;<time datetime=2020-08-17>2020-08-17</time>&nbsp;
+        <span class="post-category">
+                included in
+                <i class="far fa-folder fa-fw"></i><a href="https://sujaypillai.dev/categories/cloud/">Cloud</a>
+                    
+            </span>
+    </div>
+    <div class="post-content">
+        
+            
+            
+            
+            
+            
+            
+            
+            Find the image id corresponding to Amazon Linux 2 AMI 1 2 3 4 5  aws ec2 describe-images --owners amazon \ --filters &#39;Name=name,Values=amzn2-ami-hvm-2.0.????????-x86_64-gp2&#39; &#39;Name=state,Values=available&#39; \ --output json | jq -r &#39;.Images | sort_by(.CreationDate) | last(.[]).ImageId&#39; ami-01f7527546b557442   Create a security group 1 2 3 4 5  aws ec2 create-security-group --group-name docker-machine --description &#34;Docker Machine&#34; { &#34;GroupId&#34;:&#34;sg-0f1144719b279f8cb&#34; }   Open port 22 (SSH protocol)to connect to your instance.
+        
+    </div>
+    <div class="post-footer">
+        <a href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/">Read More</a>
+        
+            <div class="post-tags">
+                
+                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a></span>
+                
+                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/aws/"><i class="fas fa-tag fa-fw"></i>aws</a></span>
+                
+            </div>
+        
+    </div>
+</article><article class="post" itemscope itemtype="http://schema.org/Article">
+    
+    
+    
+
+    
+    
+    
+    <h1 class="post-title post-list-title" itemprop="name headline">
+        <a href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker-copy/">Running Hugo in Docker &#43; Traefik</a>
+    </h1>
+
+    <div class="post-meta">
+        <a class="author" href="https://sujaypillai.dev" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+        published on&nbsp;<time datetime=2020-08-17>2020-08-17</time>&nbsp;
+        <span class="post-category">
+                included in
+                <i class="far fa-folder fa-fw"></i><a href="https://sujaypillai.dev/categories/cloud/">Cloud</a>
+                    
+            </span>
+    </div>
+    <div class="post-content">
+        
+            
+            
+            
+            
+            
+            
+            
+            This post basically highlights how you can setup your blogging site (or any static website) using Hugo running in a Docker Swarm environment with Traefik. This whole setup is done on AWS, but it could be replicated to any cloud service provider.
+        
+    </div>
+    <div class="post-footer">
+        <a href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker-copy/">Read More</a>
+        
+            <div class="post-tags">
+                
+                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a></span>
+                
+                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/aws/"><i class="fas fa-tag fa-fw"></i>aws</a></span>
+                
+            </div>
+        
+    </div>
+</article><article class="post" itemscope itemtype="http://schema.org/Article">
+    
+    
+    
+
+    
+    
+    
+    <h1 class="post-title post-list-title" itemprop="name headline">
         <a href="https://sujaypillai.dev/2020/03/2020-03-23-first-docker-github-action/">Docker GitHub Action</a>
     </h1>
 
@@ -249,52 +385,6 @@ My previous blog Docker images on Github Package Registry showcased how we could
                     &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a></span>
                 
                     &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/github/"><i class="fas fa-tag fa-fw"></i>github</a></span>
-                
-            </div>
-        
-    </div>
-</article><article class="post" itemscope itemtype="http://schema.org/Article">
-    
-    
-    
-
-    
-    
-    
-    <h1 class="post-title post-list-title" itemprop="name headline">
-        <a href="https://sujaypillai.dev/2020/03/2020-08-17-migrating-from-aws-to-azure/">Migrating from AWS to Azure</a>
-    </h1>
-
-    <div class="post-meta">
-        <a class="author" href="https://sujaypillai.dev" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
-        published on&nbsp;<time datetime=2020-03-23>2020-03-23</time>&nbsp;
-        <span class="post-category">
-                included in
-                <i class="far fa-folder fa-fw"></i><a href="https://sujaypillai.dev/categories/docker/">Docker</a>
-                    
-            </span>
-    </div>
-    <div class="post-content">
-        
-            
-            
-            
-            
-            
-            
-            
-            Last week Docker released its first Github Action called docker/build-push-action . This has been developed by Docker after keeping into consideration to simplify basic workflow of: building an image, tagging it, logging into Docker Hub, and pushing the image to a registry.
-My previous blog Docker images on Github Package Registry showcased how we could achieve the above workflow with Github package registry. If you look at the workflow definition dockerimage.
-        
-    </div>
-    <div class="post-footer">
-        <a href="https://sujaypillai.dev/2020/03/2020-08-17-migrating-from-aws-to-azure/">Read More</a>
-        
-            <div class="post-tags">
-                
-                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/azure/"><i class="fas fa-tag fa-fw"></i>azure</a></span>
-                
-                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/aws/"><i class="fas fa-tag fa-fw"></i>aws</a></span>
                 
             </div>
         
@@ -390,97 +480,6 @@ To create a remote docker host we will use a tool called docker-machine :
                     &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/dockertip/"><i class="fas fa-tag fa-fw"></i>dockertip</a></span>
                 
                     &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/docker-compose/"><i class="fas fa-tag fa-fw"></i>docker-compose</a></span>
-                
-            </div>
-        
-    </div>
-</article><article class="post" itemscope itemtype="http://schema.org/Article">
-    
-    
-    
-
-    
-    
-    
-    <h1 class="post-title post-list-title" itemprop="name headline">
-        <a href="https://sujaypillai.dev/2019/01/2019-01-02-docker-platform-args/">Globally scoped platform ARG&#39;s in Docker BuildKit</a>
-    </h1>
-
-    <div class="post-meta">
-        <a class="author" href="https://sujaypillai.dev" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
-        published on&nbsp;<time datetime=2019-01-02>2019-01-02</time>&nbsp;
-        <span class="post-category">
-                included in
-                <i class="far fa-folder fa-fw"></i><a href="https://sujaypillai.dev/categories/docker/">Docker</a>
-                    
-            </span>
-    </div>
-    <div class="post-content">
-        
-            
-            
-            
-            
-            
-            
-            
-            ARG a.k.a &ldquo;build-time variable&rdquo; can be used to pass a variable to builder with the docker build command using --build-arg &lt;varname&gt;=&lt;value&gt; flag
- With the new engine 18.09 Docker supports a new backend BuildKit for executing your builds. You may switch to this backend by setting the below environment variable on your CLI -
-1  DOCKER_BUILDKIT=1   With this new backend Docker predefines a set of ARG variables with the information pertaining to the platform of the node performing the build (build platform) and the resulting image (target platform)
-        
-    </div>
-    <div class="post-footer">
-        <a href="https://sujaypillai.dev/2019/01/2019-01-02-docker-platform-args/">Read More</a>
-        
-            <div class="post-tags">
-                
-                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a></span>
-                
-                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/buildkit/"><i class="fas fa-tag fa-fw"></i>buildkit</a></span>
-                
-            </div>
-        
-    </div>
-</article><article class="post" itemscope itemtype="http://schema.org/Article">
-    
-    
-    
-
-    
-    
-    
-    <h1 class="post-title post-list-title" itemprop="name headline">
-        <a href="https://sujaypillai.dev/2018/11/2018-11-09-docker-ee-engine-activate/">CE-EE node activate</a>
-    </h1>
-
-    <div class="post-meta">
-        <a class="author" href="https://sujaypillai.dev" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
-        published on&nbsp;<time datetime=2018-11-09>2018-11-09</time>&nbsp;
-        <span class="post-category">
-                included in
-                <i class="far fa-folder fa-fw"></i><a href="https://sujaypillai.dev/categories/docker/">Docker</a>
-                    
-            </span>
-    </div>
-    <div class="post-content">
-        
-            
-            
-            
-            
-            
-            
-            
-            November 8, 2018 was a great day for Docker community as we saw new stable release for community edition Docker 18.09 CE afer moving to the new release and support cadence. This will be supported for 7 months with Docker 19.03 CE being the next release in line.
-Along with this being an Enterprise customer we are excited to have Docker Enterprise 2.1 which adds support for Windows Server 1709, 1803 and Windows Server 2019.
-        
-    </div>
-    <div class="post-footer">
-        <a href="https://sujaypillai.dev/2018/11/2018-11-09-docker-ee-engine-activate/">Read More</a>
-        
-            <div class="post-tags">
-                
-                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a></span>
                 
             </div>
         

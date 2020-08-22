@@ -7,17 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 23 Mar 2020 12:10:56 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 21 Aug 2020 12:10:56 +0800</lastBuildDate>
     
 	<atom:link href="https://sujaypillai.dev/tags/azure/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Migrating from AWS to Azure</title>
-      <link>https://sujaypillai.dev/2020/03/2020-08-17-migrating-from-aws-to-azure/</link>
-      <pubDate>Mon, 23 Mar 2020 12:10:56 +0800</pubDate>
+      <link>https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/</link>
+      <pubDate>Fri, 21 Aug 2020 12:10:56 +0800</pubDate>
       
-      <guid>https://sujaypillai.dev/2020/03/2020-08-17-migrating-from-aws-to-azure/</guid>
+      <guid>https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/</guid>
       <description>Last week Docker released its first Github Action called docker/build-push-action . This has been developed by Docker after keeping into consideration to simplify basic workflow of: building an image, tagging it, logging into Docker Hub, and pushing the image to a registry.
 My previous blog Docker images on Github Package Registry showcased how we could achieve the above workflow with Github package registry. If you look at the workflow definition dockerimage.</description>
     </item>

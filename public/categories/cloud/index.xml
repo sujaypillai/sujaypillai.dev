@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>aws on Sujay Pillai</title>
-    <link>https://sujaypillai.dev/tags/aws/</link>
-    <description>Recent content in aws on Sujay Pillai</description>
+    <title>Cloud on Sujay Pillai</title>
+    <link>https://sujaypillai.dev/categories/cloud/</link>
+    <description>Recent content in Cloud on Sujay Pillai</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Fri, 21 Aug 2020 12:10:56 +0800</lastBuildDate>
     
-	<atom:link href="https://sujaypillai.dev/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sujaypillai.dev/categories/cloud/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
