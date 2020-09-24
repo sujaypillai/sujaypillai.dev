@@ -14,10 +14,10 @@
     
     <item>
       <title>Running Hugo in Docker &#43; Traefik</title>
-      <link>https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker-copy/</link>
+      <link>https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker/</link>
       <pubDate>Mon, 17 Aug 2020 12:10:56 +0800</pubDate>
       
-      <guid>https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker-copy/</guid>
+      <guid>https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker/</guid>
       <description>This post basically highlights how you can setup your blogging site (or any static website) using Hugo running in a Docker Swarm environment with Traefik. This whole setup is done on AWS, but it could be replicated to any cloud service provider. In my case its only a single node docker swarm cluster.
 Install Docker on an Amazon EC2 instance   The steps to spin up EC2 instance on AWS is here</description>
     </item>

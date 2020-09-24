@@ -3,12 +3,12 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Creating an EC2 instance using CLI | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Running Hugo in Docker &#43; Traefik | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
 <meta name="Description" content="Sujay Pillai&#39;s blog">
-<link rel="prev" href="https://sujaypillai.dev/2020/03/2020-03-23-first-docker-github-action/" />
-<link rel="next" href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker/" />
-<link rel="canonical" href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" />
+<link rel="prev" href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" />
+<link rel="next" href="https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/" />
+<link rel="canonical" href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker/" />
 <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
@@ -18,9 +18,9 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Creating an EC2 instance using CLI"/>
-<meta name="twitter:description" content="This blog post highlights the steps taken by me for creating an EC2 instance to be used as a part of docker swarm environment to host my blogging site on AWS using Traefik. Below are the commands I used to spin up an EC2 instance using the AWS CLI version 2 .
-Find the image id corresponding to Amazon Linux 2 AMI 1 2 3 4 5  aws ec2 describe-images --owners amazon \ --filters &#39;Name=name,Values=amzn2-ami-hvm-2."/>
+<meta name="twitter:title" content="Running Hugo in Docker &#43; Traefik"/>
+<meta name="twitter:description" content="This post basically highlights how you can setup your blogging site (or any static website) using Hugo running in a Docker Swarm environment with Traefik. This whole setup is done on AWS, but it could be replicated to any cloud service provider. In my case its only a single node docker swarm cluster.
+Install Docker on an Amazon EC2 instance   The steps to spin up EC2 instance on AWS is here"/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -39,10 +39,10 @@ if (!doNotTrack) {
     {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
-    "headline": "Creating an EC2 instance using CLI",
+    "headline": "Running Hugo in Docker \u002b Traefik",
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https:\/\/sujaypillai.dev\/2020\/08\/2020-08-16-creating-an-ec2-instance-using-cli\/"
+        "@id": "https:\/\/sujaypillai.dev\/2020\/08\/2020-08-17-setting-up-blog-on-aws-using-traefik-docker\/"
     },
     
         "image": {
@@ -56,13 +56,13 @@ if (!doNotTrack) {
     
         "keywords": "docker, aws",
     
-    "wordcount":  295 ,
-    "url": "https:\/\/sujaypillai.dev\/2020\/08\/2020-08-16-creating-an-ec2-instance-using-cli\/",
+    "wordcount":  421 ,
+    "url": "https:\/\/sujaypillai.dev\/2020\/08\/2020-08-17-setting-up-blog-on-aws-using-traefik-docker\/",
     
-        "datePublished": "2020-08-16T12:10:56\u002b08:00",
+        "datePublished": "2020-08-17T12:10:56\u002b08:00",
     
     
-        "dateModified": "2020-08-16T12:10:56\u002b08:00",
+        "dateModified": "2020-08-17T12:10:56\u002b08:00",
     
     
         "license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
@@ -147,7 +147,7 @@ if (!doNotTrack) {
     
 
     <article class="post-warp">
-        <h1 class="post-title animated flipInX">Creating an EC2 instance using CLI</h1>
+        <h1 class="post-title animated flipInX">Running Hugo in Docker &#43; Traefik</h1>
 
         <div class="post-meta">
             <div class="post-meta-main">
@@ -159,8 +159,8 @@ if (!doNotTrack) {
                     </span>
             </div>
             <div class="post-meta-other">
-                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-08-16>2020-08-16</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 295 words&nbsp;
+                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-08-17>2020-08-17</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 421 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
         </div>
 
@@ -194,103 +194,134 @@ if (!doNotTrack) {
             
             
             
-            <p>This blog post highlights the steps taken by me for creating an EC2 instance to be used as a part of docker swarm environment to host my blogging site on AWS using <a href="https://docs.traefik.io/">Traefik</a>. Below are the commands I used to spin up an EC2 instance using the <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html">AWS CLI version 2</a> .</p>
-<a class="post-dummy-target" id="find-the-image-id-corresponding-to-amazon-linux-2-ami"></a><h3>Find the image id corresponding to Amazon Linux 2 AMI</h3>
+            <p>This post basically highlights how you can setup your blogging site (or any static website) using <a href="https://gohugo.io/documentation/">Hugo</a> running in a Docker Swarm environment with <a href="https://docs.traefik.io/">Traefik</a>. This whole setup is done on AWS, but it could be replicated to any cloud service provider. In my case its only a single node docker swarm cluster.</p>
+<a class="post-dummy-target" id="install-docker-on-an-amazon-ec2-instance"></a><h2>Install Docker on an Amazon EC2 instance</h2>
+<ul>
+<li>
+<p>The steps to spin up EC2 instance on AWS is <a href="https://www.sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/">here</a></p>
+</li>
+<li>
+<p>Connect to your instance
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ssh -i /path/inlets.pem ec2-user@ec2-54-254-122-14.ap-southeast-1.compute.amazonaws.com</code></pre></td></tr></table>
+</div>
+</div></p>
+</li>
+<li>
+<p>Update the installed packages and package cache on your instance, install docker and start the docker service.
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">aws ec2 describe-images --owners amazon \
-    --filters &#39;Name=name,Values=amzn2-ami-hvm-2.0.????????-x86_64-gp2&#39; &#39;Name=state,Values=available&#39; \
-    --output json | jq -r &#39;.Images | sort_by(.CreationDate) | last(.[]).ImageId&#39;
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo yum update -y
+sudo amazon-linux-extras install docker
+sudo service docker start</code></pre></td></tr></table>
+</div>
+</div></p>
+</li>
+<li>
+<p>Add the ec2-user to the docker group so you can execute Docker commands without using sudo.
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo usermod -a -G docker ec2-user</code></pre></td></tr></table>
+</div>
+</div></p>
+</li>
+</ul>
+<a class="post-dummy-target" id="initialize-the-docker-swarm"></a><h2>Initialize the Docker Swarm</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker swarm init --advertise-addr eth0</code></pre></td></tr></table>
+</div>
+</div>
+<a class="post-dummy-target" id="list-nodes-in-the-swarm"></a><h2>List nodes in the swarm</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+9fj7jdv4zfkgp6nlg229qqtvr *   sujaypillai.dev     Ready               Active              Leader              18.06.1-ce</code></pre></td></tr></table>
+</div>
+</div>
+<a class="post-dummy-target" id="definition-of-docker-stack-to-run-traefik"></a><h2>Definition of docker stack to run Traefik</h2>
+<script type="application/javascript" src="https://gist.github.com/sujaypillai/8947d8baa3663b9da50e15f394efee6e.js"></script>
 
-ami-01f7527546b557442</code></pre></td></tr></table>
+<ul>
+<li>The above stack uses Traefik version 1.7.13</li>
+<li>Traefik routes all incoming http/https request from the public address of the server and relays those request to the targeted service running privately on the server following some rules. This is achieved by publishing the ports 80 &amp; 443.</li>
+<li>You can configure Traefik to use an ACME provider (Let&rsquo;s Encrypt) for automatic certificate generation. All the flags <code>acme.*</code> are related to ACME configuration and the certificates generated are stored in a volume named <code>traefik_certs</code>.</li>
+<li>Use <code>htpasswd</code> utility to create an encrypted password and save the generated password in a file named htpasswd which is passed in the config section.
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">htpasswd -c htpasswd administartor</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>The <code>EMAIL</code> &amp; <code>DOMAIN</code> are set as an environment variable on the host.</li>
+</ul>
+<a class="post-dummy-target" id="deploying-the-traefik-service-as-proxy"></a><h2>Deploying the Traefik service as proxy</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker stack deploy -c docker-stack-traefik.yml proxy</code></pre></td></tr></table>
 </div>
 </div>
-<a class="post-dummy-target" id="create-a-security-group"></a><h3>Create a security group</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">aws ec2 create-security-group --group-name docker-machine --description &#34;Docker Machine&#34;
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE                 PORTS
+utjpltombxnr        proxy_traefik       replicated          1/1                 traefik:1.7.13        </code></pre></td></tr></table>
+</div>
+</div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker service ps proxy_traefik
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE          ERROR               PORTS
+ksaooufxkgsn        proxy_traefik.1     traefik:1.7.13      sujaypillai.dev     Running             Running 8 months ago                       *:443-&gt;443/tcp,*:80-&gt;80/tcp</code></pre></td></tr></table>
+</div>
+</div>
+<a class="post-dummy-target" id="deploying-blogging-site-hugo"></a><h2>Deploying blogging site (Hugo)</h2>
+<script type="application/javascript" src="https://gist.github.com/sujaypillai/0090fa3c8fbb84b00c1e2f4b7a1f7a90.js"></script>
 
-{
-    &#34;GroupId&#34;:&#34;sg-0f1144719b279f8cb&#34;
-}</code></pre></td></tr></table>
-</div>
-</div>
-<a class="post-dummy-target" id="open-port-22-ssh-protocolto-connect-to-your-instance-and-other-ports-for-docker-swarm"></a><h3>Open port 22 (SSH protocol)to connect to your instance and other ports for docker swarm.</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 22 --cidr 0.0.0.0/0
-aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 80 --cidr 0.0.0.0/0
-aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 443 --cidr 0.0.0.0/0
-aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 2377 --cidr 0.0.0.0/0
-aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 7946 --cidr 0.0.0.0/0
-aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol udp --port 7946 --cidr 0.0.0.0/0
-aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol udp --port 4789 --cidr 0.0.0.0/0</code></pre></td></tr></table>
-</div>
-</div>
-<p>The following PORTS are added to security group:</p>
-<table>
-<thead>
-<tr>
-<th>Port</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>22</td>
-<td>SSH to the docker node</td>
-</tr>
-<tr>
-<td>80,443</td>
-<td>HTTP,HTTPS connection to the docker node</td>
-</tr>
-<tr>
-<td>2377</td>
-<td>Cluster management &amp; raft sync communications</td>
-</tr>
-<tr>
-<td>7946</td>
-<td>Control plane gossip discovery communication between all nodes</td>
-</tr>
-<tr>
-<td>4789</td>
-<td>Overlay network traffic (container ingress networking).</td>
-</tr>
-</tbody>
-</table>
-<a class="post-dummy-target" id="create-a-key-pair-to-connect-to-ec2"></a><h3>Create a Key Pair to connect to EC2</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">aws ec2 create-key-pair --key-name inlets --query &#39;KeyMaterial&#39; --output text &gt; inlets.pem</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker stack deploy -c docker-stack-sujaypillai.yml web</code></pre></td></tr></table>
 </div>
 </div>
-<a class="post-dummy-target" id="create-an-ec2-instance"></a><h3>Create an EC2 instance</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -299,10 +330,22 @@ aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol 
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">aws ec2 run-instances --image-id ami-01f7527546b557442 \
-                      --security-group-ids sg-0f1144719b279f8cb \
-                      --instance-type t2.micro         \
-                      --key-name inlets </code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE                 PORTS
+utjpltombxnr        proxy_traefik       replicated          1/1                 traefik:1.7.13      
+5s2blx0kicj0        web_website         replicated          1/1                 klakegg/hugo:0.63.2   *:1313-&gt;1313/tcp  </code></pre></td></tr></table>
+</div>
+</div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker service ps web_website
+ID                  NAME                IMAGE                 NODE                DESIRED STATE       CURRENT STATE          ERROR               PORTS
+dewhzxakrfei        web_website.1       klakegg/hugo:0.63.2   sujaypillai.dev     Running             Running 8 months ago  </code></pre></td></tr></table>
 </div>
 </div>
 
@@ -312,7 +355,7 @@ aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol 
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>This article is updated with 2020-08-16</span>
+                <span>This article is updated with 2020-08-17</span>
             </div>
             <div class="post-info-license">
                 
@@ -322,7 +365,7 @@ aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol 
             <div class="post-info-md">
                 
                     
-                        <span><a class="link-to-markdown" href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/index.md" target="_blank"></a></span>
+                        <span><a class="link-to-markdown" href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker/index.md" target="_blank"></a></span>
                     
                 
             </div>
@@ -330,18 +373,18 @@ aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol 
                 
                     <span>
     
-        <a href="//twitter.com/share?url=https%3a%2f%2fsujaypillai.dev%2f2020%2f08%2f2020-08-16-creating-an-ec2-instance-using-cli%2f&amp;text=Creating%20an%20EC2%20instance%20using%20CLI&amp;via=sujaypillai" target="_blank" title="Share on Twitter">
+        <a href="//twitter.com/share?url=https%3a%2f%2fsujaypillai.dev%2f2020%2f08%2f2020-08-17-setting-up-blog-on-aws-using-traefik-docker%2f&amp;text=Running%20Hugo%20in%20Docker%20%2b%20Traefik&amp;via=sujaypillai" target="_blank" title="Share on Twitter">
             <i class="fab fa-twitter fa-fw"></i>
         </a>
     
     
-        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fsujaypillai.dev%2f2020%2f08%2f2020-08-16-creating-an-ec2-instance-using-cli%2f" target="_blank" title="Share on Facebook">
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fsujaypillai.dev%2f2020%2f08%2f2020-08-17-setting-up-blog-on-aws-using-traefik-docker%2f" target="_blank" title="Share on Facebook">
             <i class="fab fa-facebook-square fa-fw"></i>
         </a>
     
     
     
-        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fsujaypillai.dev%2f2020%2f08%2f2020-08-16-creating-an-ec2-instance-using-cli%2f&amp;title=Creating%20an%20EC2%20instance%20using%20CLI" target="_blank" title="Share on LinkedIn">
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fsujaypillai.dev%2f2020%2f08%2f2020-08-17-setting-up-blog-on-aws-using-traefik-docker%2f&amp;title=Running%20Hugo%20in%20Docker%20%2b%20Traefik" target="_blank" title="Share on LinkedIn">
             <i class="fab fa-linkedin fa-fw"></i>
         </a>
     
@@ -378,10 +421,10 @@ aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol 
 
     <div class="post-nav">
         
-            <a href="https://sujaypillai.dev/2020/03/2020-03-23-first-docker-github-action/" class="prev" rel="prev" title="Docker GitHub Action"><i class="fas fa-angle-left fa-fw"></i>Docker GitHub Action</a>
+            <a href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" class="prev" rel="prev" title="Creating an EC2 instance using CLI"><i class="fas fa-angle-left fa-fw"></i>Creating an EC2 instance using CLI</a>
         
         
-            <a href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker/" class="next" rel="next" title="Running Hugo in Docker &#43; Traefik">Running Hugo in Docker &#43; Traefik<i class="fas fa-angle-right fa-fw"></i></a>
+            <a href="https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/" class="next" rel="next" title="Migrating from AWS to Azure">Migrating from AWS to Azure<i class="fas fa-angle-right fa-fw"></i></a>
         
     </div>
 </div>
