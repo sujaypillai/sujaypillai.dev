@@ -6,8 +6,8 @@
         <title>Creating an EC2 instance using CLI | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
 <meta name="Description" content="Sujay Pillai&#39;s blog">
-<link rel="prev" href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker-copy/" />
-<link rel="next" href="https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/" />
+<link rel="prev" href="https://sujaypillai.dev/2020/03/2020-03-23-first-docker-github-action/" />
+<link rel="next" href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker-copy/" />
 <link rel="canonical" href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" />
 <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
@@ -19,7 +19,8 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Creating an EC2 instance using CLI"/>
-<meta name="twitter:description" content="Find the image id corresponding to Amazon Linux 2 AMI 1 2 3 4 5  aws ec2 describe-images --owners amazon \ --filters &#39;Name=name,Values=amzn2-ami-hvm-2.0.????????-x86_64-gp2&#39; &#39;Name=state,Values=available&#39; \ --output json | jq -r &#39;.Images | sort_by(.CreationDate) | last(.[]).ImageId&#39; ami-01f7527546b557442   Create a security group 1 2 3 4 5  aws ec2 create-security-group --group-name docker-machine --description &#34;Docker Machine&#34; { &#34;GroupId&#34;:&#34;sg-0f1144719b279f8cb&#34; }   Open port 22 (SSH protocol)to connect to your instance."/>
+<meta name="twitter:description" content="This blog post highlights the steps taken by me for creating an EC2 instance to be used as a part of docker swarm environment to host my blogging site on AWS using Traefik. Below are the commands I used to spin up an EC2 instance using the AWS CLI version 2 .
+Find the image id corresponding to Amazon Linux 2 AMI 1 2 3 4 5  aws ec2 describe-images --owners amazon \ --filters &#39;Name=name,Values=amzn2-ami-hvm-2."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -55,13 +56,13 @@ if (!doNotTrack) {
     
         "keywords": "docker, aws",
     
-    "wordcount":  160 ,
+    "wordcount":  295 ,
     "url": "https:\/\/sujaypillai.dev\/2020\/08\/2020-08-16-creating-an-ec2-instance-using-cli\/",
     
-        "datePublished": "2020-08-17T12:10:56\u002b08:00",
+        "datePublished": "2020-08-16T12:10:56\u002b08:00",
     
     
-        "dateModified": "2020-08-17T12:10:56\u002b08:00",
+        "dateModified": "2020-08-16T12:10:56\u002b08:00",
     
     
         "license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
@@ -158,9 +159,9 @@ if (!doNotTrack) {
                     </span>
             </div>
             <div class="post-meta-other">
-                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-08-17>2020-08-17</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 160 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-08-16>2020-08-16</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 295 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
         </div>
 
         
@@ -193,7 +194,8 @@ if (!doNotTrack) {
             
             
             
-            <a class="post-dummy-target" id="find-the-image-id-corresponding-to-amazon-linux-2-ami"></a><h3>Find the image id corresponding to Amazon Linux 2 AMI</h3>
+            <p>This blog post highlights the steps taken by me for creating an EC2 instance to be used as a part of docker swarm environment to host my blogging site on AWS using <a href="https://docs.traefik.io/">Traefik</a>. Below are the commands I used to spin up an EC2 instance using the <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html">AWS CLI version 2</a> .</p>
+<a class="post-dummy-target" id="find-the-image-id-corresponding-to-amazon-linux-2-ami"></a><h3>Find the image id corresponding to Amazon Linux 2 AMI</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -227,21 +229,58 @@ ami-01f7527546b557442</code></pre></td></tr></table>
 }</code></pre></td></tr></table>
 </div>
 </div>
-<a class="post-dummy-target" id="open-port-22-ssh-protocolto-connect-to-your-instance"></a><h3>Open port 22 (SSH protocol)to connect to your instance.</h3>
+<a class="post-dummy-target" id="open-port-22-ssh-protocolto-connect-to-your-instance-and-other-ports-for-docker-swarm"></a><h3>Open port 22 (SSH protocol)to connect to your instance and other ports for docker swarm.</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fallback" data-lang="fallback">aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 22 --cidr 0.0.0.0/0
 aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 80 --cidr 0.0.0.0/0
 aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 443 --cidr 0.0.0.0/0
-aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 2376 --cidr 0.0.0.0/0</code></pre></td></tr></table>
+aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 2377 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 7946 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol udp --port 7946 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol udp --port 4789 --cidr 0.0.0.0/0</code></pre></td></tr></table>
 </div>
 </div>
+<p>The following PORTS are added to security group:</p>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>22</td>
+<td>SSH to the docker node</td>
+</tr>
+<tr>
+<td>80,443</td>
+<td>HTTP,HTTPS connection to the docker node</td>
+</tr>
+<tr>
+<td>2377</td>
+<td>Cluster management &amp; raft sync communications</td>
+</tr>
+<tr>
+<td>7946</td>
+<td>Control plane gossip discovery communication between all nodes</td>
+</tr>
+<tr>
+<td>4789</td>
+<td>Overlay network traffic (container ingress networking).</td>
+</tr>
+</tbody>
+</table>
 <a class="post-dummy-target" id="create-a-key-pair-to-connect-to-ec2"></a><h3>Create a Key Pair to connect to EC2</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -252,7 +291,7 @@ aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol 
 </div>
 </div>
 <a class="post-dummy-target" id="create-an-ec2-instance"></a><h3>Create an EC2 instance</h3>
-<p><div class="highlight"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -266,8 +305,6 @@ aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol 
                       --key-name inlets </code></pre></td></tr></table>
 </div>
 </div>
-ap-southeast-1
-&ndash;count 1 &ndash;instance-type t2.micro</p>
 
         </div>
 
@@ -275,7 +312,7 @@ ap-southeast-1
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>This article is updated with 2020-08-17</span>
+                <span>This article is updated with 2020-08-16</span>
             </div>
             <div class="post-info-license">
                 
@@ -341,10 +378,10 @@ ap-southeast-1
 
     <div class="post-nav">
         
-            <a href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker-copy/" class="prev" rel="prev" title="Running Hugo in Docker &#43; Traefik"><i class="fas fa-angle-left fa-fw"></i>Running Hugo in Docker &#43; Traefik</a>
+            <a href="https://sujaypillai.dev/2020/03/2020-03-23-first-docker-github-action/" class="prev" rel="prev" title="Docker GitHub Action"><i class="fas fa-angle-left fa-fw"></i>Docker GitHub Action</a>
         
         
-            <a href="https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/" class="next" rel="next" title="Migrating from AWS to Azure">Migrating from AWS to Azure<i class="fas fa-angle-right fa-fw"></i></a>
+            <a href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker-copy/" class="next" rel="next" title="Running Hugo in Docker &#43; Traefik">Running Hugo in Docker &#43; Traefik<i class="fas fa-angle-right fa-fw"></i></a>
         
     </div>
 </div>

@@ -6,8 +6,8 @@
         <title>Running Hugo in Docker &#43; Traefik | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
 <meta name="Description" content="Sujay Pillai&#39;s blog">
-<link rel="prev" href="https://sujaypillai.dev/2020/03/2020-03-23-first-docker-github-action/" />
-<link rel="next" href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" />
+<link rel="prev" href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" />
+<link rel="next" href="https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/" />
 <link rel="canonical" href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker-copy/" />
 <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
@@ -19,7 +19,8 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Running Hugo in Docker &#43; Traefik"/>
-<meta name="twitter:description" content="This post basically highlights how you can setup your blogging site (or any static website) using Hugo running in a Docker Swarm environment with Traefik. This whole setup is done on AWS, but it could be replicated to any cloud service provider."/>
+<meta name="twitter:description" content="This post basically highlights how you can setup your blogging site (or any static website) using Hugo running in a Docker Swarm environment with Traefik. This whole setup is done on AWS, but it could be replicated to any cloud service provider. In my case its only a single node docker swarm cluster.
+Install Docker on an Amazon EC2 instance   The steps to spin up EC2 instance on AWS is here"/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -55,7 +56,7 @@ if (!doNotTrack) {
     
         "keywords": "docker, aws",
     
-    "wordcount":  42 ,
+    "wordcount":  152 ,
     "url": "https:\/\/sujaypillai.dev\/2020\/08\/2020-08-17-setting-up-blog-on-aws-using-traefik-docker-copy\/",
     
         "datePublished": "2020-08-17T12:10:56\u002b08:00",
@@ -159,7 +160,7 @@ if (!doNotTrack) {
             </div>
             <div class="post-meta-other">
                 <i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-08-17>2020-08-17</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 42 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 152 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
         </div>
 
@@ -193,7 +194,62 @@ if (!doNotTrack) {
             
             
             
-            <p>This post basically highlights how you can setup your blogging site (or any static website) using <a href="https://gohugo.io/documentation/">Hugo</a> running in a Docker Swarm environment with <a href="https://docs.traefik.io/">Traefik</a>. This whole setup is done on AWS, but it could be replicated to any cloud service provider.</p>
+            <p>This post basically highlights how you can setup your blogging site (or any static website) using <a href="https://gohugo.io/documentation/">Hugo</a> running in a Docker Swarm environment with <a href="https://docs.traefik.io/">Traefik</a>. This whole setup is done on AWS, but it could be replicated to any cloud service provider. In my case its only a single node docker swarm cluster.</p>
+<a class="post-dummy-target" id="install-docker-on-an-amazon-ec2-instance"></a><h2>Install Docker on an Amazon EC2 instance</h2>
+<ul>
+<li>
+<p>The steps to spin up EC2 instance on AWS is <a href="https://www.sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/">here</a></p>
+</li>
+<li>
+<p>Connect to your instance
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ssh -i /path/inlets.pem ec2-user@ec2-54-254-122-14.ap-southeast-1.compute.amazonaws.com</code></pre></td></tr></table>
+</div>
+</div></p>
+</li>
+<li>
+<p>Update the installed packages and package cache on your instance, install docker and start the docker service.
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo yum update -y
+sudo amazon-linux-extras install docker
+sudo service docker start</code></pre></td></tr></table>
+</div>
+</div></p>
+</li>
+<li>
+<p>Add the ec2-user to the docker group so you can execute Docker commands without using sudo.
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo usermod -a -G docker ec2-user</code></pre></td></tr></table>
+</div>
+</div></p>
+</li>
+</ul>
+<a class="post-dummy-target" id="initialize-the-docker-swarm"></a><h2>Initialize the Docker Swarm</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker swarm init --advertise-addr eth0</code></pre></td></tr></table>
+</div>
+</div>
+<a class="post-dummy-target" id="definition-of-docker-stack-to-run-traefik"></a><h2>Definition of docker stack to run Traefik</h2>
+<script type="application/javascript" src="https://gist.github.com/sujaypillai/8947d8baa3663b9da50e15f394efee6e.js"></script>
+
 
         </div>
 
@@ -267,10 +323,10 @@ if (!doNotTrack) {
 
     <div class="post-nav">
         
-            <a href="https://sujaypillai.dev/2020/03/2020-03-23-first-docker-github-action/" class="prev" rel="prev" title="Docker GitHub Action"><i class="fas fa-angle-left fa-fw"></i>Docker GitHub Action</a>
+            <a href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" class="prev" rel="prev" title="Creating an EC2 instance using CLI"><i class="fas fa-angle-left fa-fw"></i>Creating an EC2 instance using CLI</a>
         
         
-            <a href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" class="next" rel="next" title="Creating an EC2 instance using CLI">Creating an EC2 instance using CLI<i class="fas fa-angle-right fa-fw"></i></a>
+            <a href="https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/" class="next" rel="next" title="Migrating from AWS to Azure">Migrating from AWS to Azure<i class="fas fa-angle-right fa-fw"></i></a>
         
     </div>
 </div>

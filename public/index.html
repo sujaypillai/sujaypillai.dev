@@ -262,51 +262,6 @@ My previous blog Docker images on Github Package Registry showcased how we could
     
     
     <h1 class="post-title post-list-title" itemprop="name headline">
-        <a href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/">Creating an EC2 instance using CLI</a>
-    </h1>
-
-    <div class="post-meta">
-        <a class="author" href="https://sujaypillai.dev" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
-        published on&nbsp;<time datetime=2020-08-17>2020-08-17</time>&nbsp;
-        <span class="post-category">
-                included in
-                <i class="far fa-folder fa-fw"></i><a href="https://sujaypillai.dev/categories/cloud/">Cloud</a>
-                    
-            </span>
-    </div>
-    <div class="post-content">
-        
-            
-            
-            
-            
-            
-            
-            
-            Find the image id corresponding to Amazon Linux 2 AMI 1 2 3 4 5  aws ec2 describe-images --owners amazon \ --filters &#39;Name=name,Values=amzn2-ami-hvm-2.0.????????-x86_64-gp2&#39; &#39;Name=state,Values=available&#39; \ --output json | jq -r &#39;.Images | sort_by(.CreationDate) | last(.[]).ImageId&#39; ami-01f7527546b557442   Create a security group 1 2 3 4 5  aws ec2 create-security-group --group-name docker-machine --description &#34;Docker Machine&#34; { &#34;GroupId&#34;:&#34;sg-0f1144719b279f8cb&#34; }   Open port 22 (SSH protocol)to connect to your instance.
-        
-    </div>
-    <div class="post-footer">
-        <a href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/">Read More</a>
-        
-            <div class="post-tags">
-                
-                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a></span>
-                
-                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/aws/"><i class="fas fa-tag fa-fw"></i>aws</a></span>
-                
-            </div>
-        
-    </div>
-</article><article class="post" itemscope itemtype="http://schema.org/Article">
-    
-    
-    
-
-    
-    
-    
-    <h1 class="post-title post-list-title" itemprop="name headline">
         <a href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker-copy/">Running Hugo in Docker &#43; Traefik</a>
     </h1>
 
@@ -328,11 +283,58 @@ My previous blog Docker images on Github Package Registry showcased how we could
             
             
             
-            This post basically highlights how you can setup your blogging site (or any static website) using Hugo running in a Docker Swarm environment with Traefik. This whole setup is done on AWS, but it could be replicated to any cloud service provider.
+            This post basically highlights how you can setup your blogging site (or any static website) using Hugo running in a Docker Swarm environment with Traefik. This whole setup is done on AWS, but it could be replicated to any cloud service provider. In my case its only a single node docker swarm cluster.
+Install Docker on an Amazon EC2 instance   The steps to spin up EC2 instance on AWS is here
         
     </div>
     <div class="post-footer">
         <a href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker-copy/">Read More</a>
+        
+            <div class="post-tags">
+                
+                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a></span>
+                
+                    &nbsp;&nbsp;<span class="tag"><a href="https://sujaypillai.dev/tags/aws/"><i class="fas fa-tag fa-fw"></i>aws</a></span>
+                
+            </div>
+        
+    </div>
+</article><article class="post" itemscope itemtype="http://schema.org/Article">
+    
+    
+    
+
+    
+    
+    
+    <h1 class="post-title post-list-title" itemprop="name headline">
+        <a href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/">Creating an EC2 instance using CLI</a>
+    </h1>
+
+    <div class="post-meta">
+        <a class="author" href="https://sujaypillai.dev" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+        published on&nbsp;<time datetime=2020-08-16>2020-08-16</time>&nbsp;
+        <span class="post-category">
+                included in
+                <i class="far fa-folder fa-fw"></i><a href="https://sujaypillai.dev/categories/cloud/">Cloud</a>
+                    
+            </span>
+    </div>
+    <div class="post-content">
+        
+            
+            
+            
+            
+            
+            
+            
+            This blog post highlights the steps taken by me for creating an EC2 instance to be used as a part of docker swarm environment to host my blogging site on AWS using Traefik. Below are the commands I used to spin up an EC2 instance using the AWS CLI version 2 .
+Find the image id corresponding to Amazon Linux 2 AMI 1 2 3 4 5  aws ec2 describe-images --owners amazon \ --filters &#39;Name=name,Values=amzn2-ami-hvm-2.
+        
+    </div>
+    <div class="post-footer">
+        <a href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/">Read More</a>
         
             <div class="post-tags">
                 
