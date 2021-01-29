@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 17 Aug 2020 12:10:56 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 29 Jan 2021 12:10:56 +0800</lastBuildDate>
     
 	<atom:link href="https://sujaypillai.dev/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Azure Data Factory - Self Hosted Integration Runtime on Windows Container</title>
+      <link>https://sujaypillai.dev/2021/01/2021-01-29-selfhostedintegrationruntime-on-windows-container/</link>
+      <pubDate>Fri, 29 Jan 2021 12:10:56 +0800</pubDate>
+      
+      <guid>https://sujaypillai.dev/2021/01/2021-01-29-selfhostedintegrationruntime-on-windows-container/</guid>
+      <description>If you are looking for how to get started with Azure Data Factory (ADF), I will definitely recommend you to go through Cathrine Wilhelmsen&amp;rsquo;s &amp;ndash; Beginner’s Guide to Azure Data Factory. It helped me to understand the basics for ADF before starting work on a project I recently had a chance to participate at my workplace.
+The compute infrastructure that is required by ADF provides the following data integration capabilities across different network environment:</description>
+    </item>
     
     <item>
       <title>Running Hugo in Docker &#43; Traefik</title>

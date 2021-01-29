@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Azure Data Factory - Self Hosted Integration Runtime on Windows Container | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Sujay Pillai&#39;s blog">
+<link rel="prev" href="https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/" />
+<link rel="canonical" href="https://sujaypillai.dev/2021/01/2021-01-29-selfhostedintegrationruntime-on-windows-container/" />
+<link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../favicon-16x16.png">
+<link rel="manifest" href="../../../site.webmanifest">
+<link rel="mask-icon" href="../../../safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Azure Data Factory - Self Hosted Integration Runtime on Windows Container"/>
+<meta name="twitter:description" content="If you are looking for how to get started with Azure Data Factory (ADF), I will definitely recommend you to go through Cathrine Wilhelmsen&rsquo;s &ndash; Beginner’s Guide to Azure Data Factory. It helped me to understand the basics for ADF before starting work on a project I recently had a chance to participate at my workplace.
+The compute infrastructure that is required by ADF provides the following data integration capabilities across different network environment:"/>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+<script type="application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Azure Data Factory - Self Hosted Integration Runtime on Windows Container",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https:\/\/sujaypillai.dev\/2021\/01\/2021-01-29-selfhostedintegrationruntime-on-windows-container\/"
+    },
+    
+        "image": {
+            "@type": "ImageObject",
+            "url": "https:\/\/sujaypillai.dev\/cover.png",
+            "width":  800 ,
+            "height":  600 
+        },
+    
+    "genre": "posts",
+    
+        "keywords": "azure, docker",
+    
+    "wordcount":  490 ,
+    "url": "https:\/\/sujaypillai.dev\/2021\/01\/2021-01-29-selfhostedintegrationruntime-on-windows-container\/",
+    
+        "datePublished": "2021-01-29T12:10:56\u002b08:00",
+    
+    
+        "dateModified": "2021-01-29T12:10:56\u002b08:00",
+    
+    
+        "license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+    
+    
+        "publisher": {
+            "@type": "Organization",
+            "name": "XXXX",
+            "logo": {
+            "@type": "ImageObject",
+            "url": "https:\/\/sujaypillai.dev\/logo.png",
+            "width":  127 ,
+            "height":  40 
+            }
+        },
+    
+    
+    "description": ""
+    }
+    </script>
+<link rel="stylesheet" href="../../../css/style.min.css">
+<link rel="stylesheet" href="../../../css/lib/fontawesome-free/all.min.min.css">
+
+<link rel="stylesheet" href="../../../css/lib/animate/animate.min.min.css">
+
+    </head>
+    <body>
+        <script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script>
+        <div class="wrapper">
+            <nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://sujaypillai.dev">Sujay Pillai</a>
+        </div>
+        <div class="navbar-menu">
+            
+            
+                <a class="menu-item" href="https://sujaypillai.dev/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile">
+     <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://sujaypillai.dev">Sujay Pillai</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu">
+            
+            
+                <a class="menu-item" href="https://sujaypillai.dev/posts" title="">Posts</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/tags" title="">Tags</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/categories" title="">Categories</a>
+            
+                <a class="menu-item" href="https://sujaypillai.dev/about" title="">About</a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav><main class="main">
+                <div class="container">
+                    
+    
+    
+    
+
+    <article class="post-warp">
+        <h1 class="post-title animated flipInX">Azure Data Factory - Self Hosted Integration Runtime on Windows Container</h1>
+
+        <div class="post-meta">
+            <div class="post-meta-main">
+                <a class="author" href="https://sujaypillai.dev" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+                <span class="post-category">
+                        included in
+                        <i class="far fa-folder fa-fw"></i><a href="https://sujaypillai.dev/categories/cloud/">Cloud</a>
+                            
+                    </span>
+            </div>
+            <div class="post-meta-other">
+                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2021-01-29>2021-01-29</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 490 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <p>If you are looking for how to get started with Azure Data Factory (ADF), I will definitely recommend you to go through
+<a href="https://twitter.com/cathrinew">Cathrine Wilhelmsen&rsquo;s</a> &ndash; <a href="https://www.cathrinewilhelmsen.net/series/beginners-guide-azure-data-factory/">Beginner’s Guide to Azure Data Factory</a>. It helped me to understand the basics for ADF before starting work on a project I recently had a chance to participate at my workplace.</p>
+<p>The compute infrastructure that is required by ADF provides the following data integration capabilities across different network environment:</p>
+<ol>
+<li>Data Flow Execution</li>
+<li>Data Movement Execution</li>
+<li>Dispatch of Activities</li>
+<li>SSIS Package Execution</li>
+</ol>
+<p>Data Factory offers three types of <a href="https://docs.microsoft.com/en-us/azure/data-factory/concepts-integration-runtime">Integration Runtime (IR)</a>, and you should choose the type that best serve the data integration capabilities and network environment needs you&rsquo;re looking for. These three types are:</p>
+<ol>
+<li>Azure</li>
+<li>Self-hosted</li>
+<li>Azure-SSIS</li>
+</ol>
+<p>This blog will help you setup the Self-Hosted Integration Runtime (SHIR) in Windows Container and show you the steps to run it on a Windows machine as well as on Azure Container Instance.</p>
+<a class="post-dummy-target" id="prerequisites"></a><h3>Prerequisites</h3>
+<ol>
+<li>
+<p>Windows Container</p>
+<p>The Windows container feature is available on Windows Server (Semi-Annual Channel), Windows Server 2019, Windows Server 2016, and Windows 10 Professional and Enterprise Editions (version 1607 and later).</p>
+</li>
+<li>
+<p>Docker Version 2.3 or later.</p>
+</li>
+<li>
+<p>Self-Hosted Integration Runtime Version 4.11.7512.1 and later. <a href="https://www.microsoft.com/download/details.aspx?id=39717">Download</a> the latest version available.</p>
+</li>
+</ol>
+<a class="post-dummy-target" id="build-the-docker-image"></a><h3>Build the Docker image</h3>
+<p>To build the docker image we will  be using Windows 10 Professional with <a href="https://www.docker.com/products/docker-desktop">Docker Desktop 3.1.0</a> in Windows Container mode.</p>
+<p>Download the the latest source code for the SHIR windows container support <a href="https://github.com/Azure/Azure-Data-Factory-Integration-Runtime-in-Windows-Container">here</a>.</p>
+<p>Download the latest version of <a href="https://www.microsoft.com/en-us/download/details.aspx?id=39717">SHIR</a> into <code>SHIR</code> folder [5.2.7681.6 in this case]</p>
+<p><img src="../../../images/shir_location.png" alt="SHIR_Location"></p>
+<p>On the shell navigate to the folder where you downloaded the project from github to build the docker image. Execute the command below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">cd </span><span class="s2">&#34;pathToTheGithubCheckout&#34;</span>
+<span class="n">docker</span> <span class="n">build</span> <span class="n">-t</span> <span class="n">sujaypillai</span><span class="p">/</span><span class="n">adfir</span><span class="err">:</span><span class="n">5</span><span class="p">.</span><span class="n">2</span><span class="p">.</span><span class="n">7681</span><span class="p">.</span><span class="n">6</span> <span class="p">.</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="../../../images/shir_windowsimage_build.png" alt="SHIR_BuildDockerImage"></p>
+<p>You can find the same image on DockerHub as <code>sujaypillai/adfir:5.2.7681.6</code></p>
+<p>To register your SHIR Windows container you would need a valid Authentication Key which is passed as an environment variable <code>AUTH_KEY</code> in the command below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">docker</span> <span class="n">run</span> <span class="n">-d</span> <span class="n">-e</span> <span class="n">NODE_NAME</span><span class="p">=</span><span class="s2">&#34;SHIRWindowsContainer&#34;</span> <span class="p">\</span>
+              <span class="n">-e</span> <span class="n">AUTH_KEY</span><span class="p">=</span><span class="s2">&#34;GET_THE_KEY_FROM_IR_SETUP&#34;</span> <span class="p">\</span>
+              <span class="n">-e</span> <span class="n">ENABLE_HA</span><span class="p">=</span><span class="n">true</span> <span class="p">\</span>
+              <span class="n">-e</span> <span class="n">HA_PORT</span><span class="p">=</span><span class="n">8060</span> <span class="n">sujaypillai</span><span class="p">/</span><span class="n">adfir</span><span class="err">:</span><span class="n">5</span><span class="p">.</span><span class="n">2</span><span class="p">.</span><span class="n">7681</span><span class="p">.</span><span class="n">6</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>To get the <code>AUTH_KEY</code> you will have to create a SHIR and get the value from the settings tab as shown below:</p>
+<p><img src="../../../images/shir_01.png" alt="SHIR_Setup"></p>
+<p><img src="../../../images/shir_02.png" alt="SHIR_Setup"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">docker</span> <span class="n">run</span> <span class="n">-d</span> <span class="n">-e</span> <span class="n">NODE_NAME</span><span class="p">=</span><span class="s2">&#34;SHIRWindowsContainer01&#34;</span> <span class="p">\</span>
+              <span class="n">-e</span> <span class="n">AUTH_KEY</span><span class="p">=</span><span class="s2">&#34;IR@18bbe05f-4f23-4dc4-85bc-310ec29fc549@adf-sp-lab@ServiceEndpoint=adf-sp-lab.southeastasia.datafactory.azure.net@RUW7AAC7Voog0gJcFZ7tL9le/yE9PxTXNQj8WItroZk=&#34;</span> <span class="p">\</span>
+              <span class="n">-e</span> <span class="n">ENABLE_HA</span><span class="p">=</span><span class="n">true</span> <span class="p">\</span>
+              <span class="n">-e</span> <span class="n">HA_PORT</span><span class="p">=</span><span class="n">8060</span> <span class="n">sujaypillai</span><span class="p">/</span><span class="n">adfir</span><span class="err">:</span><span class="n">5</span><span class="p">.</span><span class="n">2</span><span class="p">.</span><span class="n">7681</span><span class="p">.</span><span class="n">6</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="../../../images/shir_03.png" alt="SHIR_Setup"></p>
+<p><img src="../../../images/shir_04.png" alt="SHIR_Setup"></p>
+<p>You can get more details about your SHIR by clicking on the <code>Monitor</code> icon:</p>
+<p><img src="../../../images/shir_05.png" alt="SHIR_Setup"></p>
+<p>Now that we have the image pushed on DockerHub how about running it on <a href="https://azure.microsoft.com/en-us/services/container-instances/">ACI</a> ?</p>
+<p>Set the environment variables required by the SHIR docker image <a href="https://hub.docker.com/layers/135093603/sujaypillai/adfir/5.2.7681.6/images/sha256-0e4e3846d083033908f2b09202be393d63047f5282463ee06138c4658cca1839?context=explore">sujaypillai/adfir:5.2.7681.6</a></p>
+<p><img src="../../../images/shir_07a.png" alt="SHIR_Setup"></p>
+<p>Lets deploy the container instance using Powershell as below:</p>
+<p><img src="../../../images/shir_07.png" alt="SHIR_Setup"></p>
+<p>This being a windows container it takes sometime for the image to be pulled down and for the ACI instance to be up and running.</p>
+<p><img src="../../../images/shir_09.png" alt="SHIR_Setup"></p>
+<p>Once the container is running you should see itself registering it as a SHIR.</p>
+<p><img src="../../../images/shir_08.png" alt="SHIR_Setup"></p>
+<p>Thus we were able to run the SHIR Docker container on a virtual machine as well as an Azure Container Instance.</p>
+
+        </div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>This article is updated with 2021-01-29</span>
+            </div>
+            <div class="post-info-license">
+                
+            </div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md">
+                
+                    
+                        <span><a class="link-to-markdown" href="https://sujaypillai.dev/2021/01/2021-01-29-selfhostedintegrationruntime-on-windows-container/index.md" target="_blank"></a></span>
+                    
+                
+            </div>
+            <div class="post-info-share">
+                
+                    <span>
+    
+        <a href="//twitter.com/share?url=https%3a%2f%2fsujaypillai.dev%2f2021%2f01%2f2021-01-29-selfhostedintegrationruntime-on-windows-container%2f&amp;text=Azure%20Data%20Factory%20-%20Self%20Hosted%20Integration%20Runtime%20on%20Windows%20Container&amp;via=sujaypillai" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a>
+    
+    
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fsujaypillai.dev%2f2021%2f01%2f2021-01-29-selfhostedintegrationruntime-on-windows-container%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a>
+    
+    
+    
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fsujaypillai.dev%2f2021%2f01%2f2021-01-29-selfhostedintegrationruntime-on-windows-container%2f&amp;title=Azure%20Data%20Factory%20-%20Self%20Hosted%20Integration%20Runtime%20on%20Windows%20Container" target="_blank" title="Share on LinkedIn">
+            <i class="fab fa-linkedin fa-fw"></i>
+        </a>
+    
+    
+    
+    
+    
+    
+    
+</span>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section>
+            
+                
+                    <span class="tag">
+                        <a href="https://sujaypillai.dev/tags/azure/"><i class="fas fa-tag fa-fw"></i>azure</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="https://sujaypillai.dev/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a>
+                    </span>
+                
+            
+        </section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://sujaypillai.dev">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+            <a href="https://sujaypillai.dev/2020/08/2020-08-21-migrating-from-aws-to-azure-copy/" class="prev" rel="prev" title="Migrating from AWS to Azure"><i class="fas fa-angle-left fa-fw"></i>Migrating from AWS to Azure</a>
+        
+        
+    </div>
+</div>
+
+        <div class="post-comment">
+            
+            
+
+            
+        </div>
+    </article></div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        <div class="copyright-line">
+            Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+        <div class="copyright-line">
+            <i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2018 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://sujaypillai.dev">Sujay Pillai</a></span><span class="license">&nbsp;|&nbsp;<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+<script src="../../../js/lib/jquery/jquery.slim.min.min.js"></script>
+<script src="../../../js/lib/lazysizes/lazysizes.min.min.js"></script>
+<script src="../../../js/lib/smooth-scroll/smooth-scroll.polyfills.min.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script>
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+
+
+
+<script src="../../../js/blog.min.js"></script>
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-157173015-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</div>
+        <a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll><span>&nbsp;</span></a>
+    </body>
+</html>
