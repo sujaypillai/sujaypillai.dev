@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Fri, 29 Jan 2021 12:10:56 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 02 Feb 2021 19:14:11 +0800</lastBuildDate>
     
 	<atom:link href="https://sujaypillai.dev/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Enable Metrics Server on Docker Desktop</title>
+      <link>https://sujaypillai.dev/2021/02/2021-02-02-enable-metrics-server-on-docker-desktop/</link>
+      <pubDate>Tue, 02 Feb 2021 19:14:11 +0800</pubDate>
+      
+      <guid>https://sujaypillai.dev/2021/02/2021-02-02-enable-metrics-server-on-docker-desktop/</guid>
+      <description>The steps below in this blog will help you setup Kubernetes Metrics Server on Docker Desktop which provides a standalone instance of Kubernetes running as a Docker container.
+Kubernetes Metrics Server is a scalable, efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines. Metrics Server collects resource metrics from Kubelets and exposes them in Kubernetes apiserver through Metrics API for use by Horizontal Pod Autoscaler and Vertical Pod Autoscaler.</description>
+    </item>
     
     <item>
       <title>Azure Data Factory - Self Hosted Integration Runtime on Windows Container</title>

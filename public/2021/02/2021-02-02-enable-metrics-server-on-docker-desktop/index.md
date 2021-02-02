@@ -1,8 +1,5 @@
----
-title: "Enable Metrics Server on Docker Desktop"
-date: 2021-02-02T19:14:11+08:00
-draft: false
----
+# Enable Metrics Server on Docker Desktop
+
 
 The steps below in this blog will help you setup [Kubernetes Metrics Server](https://github.com/kubernetes-sigs/metrics-server) on Docker Desktop which provides a standalone instance of Kubernetes running as a Docker container.
 
