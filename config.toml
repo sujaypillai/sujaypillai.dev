@@ -62,8 +62,9 @@ staticDir = ["static", "../assets/others"]               # static directories
   version     = "5.x"                                         # LoveIt theme version
   description = "Sujay Pillai's blog"                         # site description
   keywords    = ["Sujay Pillai", "Docker", "Cloud"]           # site keywords
-  images      = ["sample_feature_img.png"]
-                                                      #### Home Page Info
+  images      = ["images/sample_feature_img.png"]
+  twitter_cards = true
+#### Home Page Info
   home_mode = "post"                                     # [post, other] home mode
   home_paginate = 6                                      # special amount of posts in each home post page
   avatar = "images/avatar.png"                           # URL of avatar shown in home page

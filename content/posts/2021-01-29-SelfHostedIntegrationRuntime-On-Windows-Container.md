@@ -5,7 +5,8 @@ date: 2021-01-29T12:10:56+08:00
 lastmod: 2021-01-29T12:10:56+08:00
 draft: false
 tags: ['azure', 'docker']
-images: ["azure_data_factory.png"]
+images: ["images/azure_data_factory.png"]
+thumbnail: "images/azure_data_factory.png"
 categories: ['Cloud']
 ---
 
