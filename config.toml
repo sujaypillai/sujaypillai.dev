@@ -59,10 +59,10 @@ staticDir = ["static", "../assets/others"]               # static directories
 
 
 [params]
-  version = "5.x"                                        # LoveIt theme version
-  description = "Sujay Pillai's blog"                      # site description
-  keywords = ["Sujay Pillai", "Docker", "Cloud"]                   # site keywords
-
+  version     = "5.x"                                         # LoveIt theme version
+  description = "Sujay Pillai's blog"                         # site description
+  keywords    = ["Sujay Pillai", "Docker", "Cloud"]           # site keywords
+  images      = ["sample_feature_img.png"]
                                                       #### Home Page Info
   home_mode = "post"                                     # [post, other] home mode
   home_paginate = 6                                      # special amount of posts in each home post page
