@@ -1,5 +1,14 @@
-# Docker's new GitHub action
-
+---
+layout: post
+title: "Docker's new GitHub action"
+date: 2020-08-21T12:10:56+08:00
+lastmod: 2020-08-21T12:10:56+08:00
+draft: false
+images: ["images/docker-github-action-01.png"]
+thumbnail: "images/docker-github-action-01.png"
+tags: ['azure', 'aws']
+categories: ['Cloud']
+---
 
 ![Docker-GitHubAction](/images/docker-github-action-01.png)
 Last week Docker released its first [Github Action](https://help.github.com/en/actions/getting-started-with-github-actions/about-github-actions) called [docker/build-push-action](https://github.com/docker/build-push-action) . This has been developed by Docker after keeping into consideration to simplify basic workflow of: building an image, tagging it, logging into Docker Hub, and pushing the image to a registry.
