@@ -57,6 +57,11 @@ staticDir = ["static", "../assets/others"]               # static directories
     url = "about"
     weight = 4
 
+  [[menu.main]]
+    identifier = "certifications"
+    name = "Certifications"
+    url = "certifications"
+    weight = 5
 
 [params]
   version     = "5.x"                                         # LoveIt theme version
@@ -134,12 +139,12 @@ staticDir = ["static", "../assets/others"]               # static directories
       height = 40
 
   [params.logo]                                          # Website Log Info just for SEO
-    url = "logo.png"
+    url = "images/sop.png"
     width = 127
     height = 40
 
   [params.image]                                         # Website Image Info just for SEO
-    url = "cover.png"
+    url = "images/sop.png"
     width = 800
     height = 600
 
