@@ -18,6 +18,11 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      - name: Optimize Images
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq pngquant optipng
+          find static/images/ img/ -name "*.png" -type f -exec pngquant --quality=65-80 --speed 1 --force --ext .png --skip-if-larger {} \; 2>/dev/null || true
+          find static/images/ img/ -name "*.png" -type f -exec optipng -o2 -quiet {} \; 2>/dev/null || true
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
