@@ -159,7 +159,7 @@
     <script>window.typeitArr = {{ $typeitArr | jsonify | safeJS }};</script>
 {{ end }}
 
-{{ $res := "//js/blog.js" }}
+{{ $res := "/js/blog.js" }}
 <script src="{{ $res }}"></script>
 
 {{ if not hugo.IsServer }}
