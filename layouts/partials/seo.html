@@ -4,7 +4,7 @@
     "@context": "http://schema.org",
     "@type": "WebSite",
     "url": "{{ .Site.BaseURL }}",
-    {{ with .Site.Author.name }}
+    {{ with .Site.Params.Author.name }}
         "author": {
             "@type": "Person",
             "name": "{{ . }}"
@@ -79,7 +79,7 @@
             }
         },
     {{ end }}
-    {{ with .Site.Author.Name }}
+    {{ with .Site.Params.Author.Name }}
         "author": {
             "@type": "Person",
             "name": "{{ . }}"

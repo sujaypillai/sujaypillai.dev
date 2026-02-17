@@ -2,7 +2,5 @@
 resources/_gen/
 .hugo_build.lock
 
-# Build output (if building from source)
-# Note: public/ is currently committed for deployment
-# Uncomment if switching to build from source in CI:
-# public/
+# Build output - now built in CI, not committed
+public/

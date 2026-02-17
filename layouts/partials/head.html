@@ -36,21 +36,19 @@
     <link rel="feed" href="{{ .RelPermalink }}" type="application/rss+xml" title="{{ $.Site.Title }}">
 {{ end -}}
 
-{{ template "_internal/twitter_cards.html" . -}}
+{{ template "_internal/opengraph.html" . -}}
 {{ template "_internal/google_analytics.html" . }}
 {{ partial "seo.html" . -}}
 
-{{ $res := resources.Get "css/style.scss" | resources.ToCSS | resources.Minify -}}
+{{ $res := resources.Get "css/style.scss" | css.Sass | resources.Minify -}}
 <link rel="stylesheet" href="{{ $res.RelPermalink }}">
 {{ if eq (getenv "HUGO_ENV") "production" | and .Site.Params.cdn.fontawesome_free_css -}}
     {{ .Site.Params.cdn.fontawesome_free_css | safeHTML }}
 {{ else -}}
-    {{ $res := resources.Get "css/lib/fontawesome-free/all.min.css" | resources.Minify -}}
-    <link rel="stylesheet" href="{{ $res.RelPermalink }}">
+    <link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css">
 {{ end }}
 {{ if eq (getenv "HUGO_ENV") "production" | and .Site.Params.cdn.animate_css -}}
     {{ .Site.Params.cdn.animate_css | safeHTML }}
 {{ else -}}
-    {{ $res := resources.Get "css/lib/animate/animate.min.css" | resources.Minify -}}
-    <link rel="stylesheet" href="{{ $res.RelPermalink }}">
+    <link rel="stylesheet" href="/css/lib/animate/animate.min.css">
 {{ end }}
