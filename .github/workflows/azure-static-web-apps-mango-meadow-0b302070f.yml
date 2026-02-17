@@ -38,7 +38,7 @@ jobs:
           build_image: "mcr.microsoft.com/oryx/build:github-actions-debian-bookworm-20260122.1"
           ###### End of Repository/Build Configurations ######
         env:
-          HUGO_VERSION: 0.155.3
+          HUGO_VERSION: 0.149.1
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
