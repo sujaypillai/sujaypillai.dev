@@ -2,9 +2,9 @@
 
 {{ define "content" }}
     {{ $publish_date := .PublishDate.Format (.Site.Params.dateFormatToUse | default "2006-01-02") }}
-    {{ $author := .Site.Author.name }}
+    {{ $author := .Site.Params.Author.name }}
     {{ if isset .Params "author" }}
-       {{ $author = .Site.Author.name }}
+       {{ $author = .Site.Params.Author.name }}
     {{ end }}
 
     <article class="post-warp">

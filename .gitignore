@@ -1,0 +1,6 @@
+# Hugo build artifacts
+resources/_gen/
+.hugo_build.lock
+
+# Build output - now built in CI, not committed
+public/

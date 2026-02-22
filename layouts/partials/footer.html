@@ -10,7 +10,7 @@
             {{- else -}}
                 <span itemprop="copyrightYear">{{ now.Year }}</span>
             {{- end -}}
-            {{- with .Site.Author.name -}}
+            {{- with .Site.Params.Author.name -}}
                 <span class="author" itemprop="copyrightHolder">&nbsp;<a href="{{ $.Site.BaseURL }}">{{ . }}</a></span>
             {{- end -}}
             {{- with .Site.Params.icp -}}
