@@ -1,4 +1,9 @@
 {{- $user := .Get 0 -}}
 {{- $id := .Get 1 -}}
 {{- $file := .Get 2 -}}
+{{- /* Validate user and id to prevent XSS - only allow alphanumeric, hyphens, underscores */ -}}
+{{- if and (findRE "^[a-zA-Z0-9_-]+$" $user) (findRE "^[a-fA-F0-9]+$" $id) -}}
 <script src="https://gist.github.com/{{ $user }}/{{ $id }}.js{{- if $file -}}?file={{ $file }}{{- end -}}"></script>
+{{- else -}}
+{{- errorf "Invalid gist parameters: user=%q id=%q (user must be alphanumeric/hyphens/underscores, id must be hexadecimal)" $user $id -}}
+{{- end -}}
