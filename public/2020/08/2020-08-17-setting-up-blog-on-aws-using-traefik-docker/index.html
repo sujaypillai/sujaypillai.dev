@@ -1,575 +1,67 @@
-<!DOCTYPE html>
-<html lang="en-us">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Running Hugo in Docker &#43; Traefik | Sujay Pillai</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noodp" />
-<meta name="Description" content="Sujay Pillai&#39;s blog">
-<link rel="prev" href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" />
-<link rel="next" href="https://sujaypillai.dev/2020/08/2020-08-21-docker-github-action/" />
-<link rel="canonical" href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker/" />
-<link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../../../favicon-16x16.png">
-<link rel="manifest" href="../../../site.webmanifest">
-<link rel="mask-icon" href="../../../safari-pinned-tab.svg" color="#5bbad5">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://sujaypillai.dev/images/sample_feature_img.png"/>
-
-<meta name="twitter:title" content="Running Hugo in Docker &#43; Traefik"/>
-<meta name="twitter:description" content="This post basically highlights how you can setup your blogging site (or any static website) using Hugo running in a Docker Swarm environment with Traefik. This whole setup is done on AWS, but it could be replicated to any cloud service provider. In my case its only a single node docker swarm cluster.
-Install Docker on an Amazon EC2 instance   The steps to spin up EC2 instance on AWS is here"/>
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-157173015-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-
-<script type="application/ld+json">
-    {
-    "@context": "http://schema.org",
-    "@type": "BlogPosting",
-    "headline": "Running Hugo in Docker \u002b Traefik",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https:\/\/sujaypillai.dev\/2020\/08\/2020-08-17-setting-up-blog-on-aws-using-traefik-docker\/"
-    },
-    
-        "image": {
-            "@type": "ImageObject",
-            "url": "https:\/\/sujaypillai.dev\/cover.png",
-            "width":  800 ,
-            "height":  600 
-        },
-    
-    "genre": "posts",
-    
-        "keywords": "docker, aws",
-    
-    "wordcount":  421 ,
-    "url": "https:\/\/sujaypillai.dev\/2020\/08\/2020-08-17-setting-up-blog-on-aws-using-traefik-docker\/",
-    
-        "datePublished": "2020-08-17T12:10:56\u002b08:00",
-    
-    
-        "dateModified": "2020-08-17T12:10:56\u002b08:00",
-    
-    
-        "license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
-    
-    
-        "publisher": {
-            "@type": "Organization",
-            "name": "XXXX",
-            "logo": {
-            "@type": "ImageObject",
-            "url": "https:\/\/sujaypillai.dev\/logo.png",
-            "width":  127 ,
-            "height":  40 
-            }
-        },
-    
-    
-    "description": ""
-    }
-    </script>
-<link rel="stylesheet" href="../../../css/style.min.css">
-<link rel="stylesheet" href="../../../css/lib/fontawesome-free/all.min.min.css">
-
-<link rel="stylesheet" href="../../../css/lib/animate/animate.min.min.css">
-
-    </head>
-    <body>
-        <script>
-            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
-            window.isDark && document.body.classList.add('dark-theme');
-        </script>
-        <div class="wrapper">
-            <nav class="navbar">
-    <div class="navbar-container">
-        <div class="navbar-header animated bounceIn">
-            <a href="https://sujaypillai.dev">Sujay Pillai</a>
-        </div>
-        <div class="navbar-menu">
-            
-            
-                <a class="menu-item" href="https://sujaypillai.dev/posts" title="">Posts</a>
-            
-                <a class="menu-item" href="https://sujaypillai.dev/tags" title="">Tags</a>
-            
-                <a class="menu-item" href="https://sujaypillai.dev/categories" title="">Categories</a>
-            
-                <a class="menu-item" href="https://sujaypillai.dev/about" title="">About</a>
-            
-            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
-        </div>
-    </div>
-</nav>
-<nav class="navbar-mobile">
-     <div class="navbar-container">
-        <div class="navbar-header">
-            <div class="navbar-header-title animated bounceIn">
-                <a href="https://sujaypillai.dev">Sujay Pillai</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="navbar-menu" id="mobile-menu">
-            
-            
-                <a class="menu-item" href="https://sujaypillai.dev/posts" title="">Posts</a>
-            
-                <a class="menu-item" href="https://sujaypillai.dev/tags" title="">Tags</a>
-            
-                <a class="menu-item" href="https://sujaypillai.dev/categories" title="">Categories</a>
-            
-                <a class="menu-item" href="https://sujaypillai.dev/about" title="">About</a>
-            
-            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
-        </div>
-    </div>
-</nav><main class="main">
-                <div class="container">
-                    
-    
-    
-    
-
-    <article class="post-warp">
-        <h1 class="post-title animated flipInX">Running Hugo in Docker &#43; Traefik</h1>
-
-        <div class="post-meta">
-            <div class="post-meta-main">
-                <a class="author" href="https://sujaypillai.dev" rel="author"><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
-                <span class="post-category">
-                        included in
-                        <i class="far fa-folder fa-fw"></i><a href="https://sujaypillai.dev/categories/cloud/">Cloud</a>
-                            
-                    </span>
-            </div>
-            <div class="post-meta-other">
-                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-08-17>2020-08-17</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 421 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
-        </div>
-
-        
-
-        
-
-        <div class="post-content">
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <p>This post basically highlights how you can setup your blogging site (or any static website) using <a href="https://gohugo.io/documentation/">Hugo</a> running in a Docker Swarm environment with <a href="https://docs.traefik.io/">Traefik</a>. This whole setup is done on AWS, but it could be replicated to any cloud service provider. In my case its only a single node docker swarm cluster.</p>
-<a class="post-dummy-target" id="install-docker-on-an-amazon-ec2-instance"></a><h2>Install Docker on an Amazon EC2 instance</h2>
-<ul>
-<li>
-<p>The steps to spin up EC2 instance on AWS is <a href="https://www.sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/">here</a></p>
-</li>
-<li>
-<p>Connect to your instance
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">ssh -i /path/inlets.pem ec2-user@ec2-54-254-122-14.ap-southeast-1.compute.amazonaws.com</code></pre></td></tr></table>
-</div>
-</div></p>
-</li>
-<li>
-<p>Update the installed packages and package cache on your instance, install docker and start the docker service.
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo yum update -y
-sudo amazon-linux-extras install docker
-sudo service docker start</code></pre></td></tr></table>
-</div>
-</div></p>
-</li>
-<li>
-<p>Add the ec2-user to the docker group so you can execute Docker commands without using sudo.
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo usermod -a -G docker ec2-user</code></pre></td></tr></table>
-</div>
-</div></p>
-</li>
-</ul>
-<a class="post-dummy-target" id="initialize-the-docker-swarm"></a><h2>Initialize the Docker Swarm</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker swarm init --advertise-addr eth0</code></pre></td></tr></table>
-</div>
-</div>
-<a class="post-dummy-target" id="list-nodes-in-the-swarm"></a><h2>List nodes in the swarm</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ docker node ls
-ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
-9fj7jdv4zfkgp6nlg229qqtvr *   sujaypillai.dev     Ready               Active              Leader              18.06.1-ce</code></pre></td></tr></table>
-</div>
-</div>
-<a class="post-dummy-target" id="definition-of-docker-stack-to-run-traefik"></a><h2>Definition of docker stack to run Traefik</h2>
-<script type="application/javascript" src="https://gist.github.com/sujaypillai/8947d8baa3663b9da50e15f394efee6e.js"></script>
-
-<ul>
-<li>The above stack uses Traefik version 1.7.13</li>
-<li>Traefik routes all incoming http/https request from the public address of the server and relays those request to the targeted service running privately on the server following some rules. This is achieved by publishing the ports 80 &amp; 443.</li>
-<li>You can configure Traefik to use an ACME provider (Let&rsquo;s Encrypt) for automatic certificate generation. All the flags <code>acme.*</code> are related to ACME configuration and the certificates generated are stored in a volume named <code>traefik_certs</code>.</li>
-<li>Use <code>htpasswd</code> utility to create an encrypted password and save the generated password in a file named htpasswd which is passed in the config section.
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">htpasswd -c htpasswd administartor</code></pre></td></tr></table>
-</div>
-</div></li>
-<li>The <code>EMAIL</code> &amp; <code>DOMAIN</code> are set as an environment variable on the host.</li>
-</ul>
-<a class="post-dummy-target" id="deploying-the-traefik-service-as-proxy"></a><h2>Deploying the Traefik service as proxy</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker stack deploy -c docker-stack-traefik.yml proxy</code></pre></td></tr></table>
-</div>
-</div>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker service ls
-ID                  NAME                MODE                REPLICAS            IMAGE                 PORTS
-utjpltombxnr        proxy_traefik       replicated          1/1                 traefik:1.7.13        </code></pre></td></tr></table>
-</div>
-</div>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker service ps proxy_traefik
-ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE          ERROR               PORTS
-ksaooufxkgsn        proxy_traefik.1     traefik:1.7.13      sujaypillai.dev     Running             Running 8 months ago                       *:443-&gt;443/tcp,*:80-&gt;80/tcp</code></pre></td></tr></table>
-</div>
-</div>
-<a class="post-dummy-target" id="deploying-blogging-site-hugo"></a><h2>Deploying blogging site (Hugo)</h2>
-<script type="application/javascript" src="https://gist.github.com/sujaypillai/0090fa3c8fbb84b00c1e2f4b7a1f7a90.js"></script>
-
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker stack deploy -c docker-stack-sujaypillai.yml web</code></pre></td></tr></table>
-</div>
-</div>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker service ls
-ID                  NAME                MODE                REPLICAS            IMAGE                 PORTS
-utjpltombxnr        proxy_traefik       replicated          1/1                 traefik:1.7.13      
-5s2blx0kicj0        web_website         replicated          1/1                 klakegg/hugo:0.63.2   *:1313-&gt;1313/tcp  </code></pre></td></tr></table>
-</div>
-</div>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker service ps web_website
-ID                  NAME                IMAGE                 NODE                DESIRED STATE       CURRENT STATE          ERROR               PORTS
-dewhzxakrfei        web_website.1       klakegg/hugo:0.63.2   sujaypillai.dev     Running             Running 8 months ago  </code></pre></td></tr></table>
-</div>
-</div>
-
-        </div>
-
-        <div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>This article is updated with 2020-08-17</span>
-            </div>
-            <div class="post-info-license">
-                
-            </div>
-        </div>
-        <div class="post-info-line">
-            <div class="post-info-md">
-                
-                    
-                        <span><a class="link-to-markdown" href="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker/index.md" target="_blank"></a></span>
-                    
-                
-            </div>
-            <div class="post-info-share">
-                
-                    <span>
-    
-        <a href="//twitter.com/share?url=https%3a%2f%2fsujaypillai.dev%2f2020%2f08%2f2020-08-17-setting-up-blog-on-aws-using-traefik-docker%2f&amp;text=Running%20Hugo%20in%20Docker%20%2b%20Traefik&amp;via=sujaypillai" target="_blank" title="Share on Twitter">
-            <i class="fab fa-twitter fa-fw"></i>
-        </a>
-    
-    
-        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fsujaypillai.dev%2f2020%2f08%2f2020-08-17-setting-up-blog-on-aws-using-traefik-docker%2f" target="_blank" title="Share on Facebook">
-            <i class="fab fa-facebook-square fa-fw"></i>
-        </a>
-    
-    
-    
-        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fsujaypillai.dev%2f2020%2f08%2f2020-08-17-setting-up-blog-on-aws-using-traefik-docker%2f&amp;title=Running%20Hugo%20in%20Docker%20%2b%20Traefik" target="_blank" title="Share on LinkedIn">
-            <i class="fab fa-linkedin fa-fw"></i>
-        </a>
-    
-    
-    
-    
-    
-    
-    
-</span>
-                
-            </div>
-        </div>
-    </div>
-
-    <div class="post-info-more">
-        <section>
-            
-                
-                    <span class="tag">
-                        <a href="https://sujaypillai.dev/tags/docker/"><i class="fas fa-tag fa-fw"></i>docker</a>
-                    </span>
-                
-                    <span class="tag">
-                        <a href="https://sujaypillai.dev/tags/aws/"><i class="fas fa-tag fa-fw"></i>aws</a>
-                    </span>
-                
-            
-        </section>
-        <section>
-            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://sujaypillai.dev">Home</a></span>
-        </section>
-    </div>
-
-    <div class="post-nav">
-        
-            <a href="https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" class="prev" rel="prev" title="Creating an EC2 instance using CLI"><i class="fas fa-angle-left fa-fw"></i>Creating an EC2 instance using CLI</a>
-        
-        
-            <a href="https://sujaypillai.dev/2020/08/2020-08-21-docker-github-action/" class="next" rel="next" title="Docker&#39;s new GitHub action">Docker&#39;s new GitHub action<i class="fas fa-angle-right fa-fw"></i></a>
-        
-    </div>
-</div>
-
-        <div class="post-comment">
-            
-            
-
-            
-        </div>
-    </article></div>
-            </main>
-            <footer class="footer">
-    <div class="copyright">
-        <div class="copyright-line">
-            Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
-        </div>
-        <div class="copyright-line">
-            <i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2018 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://sujaypillai.dev">Sujay Pillai</a></span><span class="license">&nbsp;|&nbsp;<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-    </div>
-</footer>
-
-
-    
-    
-
-
-
-
-    
-    
-
-
-
-
-    
-    
-
-
-
-
-
-    
-    
-
-
-
-    
-    
-
-
-
-    
-    
-
-
-
-
-
-    
-    
-
-
-
-
-
-    
-    
-
-
-
-    
-    
-
-
-
-
-
-    
-    
-
-
-
-
-    
-    
-
-
-
-
-    
-    
-
-
-
-    
-    
-
-
-
-
-
-    
-    
-
-
-<script src="../../../js/lib/jquery/jquery.slim.min.min.js"></script>
-<script src="../../../js/lib/lazysizes/lazysizes.min.min.js"></script>
-<script src="../../../js/lib/smooth-scroll/smooth-scroll.polyfills.min.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script>
-
-
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-
-
-
-
-
-<script src="../../../js/blog.min.js"></script>
-
-
-    
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-157173015-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-</div>
-        <a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll><span>&nbsp;</span></a>
-    </body>
-</html>
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>Running Hugo in Docker + Traefik | Sujay Pillai</title><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta name=Description content="Sujay Pillai's blog"><link rel=prev href=https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/><link rel=next href=https://sujaypillai.dev/2020/08/2020-08-21-docker-github-action/><link rel=canonical href=https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker/><link rel="shortcut icon" type=image/x-icon href=../../../favicon.ico><link rel=apple-touch-icon sizes=180x180 href=../../../apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=../../../favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=../../../favicon-16x16.png><link rel=manifest href=../../../site.webmanifest><link rel=mask-icon href=../../../safari-pinned-tab.svg color=#5bbad5><meta name=msapplication-TileColor content="#da532c"><meta name=theme-color content="#ffffff"><meta property="og:url" content="https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker/"><meta property="og:site_name" content="Sujay Pillai"><meta property="og:title" content="Running Hugo in Docker + Traefik"><meta property="og:description" content="This post basically highlights how you can setup your blogging site (or any static website) using Hugo running in a Docker Swarm environment with Traefik. This whole setup is done on AWS, but it could be replicated to any cloud service provider. In my case its only a single node docker swarm cluster.
+Install Docker on an Amazon EC2 instance The steps to spin up EC2 instance on AWS is here"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-08-17T12:10:56+08:00"><meta property="article:modified_time" content="2020-08-17T12:10:56+08:00"><meta property="article:tag" content="Docker"><meta property="article:tag" content="Aws"><meta property="og:image" content="https://sujaypillai.dev/images/sample_feature_img.png"><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Running Hugo in Docker \u002b Traefik","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/sujaypillai.dev\/2020\/08\/2020-08-17-setting-up-blog-on-aws-using-traefik-docker\/"},"image":{"@type":"ImageObject","url":"https:\/\/sujaypillai.dev\/images\/sop.png","width":800,"height":600},"genre":"posts","keywords":"docker, aws","wordcount":421,"url":"https:\/\/sujaypillai.dev\/2020\/08\/2020-08-17-setting-up-blog-on-aws-using-traefik-docker\/","datePublished":"2020-08-17T12:10:56\u002b08:00","dateModified":"2020-08-17T12:10:56\u002b08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"XXXX","logo":{"@type":"ImageObject","url":"https:\/\/sujaypillai.dev\/logo.png","width":127,"height":40}},"author":{"@type":"Person","name":"Sujay Pillai"},"description":""}</script><link rel=stylesheet href=../../../css/style.min.css><link rel=stylesheet href=../../../lib/fontawesome-free/all.min.min.css><link rel=stylesheet href=../../../lib/animate/animate.min.min.css></head><body><script>window.isDark=(window.localStorage&&window.localStorage.getItem("theme"))==="dark",window.isDark&&document.body.classList.add("dark-theme")</script><div class=wrapper><nav class=navbar><div class=navbar-container><div class="navbar-header animated bounceIn"><a href=https://sujaypillai.dev/>Sujay Pillai</a></div><div class=navbar-menu><a class=menu-item href=https://sujaypillai.dev/posts title>Posts</a>
+<a class=menu-item href=https://sujaypillai.dev/tags title>Tags</a>
+<a class=menu-item href=https://sujaypillai.dev/categories title>Categories</a>
+<a class=menu-item href=https://sujaypillai.dev/about title>About</a>
+<a class=menu-item href=https://sujaypillai.dev/certifications title>Certifications</a>
+<a href=javascript:void(0); class=theme-switch><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a></div></div></nav><nav class=navbar-mobile><div class=navbar-container><div class=navbar-header><div class="navbar-header-title animated bounceIn"><a href=https://sujaypillai.dev/>Sujay Pillai</a></div><div class=menu-toggle id=menu-toggle><span></span><span></span><span></span></div></div><div class=navbar-menu id=mobile-menu><a class=menu-item href=https://sujaypillai.dev/posts title>Posts</a>
+<a class=menu-item href=https://sujaypillai.dev/tags title>Tags</a>
+<a class=menu-item href=https://sujaypillai.dev/categories title>Categories</a>
+<a class=menu-item href=https://sujaypillai.dev/about title>About</a>
+<a class=menu-item href=https://sujaypillai.dev/certifications title>Certifications</a>
+<a href=javascript:void(0); class=theme-switch><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a></div></div></nav><main class=main><div class=container><article class=post-warp><h1 class="post-title animated flipInX">Running Hugo in Docker + Traefik</h1><div class=post-meta><div class=post-meta-main><a class=author href=https://sujaypillai.dev/ rel=author><i class="fas fa-user-circle fa-fw"></i>Sujay Pillai&nbsp;</a>
+<span class=post-category><i class="far fa-folder fa-fw"></i><a href=https://sujaypillai.dev/categories/cloud/>Cloud</a></span></div><div class=post-meta-other><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-08-17>2020-08-17</time>&nbsp;
+<i class="fas fa-pencil-alt fa-fw"></i>421 words&nbsp;
+<i class="far fa-clock fa-fw"></i>2 minutes&nbsp;</div></div><div class=post-content><p>This post basically highlights how you can setup your blogging site (or any static website) using <a href=https://gohugo.io/documentation/ target=_blank rel="noopener noreffer">Hugo</a> running in a Docker Swarm environment with <a href=https://docs.traefik.io/ target=_blank rel="noopener noreffer">Traefik</a>. This whole setup is done on AWS, but it could be replicated to any cloud service provider. In my case its only a single node docker swarm cluster.</p><a class=post-dummy-target id=install-docker-on-an-amazon-ec2-instance></a><h2>Install Docker on an Amazon EC2 instance</h2><ul><li><p>The steps to spin up EC2 instance on AWS is <a href=https://www.sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/ target=_blank rel="noopener noreffer">here</a></p></li><li><p>Connect to your instance<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>ssh -i /path/inlets.pem ec2-user@ec2-54-254-122-14.ap-southeast-1.compute.amazonaws.com
+</span></span></span></code></pre></td></tr></table></div></div></p></li><li><p>Update the installed packages and package cache on your instance, install docker and start the docker service.<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>sudo yum update -y
+</span></span></span><span class=line><span class=cl><span class=go>sudo amazon-linux-extras install docker
+</span></span></span><span class=line><span class=cl><span class=go>sudo service docker start
+</span></span></span></code></pre></td></tr></table></div></div></p></li><li><p>Add the ec2-user to the docker group so you can execute Docker commands without using sudo.<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>sudo usermod -a -G docker ec2-user
+</span></span></span></code></pre></td></tr></table></div></div></p></li></ul><a class=post-dummy-target id=initialize-the-docker-swarm></a><h2>Initialize the Docker Swarm</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>docker swarm init --advertise-addr eth0
+</span></span></span></code></pre></td></tr></table></div></div><a class=post-dummy-target id=list-nodes-in-the-swarm></a><h2>List nodes in the swarm</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=gp>$</span> docker node ls
+</span></span><span class=line><span class=cl><span class=go>ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+</span></span></span><span class=line><span class=cl><span class=go>9fj7jdv4zfkgp6nlg229qqtvr *   sujaypillai.dev     Ready               Active              Leader              18.06.1-ce
+</span></span></span></code></pre></td></tr></table></div></div><a class=post-dummy-target id=definition-of-docker-stack-to-run-traefik></a><h2>Definition of docker stack to run Traefik</h2><script src=https://gist.github.com/sujaypillai/8947d8baa3663b9da50e15f394efee6e.js></script><ul><li>The above stack uses Traefik version 1.7.13</li><li>Traefik routes all incoming http/https request from the public address of the server and relays those request to the targeted service running privately on the server following some rules. This is achieved by publishing the ports 80 & 443.</li><li>You can configure Traefik to use an ACME provider (Let&rsquo;s Encrypt) for automatic certificate generation. All the flags <code>acme.*</code> are related to ACME configuration and the certificates generated are stored in a volume named <code>traefik_certs</code>.</li><li>Use <code>htpasswd</code> utility to create an encrypted password and save the generated password in a file named htpasswd which is passed in the config section.<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>htpasswd -c htpasswd administartor
+</span></span></span></code></pre></td></tr></table></div></div></li><li>The <code>EMAIL</code> & <code>DOMAIN</code> are set as an environment variable on the host.</li></ul><a class=post-dummy-target id=deploying-the-traefik-service-as-proxy></a><h2>Deploying the Traefik service as proxy</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>docker stack deploy -c docker-stack-traefik.yml proxy
+</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>docker service ls
+</span></span></span><span class=line><span class=cl><span class=go>ID                  NAME                MODE                REPLICAS            IMAGE                 PORTS
+</span></span></span><span class=line><span class=cl><span class=go>utjpltombxnr        proxy_traefik       replicated          1/1                 traefik:1.7.13        
+</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>docker service ps proxy_traefik
+</span></span></span><span class=line><span class=cl><span class=go>ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE          ERROR               PORTS
+</span></span></span><span class=line><span class=cl><span class=go>ksaooufxkgsn        proxy_traefik.1     traefik:1.7.13      sujaypillai.dev     Running             Running 8 months ago                       *:443-&gt;443/tcp,*:80-&gt;80/tcp
+</span></span></span></code></pre></td></tr></table></div></div><a class=post-dummy-target id=deploying-blogging-site-hugo></a><h2>Deploying blogging site (Hugo)</h2><script src=https://gist.github.com/sujaypillai/0090fa3c8fbb84b00c1e2f4b7a1f7a90.js></script><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>docker stack deploy -c docker-stack-sujaypillai.yml web
+</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>docker service ls
+</span></span></span><span class=line><span class=cl><span class=go>ID                  NAME                MODE                REPLICAS            IMAGE                 PORTS
+</span></span></span><span class=line><span class=cl><span class=go>utjpltombxnr        proxy_traefik       replicated          1/1                 traefik:1.7.13      
+</span></span></span><span class=line><span class=cl><span class=go>5s2blx0kicj0        web_website         replicated          1/1                 klakegg/hugo:0.63.2   *:1313-&gt;1313/tcp  
+</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>docker service ps web_website
+</span></span></span><span class=line><span class=cl><span class=go>ID                  NAME                IMAGE                 NODE                DESIRED STATE       CURRENT STATE          ERROR               PORTS
+</span></span></span><span class=line><span class=cl><span class=go>dewhzxakrfei        web_website.1       klakegg/hugo:0.63.2   sujaypillai.dev     Running             Running 8 months ago  
+</span></span></span></code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>%!(EXTRA string=2020-08-17)</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share></div></div></div><div class=post-info-more><section><span class=tag><a href=https://sujaypillai.dev/tags/docker/><i class="fas fa-tag fa-fw"></i>docker</a>
+</span><span class=tag><a href=https://sujaypillai.dev/tags/aws/><i class="fas fa-tag fa-fw"></i>aws</a></span></section><section><span><a href=javascript:window.history.back();>Back</a></span>&nbsp;|&nbsp;<span><a href=https://sujaypillai.dev/>Home</a></span></section></div><div class=post-nav><a href=https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/ class=prev rel=prev title="Creating an EC2 instance using CLI"><i class="fas fa-angle-left fa-fw"></i>Creating an EC2 instance using CLI</a>
+<a href=https://sujaypillai.dev/2020/08/2020-08-21-docker-github-action/ class=next rel=next title="Docker's new GitHub action">Docker's new GitHub action<i class="fas fa-angle-right fa-fw"></i></a></div></div><div class=post-comment></div></article></div></main><footer class=footer><div class=copyright><div class=copyright-line>%!(EXTRA string=<a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreffer">Hugo</a>)&nbsp;|&nbsp;<a href=https://github.com/dillonzq/LoveIt target=_blank rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a></div><div class=copyright-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2026</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://sujaypillai.dev/>Sujay Pillai</a></span></div></div></footer><script>window.scroll=new SmoothScroll("[data-scroll]",{speed:300,speedAsDuration:!0})</script></div><a href=# class=dynamic-to-top id=dynamic-to-top data-scroll><span>&nbsp;</span></a></body></html>

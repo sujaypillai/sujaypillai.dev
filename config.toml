@@ -5,7 +5,6 @@ title = "Sujay Pillai"
 theme = "LoveIt"
 enableGitInfo = false                                    # whether to use git commit log to generate lastmod record
 hasCJKLanguage = false                                   # whether to include chinese/japanese/korean
-paginate = 12                                            # default amount of posts in each pages
 enableEmoji = true                                       # whether to use emojclear code
 enableRobotsTXT = true                                   # whether to use robots.txt
 googleAnalytics = "UA-157173015-1"                       # [UA-XXXXXXXX-X] google analytics code
@@ -21,6 +20,9 @@ pygmentsCodefencesGuessSyntax = true
 
 staticDir = ["static", "../assets/others"]               # static directories
 
+[pagination]                                             # default amount of posts in each pages
+  pagerSize = 12
+
 [author]                                              #### Author Info
   name = "Sujay Pillai"
 
@@ -30,7 +32,7 @@ staticDir = ["static", "../assets/others"]               # static directories
   priority = 0.5
 
 [Permalinks]                                          #### Permalinks Info (https://gohugo.io/content-management/urls/#permalinks)
-  posts = ":year/:month/:filename"
+  posts = ":year/:month/:contentbasename"
 
 [menu]                                                #### Menu Info
   [[menu.main]]
@@ -69,6 +71,10 @@ staticDir = ["static", "../assets/others"]               # static directories
   keywords    = ["Sujay Pillai", "Docker", "Cloud"]           # site keywords
   images      = ["images/sample_feature_img.png"]
   twitter_cards = true
+
+  [params.author]                                           #### Author Info
+    name = "Sujay Pillai"
+
 #### Home Page Info
   home_mode = "post"                                     # [post, other] home mode
   home_paginate = 6                                      # special amount of posts in each home post page
@@ -186,4 +192,4 @@ staticDir = ["static", "../assets/others"]               # static directories
   page = ["HTML", "MarkDown"]
   section = ["HTML", "RSS"]
   taxonomy = ["HTML", "RSS"]
-  taxonomyTerm = ["HTML"]
+  term = ["HTML"]

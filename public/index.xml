@@ -1,43 +1,99 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>Sujay Pillai on Sujay Pillai</title>
-        <link>https://sujaypillai.dev/</link>
-        <description>Recent content in Sujay Pillai on Sujay Pillai</description>
-        <generator>Hugo -- gohugo.io</generator>
-        
-            <language>en-us</language>
-        
-        
-        
-            <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-        
-        
-            <lastBuildDate>Tue, 02 Feb 2021 19:14:11 +0800</lastBuildDate>
-        
-        <atom:link href="https://sujaypillai.dev/" rel="self" type="application/rss+xml" />
-        
-            <item>
-                <title>Posts</title>
-                <link>https://sujaypillai.dev/posts/</link>
-                <pubDate>Tue, 02 Feb 2021 19:14:11 +0800</pubDate>
-                
-                <guid>https://sujaypillai.dev/posts/</guid>
-                <description></description>
-            </item>
-        
-            <item>
-                <title>About</title>
-                <link>https://sujaypillai.dev/about/</link>
-                <pubDate>Sun, 26 Jan 2020 16:31:24 +0800</pubDate>
-                
-                <guid>https://sujaypillai.dev/about/</guid>
-                <description>&lt;p&gt;Sujay Pillai is a DevOps Engineer with over 12+years in IT and currently working in Penang, Malaysia. He is the community leader for &lt;a href=&#34;https://events.docker.com/penang/&#34;&gt;Docker Penang Meetup group&lt;/a&gt; where he frequently talks about Docker technology and recently conducted hands on lab during Docker birthday celebrations. At his workplace he is the pioneer in leading the Docker team and conducts various inhouse training for his team members.&lt;/p&gt;
-&lt;p&gt;He is also a &lt;a href=&#34;https://www.docker.com/community/captains&#34;&gt;Docker Captain&lt;/a&gt; a distinction that Docker awards select members of the community that are both experts in their field and are passionate about sharing their Docker knowledge with others. Captains are Docker ambassadors (not employees) and their commitment to sharing their expertise has a huge impact on the Docker community – whether they are blogging, writing books, speaking, running workshops, creating tutorials and classes, offering support in forums, or organizing and contributing to local events – they help make Docker’s mission of democratizing technology possible.&lt;/p&gt;
-&lt;p&gt;His key technical areas are: Cloud Computing, Microsoft Azure, Storage – GlusterFS, DevOps, Linux, Docker and focuses on tasks around CI/CD, containers, automation and anything that improves platforms and services on the web.
-During the DockerCon 2018, San Francisco he gave a talk along with one of Docker Engineer on – &lt;a href=&#34;https://dockercon2018.hubs.vidyard.com/watch/iPXWirVJZNG3mfxBmt8gbX&#34;&gt;“Considerations for operating Docker Enterprise Edition at scale”&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Along working with Docker technology, he is also an expert in Enterprise Content Management systems such as Alfresco and Adobe AEM. He is also an opensource contributor for and a member of Order Of The Bee community in Alfresco.&lt;/p&gt;
-</description>
-            </item>
-        
-    </channel>
-</rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Sujay Pillai</title><link>https://sujaypillai.dev/</link><description>Sujay Pillai's blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 30 Jul 2021 19:14:11 +0800</lastBuildDate><atom:link href="https://sujaypillai.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Running Docker Desktop on Windows 11 in Azure"</title><link>https://sujaypillai.dev/2021/07/2021-07-30-running-docker-desktop-on-windows11-in-azure/</link><pubDate>Fri, 30 Jul 2021 19:14:11 +0800</pubDate><author>Sujay Pillai</author><guid>https://sujaypillai.dev/2021/07/2021-07-30-running-docker-desktop-on-windows11-in-azure/</guid><description><![CDATA[<p>In this blog we will setup a Windows 11 machine in Azure and then install Docker Desktop on top of it. As of today we don&rsquo;t have Windows 11 image available in Azure&rsquo;s Marketplace. So first we will install the latest Windows 10 image and then by leveraging the Windows Insider program we can upgrade the box to Windows 11.</p>
+<p>So lets start with installing a Windows 10 box using the image -</p>]]></description></item><item><title>Enable Metrics Server on Docker Desktop</title><link>https://sujaypillai.dev/2021/02/2021-02-02-enable-metrics-server-on-docker-desktop/</link><pubDate>Tue, 02 Feb 2021 19:14:11 +0800</pubDate><author>Sujay Pillai</author><guid>https://sujaypillai.dev/2021/02/2021-02-02-enable-metrics-server-on-docker-desktop/</guid><description><![CDATA[<p>The steps below in this blog will help you setup <a href="https://github.com/kubernetes-sigs/metrics-server" target="_blank" rel="noopener noreffer ">Kubernetes Metrics Server</a> on Docker Desktop which provides a standalone instance of Kubernetes running as a Docker container.</p>
+<p><a href="https://github.com/kubernetes-sigs/metrics-server" target="_blank" rel="noopener noreffer ">Kubernetes Metrics Server</a> is a scalable, efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines. Metrics Server collects resource metrics from Kubelets and exposes them in Kubernetes apiserver through Metrics API for use by <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/" target="_blank" rel="noopener noreffer ">Horizontal Pod Autoscaler</a> and <a href="https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler" target="_blank" rel="noopener noreffer ">Vertical Pod Autoscaler</a>.</p>]]></description></item><item><title>Azure Data Factory - Self Hosted Integration Runtime on Windows Container</title><link>https://sujaypillai.dev/2021/01/2021-01-29-selfhostedintegrationruntime-on-windows-container/</link><pubDate>Fri, 29 Jan 2021 12:10:56 +0800</pubDate><author>Sujay Pillai</author><guid>https://sujaypillai.dev/2021/01/2021-01-29-selfhostedintegrationruntime-on-windows-container/</guid><description><![CDATA[<p>If you are looking for how to get started with Azure Data Factory (ADF), I will definitely recommend you to go through
+<a href="https://twitter.com/cathrinew" target="_blank" rel="noopener noreffer ">Cathrine Wilhelmsen&rsquo;s</a> &ndash; <a href="https://www.cathrinewilhelmsen.net/series/beginners-guide-azure-data-factory/" target="_blank" rel="noopener noreffer ">Beginner’s Guide to Azure Data Factory</a>. It helped me to understand the basics for ADF before starting work on a project I recently had a chance to participate at my workplace.</p>
+<p>The compute infrastructure that is required by ADF provides the following data integration capabilities across different network environment:</p>]]></description></item><item><title>Docker's new GitHub action</title><link>https://sujaypillai.dev/2020/08/2020-08-21-docker-github-action/</link><pubDate>Fri, 21 Aug 2020 12:10:56 +0800</pubDate><author>Sujay Pillai</author><guid>https://sujaypillai.dev/2020/08/2020-08-21-docker-github-action/</guid><description><![CDATA[<p>
+Last week Docker released its first <a href="https://help.github.com/en/actions/getting-started-with-github-actions/about-github-actions" target="_blank" rel="noopener noreffer ">Github Action</a> called <a href="https://github.com/docker/build-push-action" target="_blank" rel="noopener noreffer ">docker/build-push-action</a> . This has been developed by Docker after keeping into consideration to simplify basic workflow of: building an image, tagging it, logging into Docker Hub, and pushing the image to a registry.</p>
+<p>My previous blog <a href="https://sujaypillai.dev/2019/09/2019-09-26-docker-github-package-registry/" rel="">Docker images on Github Package Registry</a> showcased how we could achieve the above workflow with Github package registry. If you look at the workflow definition <a href="https://github.com/sujaypillai/buildxdemo/blob/master/.github/workflows/dockerimage.yml" target="_blank" rel="noopener noreffer ">dockerimage.yml</a> for this we had to write three small actions to achieve the above workflow. Lets replace [<em><strong>we will actually create a new workflow definiton</strong></em>] this with Docker&rsquo;s new GitHub action.</p>]]></description></item><item><title>Running Hugo in Docker + Traefik</title><link>https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker/</link><pubDate>Mon, 17 Aug 2020 12:10:56 +0800</pubDate><author>Sujay Pillai</author><guid>https://sujaypillai.dev/2020/08/2020-08-17-setting-up-blog-on-aws-using-traefik-docker/</guid><description><![CDATA[<p>This post basically highlights how you can setup your blogging site (or any static website) using <a href="https://gohugo.io/documentation/" target="_blank" rel="noopener noreffer ">Hugo</a> running in a Docker Swarm environment with <a href="https://docs.traefik.io/" target="_blank" rel="noopener noreffer ">Traefik</a>. This whole setup is done on AWS, but it could be replicated to any cloud service provider. In my case its only a single node docker swarm cluster.</p>
+<h2 id="install-docker-on-an-amazon-ec2-instance">Install Docker on an Amazon EC2 instance</h2>
+<ul>
+<li>
+<p>The steps to spin up EC2 instance on AWS is <a href="https://www.sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/" target="_blank" rel="noopener noreffer ">here</a></p>]]></description></item><item><title>Creating an EC2 instance using CLI</title><link>https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/</link><pubDate>Sun, 16 Aug 2020 12:10:56 +0800</pubDate><author>Sujay Pillai</author><guid>https://sujaypillai.dev/2020/08/2020-08-16-creating-an-ec2-instance-using-cli/</guid><description><![CDATA[<p>This blog post highlights the steps taken by me for creating an EC2 instance to be used as a part of docker swarm environment to host my blogging site on AWS using <a href="https://docs.traefik.io/" target="_blank" rel="noopener noreffer ">Traefik</a>. Below are the commands I used to spin up an EC2 instance using the <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html" target="_blank" rel="noopener noreffer ">AWS CLI version 2</a> .</p>
+<h3 id="find-the-image-id-corresponding-to-amazon-linux-2-ami">Find the image id corresponding to Amazon Linux 2 AMI</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">aws ec2 describe-images --owners amazon \
+</span></span></span><span class="line"><span class="cl"><span class="go">    --filters &#39;Name=name,Values=amzn2-ami-hvm-2.0.????????-x86_64-gp2&#39; &#39;Name=state,Values=available&#39; \
+</span></span></span><span class="line"><span class="cl"><span class="go">    --output json | jq -r &#39;.Images | sort_by(.CreationDate) | last(.[]).ImageId&#39;
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="go">ami-01f7527546b557442
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="create-a-security-group">Create a security group</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">aws ec2 create-security-group --group-name docker-machine --description &#34;Docker Machine&#34;
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="go">{
+</span></span></span><span class="line"><span class="cl"><span class="go">    &#34;GroupId&#34;:&#34;sg-0f1144719b279f8cb&#34;
+</span></span></span><span class="line"><span class="cl"><span class="go">}
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="open-port-22-ssh-protocolto-connect-to-your-instance-and-other-ports-for-docker-swarm">Open port 22 (SSH protocol)to connect to your instance and other ports for docker swarm.</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 22 --cidr 0.0.0.0/0
+</span></span></span><span class="line"><span class="cl"><span class="go">aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 80 --cidr 0.0.0.0/0
+</span></span></span><span class="line"><span class="cl"><span class="go">aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 443 --cidr 0.0.0.0/0
+</span></span></span><span class="line"><span class="cl"><span class="go">aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 2377 --cidr 0.0.0.0/0
+</span></span></span><span class="line"><span class="cl"><span class="go">aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol tcp --port 7946 --cidr 0.0.0.0/0
+</span></span></span><span class="line"><span class="cl"><span class="go">aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol udp --port 7946 --cidr 0.0.0.0/0
+</span></span></span><span class="line"><span class="cl"><span class="go">aws ec2 authorize-security-group-ingress --group-name docker-machine --protocol udp --port 4789 --cidr 0.0.0.0/0
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>The following PORTS are added to security group:</p>]]></description></item><item><title>Docker GitHub Action</title><link>https://sujaypillai.dev/2020/03/2020-03-23-first-docker-github-action/</link><pubDate>Mon, 23 Mar 2020 12:10:56 +0800</pubDate><author>Sujay Pillai</author><guid>https://sujaypillai.dev/2020/03/2020-03-23-first-docker-github-action/</guid><description><![CDATA[<p>
+Last week Docker released its first <a href="https://help.github.com/en/actions/getting-started-with-github-actions/about-github-actions" target="_blank" rel="noopener noreffer ">Github Action</a> called <a href="https://github.com/docker/build-push-action" target="_blank" rel="noopener noreffer ">docker/build-push-action</a> . This has been developed by Docker after keeping into consideration to simplify basic workflow of: building an image, tagging it, logging into Docker Hub, and pushing the image to a registry.</p>
+<p>My previous blog <a href="https://sujaypillai.dev/2019/09/2019-09-26-docker-github-package-registry/" rel="">Docker images on Github Package Registry</a> showcased how we could achieve the above workflow with Github package registry. If you look at the workflow definition <a href="https://github.com/sujaypillai/buildxdemo/blob/master/.github/workflows/dockerimage.yml" target="_blank" rel="noopener noreffer ">dockerimage.yml</a> for this we had to write three small actions to achieve the above workflow. Lets replace [<em><strong>we will actually create a new workflow definiton</strong></em>] this with Docker&rsquo;s new GitHub action.</p>]]></description></item><item><title>Docker images on Github Package Registry</title><link>https://sujaypillai.dev/2019/09/2019-09-26-docker-github-package-registry/</link><pubDate>Thu, 26 Sep 2019 12:28:54 +0800</pubDate><author>Sujay Pillai</author><guid>https://sujaypillai.dev/2019/09/2019-09-26-docker-github-package-registry/</guid><description><![CDATA[<p></p>
+
+    <div class="admonition question"><p><strong>Ever wondered to have your source code and packages in one place?</strong></p>
+<p><a href="https://github.com/features/packages" target="_blank" rel="noopener noreffer ">GitHub Package Registry</a> is a package management service that makes it easy to publish public or private packages next to your source code. It is fully integrated with GitHub, so you can use the same search, browsing, and management tools to find and publish packages as you do for your repositories. You can also use the same user and team permissions to manage code and packages together.</p>]]></description></item><item><title>Connect to Docker daemon over ssh using docker-compose</title><link>https://sujaypillai.dev/2019/01/2019-01-22-docker-tip/</link><pubDate>Tue, 22 Jan 2019 16:22:42 +0800</pubDate><author>Sujay Pillai</author><guid>https://sujaypillai.dev/2019/01/2019-01-22-docker-tip/</guid><description><![CDATA[<p>One of the cool feature released with Docker 18.09 is the ability to connect to a docker daemon over ssh. This post would walk you through the steps to connect to a docker daemon running on <a href="https://www.digitalocean.com/" target="_blank" rel="noopener noreffer ">DigitalOcean</a>.</p>
+<p>To create a remote docker host we will use a tool called docker-machine :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">docker-machine create --driver DigitalOcean --digitalocean-access-token xxxx do-node2
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+<p></p>
+<p>Here is a detailed <a href="https://docs.docker.com/machine/examples/ocean/" target="_blank" rel="noopener noreffer ">documentation</a> about setting up a droplet on DigitalOcean. You may verify this by logging into your DigitalOcean account as shown below</p>]]></description></item><item><title>Globally scoped platform ARG's in Docker BuildKit</title><link>https://sujaypillai.dev/2019/01/2019-01-02-docker-platform-args/</link><pubDate>Wed, 02 Jan 2019 16:22:42 +0800</pubDate><author>Sujay Pillai</author><guid>https://sujaypillai.dev/2019/01/2019-01-02-docker-platform-args/</guid><description><![CDATA[<div class="admonition note"><p><em><strong>ARG a.k.a &ldquo;build-time variable&rdquo; can be used to pass a variable to builder with the <code>docker build</code> command using <code>--build-arg &lt;varname&gt;=&lt;value&gt; flag</code></strong></em></p>
+</div>
+<p>With the new engine 18.09 Docker supports a new backend <a href="https://docs.docker.com/engine/reference/builder/#buildkit" target="_blank" rel="noopener noreffer ">BuildKit</a> for executing your builds. You may switch to this backend by setting the below environment variable on your CLI -</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">DOCKER_BUILDKIT=1
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>With this new backend Docker predefines a set of ARG variables with the information pertaining to the platform of the node performing the build (build platform) and the resulting image (target platform)</p>]]></description></item></channel></rss>

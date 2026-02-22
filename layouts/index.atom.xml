@@ -11,10 +11,10 @@
     {{ end }}
     <id>{{ .Permalink }}</id>
     <author>
-        {{ with .Site.Author.name }}
+        {{ with .Site.Params.Author.name }}
             <name>{{ . }}</name>
         {{ end }}
-        {{ with $.Site.Author.email }}
+        {{ with $.Site.Params.Author.email }}
             <email>{{ . }}</email>
         {{ end }}
     </author>
@@ -24,7 +24,7 @@
             {{ `<title type="html"><![CDATA[` | safeHTML }}{{ .Title }}]]></title>
             <link href="{{ .Permalink }}"/>
             <id>{{ .Permalink }}</id>
-            {{ with .Site.Author.name }}
+            {{ with .Site.Params.Author.name }}
                 <author>
                     <name>{{ . }}</name>
                 </author>
